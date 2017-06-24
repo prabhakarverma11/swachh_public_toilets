@@ -20,4 +20,9 @@ public class LocationServiceImpl implements LocationService {
     public List<Location> getAllLocations() {
         return locationDao.getAllLocations();
     }
+
+    @Override
+    public Location getLocationById(Integer locationId) {
+        return locationDao.getLocationById(locationId);
+    }
 }

@@ -21,4 +21,9 @@ public class LocationDaoImpl extends AbstractDao<Integer, Location> implements L
         List<Location> locations = (List<Location>) criteria.list();
         return locations;
     }
+
+    @Override
+    public Location getLocationById(Integer locationId) {
+        return getByKey(locationId);
+    }
 }

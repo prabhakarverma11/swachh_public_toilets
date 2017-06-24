@@ -14,6 +14,9 @@
     <link href="<c:url value='/static/css/1.css' />" rel="stylesheet"/>
     <link href="<c:url value='/static/css/2.css' />" rel="stylesheet"/>
     <link href="<c:url value='/static/css/3.css' />" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <style>
         @media screen and (max-width: 992px) {
             .container {
@@ -21,6 +24,11 @@
             }
         }
     </style>
+    <script>
+        function fun(reviews) {
+            console.log("reviews", reviews);
+        }
+    </script>
 </head>
 
 <body style="height: auto;">
@@ -64,27 +72,51 @@
                         <th>Name</th>
                         <th>Address</th>
                         <th>Country</th>
-                        <th>Latitude</th>
-                        <th>Longitude</th>
                         <th>Type</th>
+                        <th>Rating</th>
+                        <th>Reviews</th>
                     </tr>
                     </thead>
                     <tbody>
                     <c:set var="count" value="${0}"></c:set>
-                    <c:forEach items="${locationsList}" var="location">
+                    <c:forEach items="${reportsList}" var="report">
                         <c:set var="count" value="${count+1}"></c:set>
                         <tr>
                             <td>${count}</td>
-                            <td>${location.name}</td>
-                            <td>${location.address}</td>
-                            <td>${location.country}</td>
-                            <td>${location.latitude}</td>
-                            <td>${location.longitude}</td>
-                            <td>${location.type}</td>
+                            <td>${report.location.name}</td>
+                            <td>${report.location.address}</td>
+                            <td>${report.location.country}</td>
+                            <td>${report.location.type}</td>
+                            <td>${report.placeDetail.rating}</td>
+                            <td>
+                                <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+                                        data-target="#myModal" onclick="fun(<c:out value='${report.reviews}'/>)">show
+                                </button>
+                            </td>
                         </tr>
                     </c:forEach>
                     </tbody>
                 </table>
+            </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Modal Header</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Some text in the modal.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
