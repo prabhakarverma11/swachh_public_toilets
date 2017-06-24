@@ -1,0 +1,236 @@
+/* Media Queries */
+
+@media screen and (max-width: 1366px ) {/*.sliderIncap{ margin-left:6%;}*/
+
+.captionOuter{top:32%;}
+.sliderIncap h2,.subline{ margin-bottom:12px;}
+.counterRow {margin-top: -80px;}
+.sliderIncap .button.howItWork {margin-top: 55px;}
+.count {font-size:2.5em; line-height:50px;}
+.counterDetail sup {font-size: 2.143em;top: 15px;}
+}
+@media screen and ( max-width: 1200px ) {
+	.container { max-width: 970px; padding-left: 20px; padding-right: 20px; }
+	.indexBanner .sliderBanner .item {background-size: cover;height: auto;}
+
+	
+	.wrapBox::before{ margin:-26px auto;}
+	.wrapTitle span::before {height: 155px;width: 155px;}
+	.wrapBox .dashbord span::before {background-position:-352px -607px;}
+	.wrapBox .swachhProject span::before {background-position: -345px -741px;}
+	.wrapBox .csr span::before {background-position: -350px -862px;}
+	
+	.tbox{ min-height:200px;}
+	.testDiscr > h3{ font-size:1.286em; line-height:20px;}
+	.thumbImg{ width:105px; height:105px; border:4px solid #d5d5d5;}
+	.testDiscr {margin-left: -30px;padding-left: 143px;}
+	
+	.counter > li {margin-right: 0;width: 25%;}
+	.count {font-size: 2.857em;}
+	
+	.footerNav li a{ padding:0 8px;}
+	
+	.tabViewContnt .totalCounting {padding: 0 0 0 15px;}
+	.tabViewContnt .totalCounting span{ font-size:15px;}
+	.filterGird ul li{ width:33.3333%;}
+	#logo{ width:340px;}
+    .header {height: auto; min-height:inherit;}
+	.sliderIncap h2 {font-size: 2.188em;}
+	.subline { font-size:18px;}
+	.sliderBanner .owl-prev {margin-left: 9px !important;}
+	.sliderBanner .owl-next {margin-right: 7px !important;}
+	.homeSectionTop,.homeSectionTestionial{padding:35px 0;}
+	.filterProjects, .projectDetail {padding: 0 0 10px;}
+	.container .counter {display: none;}
+	.counterMobile{ display:inline-block !important;}
+	.counterRow {margin-top: 0;padding:15px 0; bottom:0;}
+	 .counterDetail {padding: 15px 0;}
+	 .count{ text-align:center; float:none; display:inline-block;}
+	.counterMobile .owl-item > li {text-align: center;}
+	.counterDetail sup{ font-size:50px;}
+	 .counterDetail sub {display: inline-block;margin-left: -26px;margin-top: 31px;}
+	 
+	.sliderIncap {border-bottom: 0 solid #000000;text-align: left;width: 50%;}
+	.sliderIncap .captionLeft {float: none;width: auto;}
+	.captionOuter {left: 0;line-height: normal;position: absolute;right: 0;top: 50%;transform: translate(0px, -50%);}
+	.sliderIncap .button.howItWork {margin-top: 0;padding: 12px 24px;}
+	.sliderIncap .captionRight {float: none;}
+	.counter{ width:100%;}
+	.siteVisitors{ padding-left:15px;}
+}
+
+@media screen and ( max-width: 992px ) {
+	.container { max-width: 750px; }
+	.menuPart{ width:260px; margin-top:0;}
+	.loginBtn, .registrBtn{ margin-top:15px;}
+	
+	.rightLinks li:nth-child(1),.rightLinks li:nth-child(2),.rightLinks li:nth-child(3){ display:none;}
+	.rightLinks li.selectboxli{ display:inline-block; margin-bottom:0px;}
+	.rightLinks li:last-child {padding-left:2px;padding-right: 0;}
+	.sliderIncap {margin-left:2%;}
+	.sliderIncap h2 {font-size: 25px;margin-bottom: 15px;}
+	.subline {font-size: 17px;margin-bottom: 15px;}
+	.sliderIncap  .button.howItWork {padding:8px 15px;}
+	
+	.wrapBox{ min-height:240px; overflow:hidden;}
+	.wrapBox::before{ display:none;}
+	.wrapTitle span::before {height: 135px;width: 135px; margin:30px auto;}
+	.wrapBox .dashbord span::before {background-position: -361px -617px;}
+	.wrapBox .swachhProject span::before {background-position: -358px -748px;}
+	.wrapBox .csr span::before {background-position: -361px -872px;}
+	.tbox {min-height: 145px;}
+	.homeSectionTop .row{ margin:0 -8px;}
+	.homeSectionTop .cols4{ padding-left:8px; padding-right:8px;}
+	.wrapBox span{ font-size:18px; padding-top:193px;}
+	.wrapBox .hoverText .boxTitle{ font-size:18px;}
+	
+	.footerMenu {float: none;text-align: center;width: 100%;}
+	.footerNav li {display: inline-block;float: none;}
+	.siteVisitors {float:none;font-size: 0.929em;text-align: center;width: 100%; padding-top:0;}
+	.footer .copyRight {font-size: 0.929em;margin: 5px 0 15px;}
+	.footer .w3cValidation {float: none;margin: 5px 0 0;text-align: center;}
+	.footer .w3cValidation li {display: inline-block;float: none;}
+	
+
+	
+	.tabView-Area ul li{ width:50%;}
+	.filterGird ul li{ width:50%;}
+	.filterForm ul li{width:33.3333%; margin-bottom:12px;}
+	.filterForm ul li:last-child {margin-bottom: 0;}
+	
+	.formPage li{ width:50%;}
+	 .headerInner .loginRow{ display:none;}
+	 li.mobileView {display: block;}
+	 .mobileView .loginBtn,.mobileView .registrBtn {margin-top: 0;}
+	 .mobileView a.loginBtn,.mobileView a.registrBtn {background-color: #e9b228;color: #2a2a2a;display: block;font: 1.071em/1.2 "open_sanssemibold";overflow: hidden;padding				:7px 23px 7px 46px;position: relative;text-decoration: none;text-transform: uppercase;}
+ .mobileView a.loginBtn:hover,.mobileView a.registrBtn:hover{ background:#333;color:#fff;}
+
+	.loginBtn {display: inline-block !important;float:none;}
+	.registrBtn {display: inline-block !important;float:none;}
+	.loginRow {line-height:5px;}
+	 li.mobileView::before {background: #6a6a6a none repeat scroll 0 0;content: " ";height: 11px;left: 4px;margin-top: -5px;overflow: hidden;position: absolute;top: 50%;width: 1px;z-index: auto;}
+	 .rightLinks li:nth-child(4)::before { display:none;}
+	 .toggleMenu{ margin-right:0;}	 
+	 .homeSectionTestionial{ min-height:255px;}
+	 .headerInner {min-height: 85px;}
+	 #nav {right:0px;}
+	 .homeSectionBottom {padding: 40px 0;}
+	 .siteVisitors{ padding-left:0px;}
+	 
+	
+	 
+	 
+	
+	
+}
+
+@media screen and ( max-width: 768px ) {
+	.container { max-width: inherit; }
+	.sliderIncap {margin-left:0;}
+	.homeSectionTop .cols4 {width: 100%;}
+    .homeSectionTop .wrapBox{ margin-bottom:25px;}
+	.homeSectionTop .cols4:last-child .wrapBox{ margin-bottom:0px;}
+	.wrapBox .hoverText{ text-align:center;}
+	.wrapBox::before {margin: -2px auto;}
+
+	
+	.tabViewContnt .totalCounting span {font-size: 13px;}
+	.tabViewContnt .totalCounting .counting{ font-size:40px;}
+	
+	.graphView-Area ul li .Icon {height: 55px;width: 55px;}
+	.graphView-Area ul li span{ font-size:12px;}
+	
+	.graphViewOuter {overflow-x: scroll;overflow-y: hidden;}
+	.graphView-Area { width:768px; padding-bottom:15px;}
+	
+	
+	.counter > li {margin-right: 0;padding:0px;}
+	.count {font-size: 30px;}
+	.loginRow {line-height:inherit;}
+	.homeSectionTop { padding:25px 0;}
+	.homeSectionTestionial{ background:none; padding:0 0 60px; min-height:150px;}
+	.owl-theme .owl-dots .owl-dot span, .noJS .owl-dots .owl-dot a {border: 1px solid #cdcdcd;}
+	.counter > li:nth-child(1),.counter > li:nth-child(2){ margin-bottom:50px;}
+	.counter > li {width: 50%;}
+	.counter > li:last-child{width:50%; margin-bottom:0;}
+	.captionOuter {left: 0;position: relative;right: 0;text-align: center;top: 0;transform: none; background:#f2f2f2; padding:35px 0;}
+	.sliderIncap {text-align: center;width: 100%;}
+	.sliderIncap h2{ padding:0; margin-bottom:10px;}
+	.sliderIncap .button.howItWork {display: block;font-size: 15px;margin: 14px auto 0;padding:8px 22px;width: 160px;}
+	.sliderBanner .owl-next {background-position: -456px -15px !important;}
+	.sliderBanner .owl-prev {background-position: -401px -14px !important;}
+	.sliderBanner .owl-prev:hover {background-position: -398px -82px !important;}
+	.sliderBanner .owl-next:hover {background-position: -456px -87px !important;}
+	.sliderBanner .owl-prev,.sliderBanner .owl-next {margin-top: -30px !important;}
+	.homeSectionTop{padding:25px 0;}
+	.homeSectionBottom {padding: 65px 0 25px;}
+	
+	
+	.indexBanner .owl-carousel .owl-item img {display: none;width: 100%;}
+	.subline { font-size:17px; margin-bottom:15px;}
+	#innerBannerTemplate {padding: 15px 0;}
+	.width50{ width:100%; padding:0;}
+	.moudLogo{ display:none;}
+	
+
+}
+
+@media screen and ( max-width: 600px ) {
+	.tabView-Area ul li{ width:100%;}
+	.tabViewContnt .totalCounting span {font-size:15px;}
+	.filterForm ul li{width:50%;}
+	.filterGird ul li{ width:100%; padding:0;}
+	.filterGird ul li .filterBox{margin:0 auto;}
+    .formPage li{ width:100%;}
+	.thumbImg{ width:135px; height:135px; border:4px solid #d5d5d5;}
+	.rightLinks li:nth-child(4) {padding-left: 0;}
+	.sliderIncap h2 {font-size: 20px;}
+	.subline{ font-size:18px;}
+	.breadcrumb {float: left;padding: 5px 0 0;width: 100%;}
+	#logo {width: 330px;}
+	.hindiDoc .mainNavigation {margin-top: 18px;}
+
+
+
+ 
+	
+ 
+
+	
+}
+
+@media screen and ( max-width: 480px ) {
+	 
+		.mobileMenu{ display:none;}
+	.thumbImg {margin: 0 auto 15px;text-align: center; float:none;}
+	.testDiscr {margin-left: 0;padding-left: 0;text-align: center;}
+	.socialMedia {float: none;text-align: center;}
+	.tbox{ padding:15px;}
+	.count {font-size: 30px;}
+	.counter > li{ padding:0;}
+	
+	.pageUpdated {display: block;width: 100%;}
+	.pipeSign{ display:none;}
+	.filterForm ul li{width:100%; padding:0;}
+	.rightLinks{ float:left;}
+	.mainNavigation {margin: 5px 0 0;}
+	
+	.leftLink {float: none;text-align: center;}
+	.leftLink li { display:inline-block; float:none;}
+	
+	.rightLinks {float: none;text-align: center;}
+	.rightLinks li { display:inline-block; float:none;}
+	.hindiDoc .mainNavigation {margin-top: 6px;}
+	#logo {width: 83%;}
+	 
+
+
+}
+
+@media screen and ( max-width: 320px ) {
+	.mainNavigation {margin:8px 0 0;}
+	#nav {top:40px;}
+	 
+	 
+	
+} 
