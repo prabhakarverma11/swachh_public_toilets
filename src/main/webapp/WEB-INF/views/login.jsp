@@ -28,7 +28,7 @@
 	</style>
 	<link href="<c:url value='/static/css/login.css' />" rel="stylesheet"/>
 </head>
-<body class="noJS fullBg" onload="FocusOnInput()">
+<body class="noJS fullBg">
 <div id="wrapper">
 	<form method="post" action="/login">
 
@@ -51,13 +51,13 @@
 						<ul>
 							<li id="login">
 								<label for="txtEmail" id="mailLabel" class="loginLabel">Login ID </label>
-								<input name="txtEmail" type="text" maxlength="100" id="txtEmail" tabindex="1"
+								<input name="username" type="text" maxlength="100" id="txtEmail" tabindex="1"
 									   class="loginInput">
 								<span id="rfvtxtEmail" class="error" style="display:none;">Please enter login id</span>
 							</li>
 							<li id="password">
 								<label for="txtPassword" id="pswdLabel" class="loginLabel">Password </label>
-								<input name="txtPassword" type="password" maxlength="35" id="txtPassword" tabindex="2"
+								<input name="password" type="password" maxlength="35" id="txtPassword" tabindex="2"
 									   class="loginInput"
 									   style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAAPhJREFUOBHlU70KgzAQPlMhEvoQTg6OPoOjT+JWOnRqkUKHgqWP4OQbOPokTk6OTkVULNSLVc62oJmbIdzd95NcuGjX2/3YVI/Ts+t0WLE2ut5xsQ0O+90F6UxFjAI8qNcEGONia08e6MNONYwCS7EQAizLmtGUDEzTBNd1fxsYhjEBnHPQNG3KKTYV34F8ec/zwHEciOMYyrIE3/ehKAqIoggo9inGXKmFXwbyBkmSQJqmUNe15IRhCG3byphitm1/eUzDM4qR0TTNjEixGdAnSi3keS5vSk2UDKqqgizLqB4YzvassiKhGtZ/jDMtLOnHz7TE+yf8BaDZXA509yeBAAAAAElFTkSuQmCC&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%;">
 								<span id="rfvtxtPassword" class="error"

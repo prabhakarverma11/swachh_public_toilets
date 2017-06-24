@@ -7,7 +7,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-    <title>Users List</title>
+    <title>Report</title>
 
     <link href="<c:url value='/static/css/bootstrap.css' />" rel="stylesheet"/>
     <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"/>
@@ -25,8 +25,20 @@
         }
     </style>
     <script>
-        function fun(reviews) {
-            console.log("reviews", reviews);
+        function fun(locationName, locationAddress, reviews) {
+            var modalBody = "<ul class='list-group'>";
+
+            reviews.forEach(function (review) {
+                modalBody += "<li class='list-group-item'>" +
+                    "Author: <a href='" + review.authorURL + "' target='_blank'>" + review.authorName + "</a><br>" +
+                    "Rating: " + review.rating + "<br>" +
+                    "Review: " + review.reviewText +
+                    "</li>";
+            });
+
+            modalBody += "</ul>";
+            $(".modal-title").html(locationName + ", " + locationAddress);
+            $(".modal-body").html(modalBody);
         }
     </script>
 </head>
@@ -36,7 +48,7 @@
     <%@include file="navigation.jsp" %>
     <div class="container">
         <div class="row">
-            <form class="form-inline" style="font-size: medium;">
+            <form class="form-inline" style="font-size: medium;" action="/report">
                 <div class="col-md-3 form-group">
                     <label for="select_date">Select Range</label>
                     <select class="form-control" id="select_date">
@@ -51,11 +63,11 @@
                 </div>
                 <div class="col-md-3 form-group">
                     <label for="start_date">Start Date</label>
-                    <input type="date" class="form-control" id="start_date">
+                    <input type="date" class="form-control" id="start_date" name="start_date">
                 </div>
                 <div class="col-md-3 form-group">
                     <label for="end_date">End Date</label>
-                    <input type="date" class="form-control" id="end_date">
+                    <input type="date" class="form-control" id="end_date" name="end_date">
                 </div>
                 <div class="col-md-2 form-group">
                     <button type="submit" class="btn btn-success">Fetch Report</button>
@@ -90,7 +102,9 @@
                             <td>${report.placeDetail.rating}</td>
                             <td>
                                 <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                        data-target="#myModal" onclick="fun(<c:out value='${report.reviews}'/>)">show
+                                        data-target="#myModal"
+                                        onclick="fun('${report.location.name}','${report.location.address}',<c:out
+                                                value='${report.reviews}'/>)">show
                                 </button>
                             </td>
                         </tr>
@@ -109,7 +123,7 @@
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h4 class="modal-title">Modal Header</h4>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body" style="max-height: 500px;overflow-y: scroll;">
                         <p>Some text in the modal.</p>
                     </div>
                     <div class="modal-footer">

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParseException;
 import java.util.List;
 
 
@@ -18,7 +19,7 @@ public class ReviewServiceImpl implements ReviewService {
     ReviewDao reviewDao;
 
     @Override
-    public List<Review> getReviewsByPlaceBetweenDates(Place place, String startDate, String endDate) {
+    public List<Review> getReviewsByPlaceBetweenDates(Place place, String startDate, String endDate) throws ParseException {
         return reviewDao.getReviewsByPlaceBetweenDates(place, startDate, endDate);
     }
 }

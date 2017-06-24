@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,25 +41,36 @@ public class ReportController {
     @RequestMapping(value = "/report", method = RequestMethod.GET)
     public String showReport(HttpServletRequest request, ModelMap model) {
 
+        //TODO remove these lines
+        List<Location> locations = locationService.getAllLocations();
+
+
         String startDate = request.getParameter("start_date");
         String endDate = request.getParameter("end_date");
 
         Integer locationId = 1;
-
-        Location location = locationService.getLocationById(locationId);
-        Place place = placeService.getPlaceByLocation(location);
-        PlaceDetail placeDetail = placeDetailService.getPlaceDetailByPlace(place);
-        List<Review> reviews = reviewService.getReviewsByPlaceBetweenDates(place, startDate, endDate);
-
-        Report report = new Report();
-        report.setLocation(location);
-        report.setPlace(place);
-        report.setPlaceDetail(placeDetail);
-        report.setReviews(reviews);
-
         List<Report> reportsList = new ArrayList<Report>();
-        reportsList.add(report);
-        Gson gson = new Gson();
+
+//        Location location = locationService.getLocationById(locationId);
+        for (Location location: locations) {
+            Place place = placeService.getPlaceByLocation(location);
+            PlaceDetail placeDetail = placeDetailService.getPlaceDetailByPlace(place);
+            List<Review> reviews = null;
+            try {
+                reviews = reviewService.getReviewsByPlaceBetweenDates(place, startDate, endDate);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            Report report = new Report();
+            report.setLocation(location);
+            report.setPlace(place);
+            report.setPlaceDetail(placeDetail);
+            Gson gson = new Gson();
+            report.setReviews(gson.toJson(reviews));
+
+            reportsList.add(report);
+        }
         model.addAttribute("reportsList", reportsList);
 //        model.addAttribute("reviews", gson.toJson(reviews));
         return "report";

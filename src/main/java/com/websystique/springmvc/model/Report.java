@@ -1,7 +1,6 @@
 package com.websystique.springmvc.model;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * Created by prabhakar on 24/6/17.
@@ -20,7 +19,7 @@ public class Report implements Serializable {
 
     private PlaceDetail placeDetail;
 
-    private List<Review> reviews;
+    private String reviewsJson;
 
     public Location getLocation() {
         return location;
@@ -46,11 +45,11 @@ public class Report implements Serializable {
         this.placeDetail = placeDetail;
     }
 
-    public List<Review> getReviews() {
-        return reviews;
+    public String getReviews() {
+        return reviewsJson;
     }
 
-    public void setReviews(List<Review> reviews) {
-        this.reviews = reviews;
+    public void setReviews(String reviewsJson) {
+        this.reviewsJson = reviewsJson;
     }
 }

@@ -10,7 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 
@@ -43,18 +44,18 @@ public class ReviewDaoImpl extends AbstractDao<Integer, Review> implements Revie
     }
 
     @Override
-    public List<Review> getReviewsByPlaceBetweenDates(Place place, String startDate, String endDate) {
+    public List<Review> getReviewsByPlaceBetweenDates(Place place, String startDate, String endDate) throws ParseException {
 
         Criteria criteria = createEntityCriteria().setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 
         if (place != null)
             criteria = criteria.add(Restrictions.eq("place", place));
 
-        if (startDate != null)
-            criteria = criteria.add(Restrictions.ge("timeStamp", new Date(startDate)));
+        if (startDate != null && !startDate.equals(""))
+            criteria = criteria.add(Restrictions.ge("timeStamp", new SimpleDateFormat("yyyy-MM-dd").parse(startDate)));
 
-        if (endDate != null)
-            criteria = criteria.add(Restrictions.le("timeStamp", new Date(endDate)));
+        if (endDate != null && !endDate.equals(""))
+            criteria = criteria.add(Restrictions.le("timeStamp", new SimpleDateFormat("yyyy-MM-dd").parse(endDate)));
 
         List<Review> reviews = criteria.list();
         return reviews;

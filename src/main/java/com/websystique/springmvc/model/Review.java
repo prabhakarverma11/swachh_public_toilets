@@ -40,7 +40,7 @@ public class Review implements Serializable {
     private String reviewText;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "PLACE_ID", nullable = false)
     private Place place;
 
