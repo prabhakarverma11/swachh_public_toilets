@@ -16,5 +16,13 @@ public interface ReviewDao {
 
     List<Review> getReviewsByPlaceBetweenDates(Place place, String startDate, String endDate) throws ParseException;
 
+    Double getOverallRatingByPlace(Place place);
+
+    Double getAverageRatingByPlaceBetweenDates(Place place, String startDate, String endDate) throws ParseException;
+
+    Long countReviewsByPlaceBetweenDates(Place place, String startDate, String endDate) throws ParseException;
+
+    Long countReviewsByPlace(Place place);
+
 }
 

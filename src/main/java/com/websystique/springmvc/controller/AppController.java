@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.List;
 import java.util.Locale;
 
@@ -42,6 +43,9 @@ public class AppController {
     LocationService locationService;
 
     @Autowired
+    ReviewService reviewService;
+
+    @Autowired
     UserProfileService userProfileService;
 
     @Autowired
@@ -57,14 +61,14 @@ public class AppController {
     /**
      * This method will list all existing users.
      */
-    @RequestMapping(value = {"/", "/list"}, method = RequestMethod.GET)
-    public String listUsers(ModelMap model) {
-
-        List<User> users = userService.findAllUsers();
-        model.addAttribute("users", users);
-        model.addAttribute("loggedinuser", getPrincipal());
-        return "userslist";
-    }
+//    @RequestMapping(value = {"/", "/list"}, method = RequestMethod.GET)
+//    public String listUsers(ModelMap model) {
+//
+//        List<User> users = userService.findAllUsers();
+//        model.addAttribute("users", users);
+//        model.addAttribute("loggedinuser", getPrincipal());
+//        return "userslist";
+//    }
 
     /**
      * This method will provide the medium to add a new user.
@@ -98,8 +102,8 @@ public class AppController {
 		 * framework as well while still using internationalized messages.
 		 * 
 		 */
-        if (!userService.isUserSSOUnique(user.getId(), user.getUserName())) {
-            FieldError ssoError = new FieldError("user", "ssoId", messageSource.getMessage("non.unique.ssoId", new String[]{user.getUserName()}, Locale.getDefault()));
+        if (!userService.isUserSSOUnique(user.getId(), user.getSsoId())) {
+            FieldError ssoError = new FieldError("user", "ssoId", messageSource.getMessage("non.unique.ssoId", new String[]{user.getSsoId()}, Locale.getDefault()));
             result.addError(ssoError);
             return "registration";
         }
@@ -138,8 +142,8 @@ public class AppController {
         }
 
 		/*//Uncomment below 'if block' if you WANT TO ALLOW UPDATING SSO_ID in UI which is a unique key to a User.
-        if(!userService.isUserSSOUnique(user.getId(), user.getUserName())){
-			FieldError ssoError =new FieldError("user","ssoId",messageSource.getMessage("non.unique.ssoId", new String[]{user.getUserName()}, Locale.getDefault()));
+        if(!userService.isUserSSOUnique(user.getId(), user.getUsername())){
+			FieldError ssoError =new FieldError("user","ssoId",messageSource.getMessage("non.unique.ssoId", new String[]{user.getUsername()}, Locale.getDefault()));
 		    result.addError(ssoError);
 			return "registration";
 		}*/
@@ -189,7 +193,7 @@ public class AppController {
         if (isCurrentAuthenticationAnonymous()) {
             return "login";
         } else {
-            return "redirect:/list";
+            return "redirect:/home";
         }
     }
 
@@ -246,6 +250,47 @@ public class AppController {
         return "locationslist";
     }
 
+    @RequestMapping(value = "/location-detail-{locationId}", method = RequestMethod.GET)
+    public String listingLocations(@PathVariable Integer locationId, HttpServletRequest request, ModelMap model) {
+
+        String startDate = request.getParameter("start_date");
+        String endDate = request.getParameter("end_date");
+
+        Location location = locationService.getLocationById(locationId);
+        Place place = placeService.getPlaceByLocation(location);
+
+        Double overallRating = reviewService.getOverallRatingByPlace(place);
+        Double averageRating = null;
+
+        try {
+            averageRating = reviewService.getAverageRatingByPlaceBetweenDates(place, startDate, endDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Long reviewsCount = null;
+        try {
+            reviewsCount = reviewService.countReviewsByPlaceBetweenDates(place, startDate, endDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Long totalReviews = reviewService.countReviewsByPlace(place);
+
+        List<Review> reviewsList = null;
+        try {
+            reviewsList = reviewService.getReviewsByPlaceBetweenDates(place,startDate,endDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        model.addAttribute("location", location);
+        model.addAttribute("overallRating", overallRating);
+        model.addAttribute("averageRating", averageRating);
+        model.addAttribute("reviewsCount", reviewsCount);
+        model.addAttribute("totalReviews", totalReviews);
+        model.addAttribute("reviews", reviewsList);
+
+        return "locationdetail";
+    }
+
     @RequestMapping(value = "/fetch-place-details", method = RequestMethod.GET)
     public String fetchPlaceDetails(ModelMap model) {
 
@@ -270,7 +315,7 @@ public class AppController {
         return "placeslist";
     }
 
-    @RequestMapping(value = "/home", method = RequestMethod.GET)
+    @RequestMapping(value = {"/", "/home"}, method = RequestMethod.GET)
     public String home(ModelMap model) {
 
         List<Location> allLocations = locationService.getAllLocations();

@@ -18,7 +18,14 @@
             </div>
             <div class="loginRow">
                 <%--<a href="" class="button sprite registrBtn">Registration</a>--%>
-                <a href="/login" class="button sprite loginBtn">Login</a>
+                <sec:authorize access="isAuthenticated()">
+                    <th width="100"></th>
+                    <a href="/logout" class="button sprite loginBtn">Logout</a>
+                </sec:authorize>
+                <sec:authorize access="!isAuthenticated()">
+                    <th width="100"></th>
+                    <a href="/login" class="button sprite loginBtn">Login</a>
+                </sec:authorize>
             </div>
             <div id="mainNav" class="mainNavigation">
                 <%--<nav class="menuPart">--%>
@@ -35,7 +42,8 @@
                     <div id="ContentPlaceHolder1_UserCMSHeader1_UserMenuHorizontal1_divMenu" class="menuPart cf">
                         <ul id="nav" class="hide">
                             <li class="MenuLi MenuLiFirst MenuLi1"><a class="menuFirstNode" href="/home">Home</a></li>
-                            <li class="MenuLi MenuLi2"><a class="menuFirstNode" href="/marker-display">Map Marker</a></li>
+                            <li class="MenuLi MenuLi2"><a class="menuFirstNode" href="/marker-display">Map Marker</a>
+                            </li>
                         </ul>
                     </div>
                 </nav>

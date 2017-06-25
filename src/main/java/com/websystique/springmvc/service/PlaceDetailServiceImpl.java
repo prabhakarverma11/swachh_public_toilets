@@ -63,7 +63,7 @@ public class PlaceDetailServiceImpl implements PlaceDetailService {
                     review.setProfilePhotoURL(jsonElement.getAsJsonObject().get("profile_photo_url").getAsString());
                     review.setRating(jsonElement.getAsJsonObject().get("rating").getAsInt());
                     review.setReviewText(jsonElement.getAsJsonObject().get("text").getAsString());
-                    review.setTimeStamp(new Date(jsonElement.getAsJsonObject().get("time").getAsLong()));
+                    review.setTimeStamp(new Date(jsonElement.getAsJsonObject().get("time").getAsLong() * 1000));
 
                     reviewDao.save(review);
                     System.out.println("place = [" + place + "], url = [" + url + "]");

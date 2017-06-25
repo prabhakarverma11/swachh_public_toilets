@@ -4,6 +4,7 @@ import com.websystique.springmvc.model.Place;
 import com.websystique.springmvc.model.Review;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,5 +60,59 @@ public class ReviewDaoImpl extends AbstractDao<Integer, Review> implements Revie
 
         List<Review> reviews = criteria.list();
         return reviews;
+    }
+
+    @Override
+    public Double getOverallRatingByPlace(Place place) {
+        Criteria criteria = createEntityCriteria();
+
+        if (place != null)
+            criteria = criteria.add(Restrictions.eq("place", place));
+
+        criteria.setProjection(Projections.avg("rating"));
+        return (Double) criteria.uniqueResult();
+    }
+
+    @Override
+    public Double getAverageRatingByPlaceBetweenDates(Place place, String startDate, String endDate) throws ParseException {
+        Criteria criteria = createEntityCriteria();
+
+        if (place != null)
+            criteria = criteria.add(Restrictions.eq("place", place));
+
+        if (startDate != null && !startDate.equals(""))
+            criteria = criteria.add(Restrictions.ge("timeStamp", new SimpleDateFormat("yyyy-MM-dd").parse(startDate)));
+
+        if (endDate != null && !endDate.equals(""))
+            criteria = criteria.add(Restrictions.le("timeStamp", new SimpleDateFormat("yyyy-MM-dd").parse(endDate)));
+
+        criteria.setProjection(Projections.avg("rating"));
+        return (Double) criteria.uniqueResult();
+    }
+
+    @Override
+    public Long countReviewsByPlaceBetweenDates(Place place, String startDate, String endDate) throws ParseException {
+        Criteria criteria = createEntityCriteria();
+
+        if (place != null)
+            criteria = criteria.add(Restrictions.eq("place", place));
+
+        if (startDate != null && !startDate.equals(""))
+            criteria = criteria.add(Restrictions.ge("timeStamp", new SimpleDateFormat("yyyy-MM-dd").parse(startDate)));
+
+        if (endDate != null && !endDate.equals(""))
+            criteria = criteria.add(Restrictions.le("timeStamp", new SimpleDateFormat("yyyy-MM-dd").parse(endDate)));
+
+        criteria.setProjection(Projections.rowCount());
+        return (Long) criteria.uniqueResult();
+    }
+
+    @Override
+    public Long countReviewsByPlace(Place place) {
+        Criteria criteria = createEntityCriteria();
+        if (place != null)
+            criteria.add(Restrictions.eq("place", place));
+        criteria.setProjection(Projections.rowCount());
+        return (Long) criteria.uniqueResult();
     }
 }

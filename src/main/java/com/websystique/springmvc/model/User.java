@@ -25,8 +25,8 @@ public class User implements Serializable{
 	private Integer id;
 
 	@NotEmpty
-	@Column(name="USERNAME", unique=true, nullable=false)
-	private String userName;
+	@Column(name="SSO_ID", unique=true, nullable=false)
+	private String ssoId;
 	
 	@NotEmpty
 	@Column(name="PASSWORD", nullable=false)
@@ -59,12 +59,12 @@ public class User implements Serializable{
 		this.id = id;
 	}
 
-	public String getUserName() {
-		return userName;
+	public String getSsoId() {
+		return ssoId;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setSsoId(String ssoId) {
+		this.ssoId = ssoId;
 	}
 
 	public String getPassword() {
@@ -112,7 +112,7 @@ public class User implements Serializable{
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((userName == null) ? 0 : userName.hashCode());
+		result = prime * result + ((ssoId == null) ? 0 : ssoId.hashCode());
 		return result;
 	}
 
@@ -130,10 +130,10 @@ public class User implements Serializable{
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (userName == null) {
-			if (other.userName != null)
+		if (ssoId == null) {
+			if (other.ssoId != null)
 				return false;
-		} else if (!userName.equals(other.userName))
+		} else if (!ssoId.equals(other.ssoId))
 			return false;
 		return true;
 	}
@@ -144,7 +144,7 @@ public class User implements Serializable{
 	 */
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", userName=" + userName + ", password=" + password
+		return "User [id=" + id + ", ssoId=" + ssoId + ", password=" + password
 				+ ", firstName=" + firstName + ", lastName=" + lastName
 				+ ", email=" + email + "]";
 	}

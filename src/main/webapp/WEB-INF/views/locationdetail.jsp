@@ -6,14 +6,12 @@
 <html>
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-    <title>Report</title>
-
     <link href="<c:url value='/static/css/bootstrap.css' />" rel="stylesheet"/>
     <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"/>
     <link href="<c:url value='/static/css/1.css' />" rel="stylesheet"/>
     <link href="<c:url value='/static/css/2.css' />" rel="stylesheet"/>
     <link href="<c:url value='/static/css/3.css' />" rel="stylesheet"/>
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -24,31 +22,17 @@
             }
         }
     </style>
-    <script>
-        function fun(locationName, locationAddress, reviews) {
-            var modalBody = "<ul class='list-group'>";
-
-            reviews.forEach(function (review) {
-                modalBody += "<li class='list-group-item'>" +
-                    "Author: <a href='" + review.authorURL + "' target='_blank'>" + review.authorName + "</a><br>" +
-                    "Rating: " + review.rating + "<br>" +
-                    "Review: " + review.reviewText +
-                    "</li>";
-            });
-
-            modalBody += "</ul>";
-            $(".modal-title").html(locationName + ", " + locationAddress);
-            $(".modal-body").html(modalBody);
-        }
-    </script>
 </head>
 
-<body style="height: auto;">
+<body>
 <div>
     <%@include file="navigation.jsp" %>
     <div class="container">
         <div class="row">
-            <form class="form-inline" style="font-size: medium;" action="/report">
+            <h1 class="text-center">${location.name}, ${location.address}</h1>
+        </div>
+        <div class="row">
+            <form class="form-inline" action='/location-detail-<c:out value="${location.id}"></c:out>'>
                 <div class="col-md-3 form-group">
                     <label for="select_date">Select Range</label>
                     <select class="form-control" id="select_date">
@@ -75,58 +59,61 @@
 
             </form>
         </div>
-        <div class="row" style="max-height: 500px; overflow-y: scroll">
-            <div class="table-responsive">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>S.No.</th>
-                        <th>Name</th>
-                        <th>Address</th>
-                        <th>Country</th>
-                        <th>Type</th>
-                        <th>Rating</th>
-                        <th>Reviews</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <c:set var="count" value="${0}"></c:set>
-                    <c:forEach items="${reportsList}" var="report">
-                        <c:set var="count" value="${count+1}"></c:set>
-                        <tr>
-                            <td>${count}</td>
-                            <td>
-                                <a href='/location-detail-<c:out value="${report.location.id}"></c:out>'>${report.location.name}</a>
-                            </td>
-                            <td>${report.location.address}</td>
-                            <td>${report.location.country}</td>
-                            <td>${report.location.type}</td>
-                            <td>${report.placeDetail.rating}</td>
-                            <td>
+        <div class="row">
+            <div class="container">
+                <div class="col-md-6">
+                    <div class="row">
+                        <img src="<c:out value="${location.imageURL}"></c:out>"
+                             style="height: 50%;width: 80%;/* min-width: 500px; */">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <strong style="font-weight: bold">Overall Rating: </strong>${overallRating}
+                            </li>
+                            <li class="list-group-item">
+                                <strong style="font-weight: bold">Average Rating: </strong>${averageRating}
+                            </li>
+                            <li class="list-group-item">
+                                <strong style="font-weight: bold">Reviews Count: </strong>${reviewsCount}
+                            </li>
+                            <li class="list-group-item">
+                                <strong style="font-weight: bold">Total Reviews: </strong>${totalReviews}
+                            </li>
+                            <li class="list-group-item">
                                 <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                        data-target="#myModal"
-                                        onclick="fun('${report.location.name}','${report.location.address}',<c:out
-                                                value='${report.reviews}'/>)">show
+                                        data-target="#myModal1">Show reviews
                                 </button>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                    </tbody>
-                </table>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
         <!-- Modal -->
-        <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal fade" id="myModal1" role="dialog">
             <div class="modal-dialog">
 
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Modal Header</h4>
+                        <h4 class="modal-title">${location.name}, ${location.address}</h4>
                     </div>
                     <div class="modal-body" style="max-height: 500px;overflow-y: scroll;">
-                        <p>Some text in the modal.</p>
+                        <ul class="list-group">
+                            <c:forEach items="${reviews}" var="review">
+                                <li class='list-group-item'>
+                                    Author: <a href='<c:out value="${review.authorURL}"></c:out>' target='_blank'>${review.authorName}</a>
+                                    <br>
+                                    Rating: ${review.rating}
+                                    <br>
+                                    Review: ${review.reviewText}
+                                </li>
+                            </c:forEach>
+                        </ul>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -136,7 +123,6 @@
             </div>
         </div>
     </div>
-    <%@include file="footer.jsp" %>
 </div>
 </body>
 </html>
