@@ -17,16 +17,16 @@
     <style>
         @media screen and (max-width: 992px) {
             .container {
-                 max-width: 990px;
+                max-width: 990px;
             }
         }
     </style>
 </head>
 
 <body style="height: auto;">
-<div>
-    <%@include file="navigation.jsp" %>
-    <div class="container" style="max-height: 500px; overflow-y: scroll">
+<%@include file="navigation.jsp" %>
+<div class="row" style="height: 80%; margin:0;overflow: auto">
+    <div class="container" style="height: 100%; overflow-y: scroll">
         <div class="table-responsive">
             <table class="table">
                 <thead>
@@ -58,7 +58,8 @@
             </table>
         </div>
     </div>
-    <%@include file="footer.jsp" %>
 </div>
+
+<%@include file="footer.jsp" %>
 </body>
 </html>

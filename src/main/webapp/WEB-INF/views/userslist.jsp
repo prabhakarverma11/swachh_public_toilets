@@ -57,6 +57,7 @@
 		 		<a href="<c:url value='/newuser' />">Add New User</a>
 		 	</div>
 	 	</sec:authorize>
+		<%@include file="footer.jsp" %>
    	</div>
 </body>
 </html>

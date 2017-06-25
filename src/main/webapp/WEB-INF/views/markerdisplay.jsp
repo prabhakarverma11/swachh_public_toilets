@@ -27,83 +27,82 @@
 </head>
 
 <body style="height: auto;" onload="createMarker(<c:out value='${locationsListJson}'/>);">
-<div>
-    <%@include file="navigation.jsp" %>
-    <div class="container" style="margin-bottom: 10px;">
-        <div class="col-md-6" style="height: 75%;">
-            <div id="map" style="height: 100%;margin: 5px 0;"></div>
+<%@include file="navigation.jsp" %>
+<div class="row" style="height: 80%;margin: 0; overflow: auto">
+    <div class="col-md-6">
+        <div id="map" style="height: 100%;margin: 5px 0;"></div>
+    </div>
+    <div class="col-md-6">
+        <div class="row" id="overall_rating" style="height: 5%;margin: 0">
+            <strong style="font-weight: bold">Rating:</strong><span>4.4</span>
         </div>
-        <div class="col-md-6" style="height: 75%;">
-            <div class="row" id="overall_rating" style="height: 5%;margin: 0">
-                <strong style="font-weight: bold">Rating:</strong><span>4.4</span>
-            </div>
-            <div class="row" id="reviews" style="height: 90%;margin: 0">
-                <strong style="font-weight: bold">Reviews:</strong>
-                <div style="overflow-y: scroll;max-height: 100%;">
-                    <ul class="list-group" id="reviews_list">
-                        <li class="list-group-item" style="border: 1px solid grey">
-                            <div><strong>Rating:</strong> 1.1</div>
-                            <div>It needs improvement but I am happy that it is located on Google</div>
-                        </li>
-                        <li class="list-group-item" style="border: 1px solid grey">
-                            <div><strong>Rating:</strong> 1.1</div>
-                            <div>It needs improvement but I am happy that it is located on Google</div>
-                        </li>
-                        <li class="list-group-item" style="border: 1px solid grey">
-                            <div><strong>Rating:</strong> 1.1</div>
-                            <div>It needs improvement but I am happy that it is located on Google</div>
-                        </li>
-                        <li class="list-group-item" style="border: 1px solid grey">
-                            <div><strong>Rating:</strong> 1.1</div>
-                            <div>It needs improvement but I am happy that it is located on Google</div>
-                        </li>
-                        <li class="list-group-item" style="border: 1px solid grey">
-                            <div><strong>Rating:</strong> 1.1</div>
-                            <div>It needs improvement but I am happy that it is located on Google</div>
-                        </li>
-                        <li class="list-group-item" style="border: 1px solid grey">
-                            <div><strong>Rating:</strong> 1.1</div>
-                            <div>It needs improvement but I am happy that it is located on Google</div>
-                        </li>
-                        <li class="list-group-item" style="border: 1px solid grey">
-                            <div><strong>Rating:</strong> 1.1</div>
-                            <div>It needs improvement but I am happy that it is located on Google</div>
-                        </li>
-                        <li class="list-group-item" style="border: 1px solid grey">
-                            <div><strong>Rating:</strong> 1.1</div>
-                            <div>It needs improvement but I am happy that it is located on Google</div>
-                        </li>
-                        <li class="list-group-item" style="border: 1px solid grey">
-                            <div><strong>Rating:</strong> 1.1</div>
-                            <div>It needs improvement but I am happy that it is located on Google</div>
-                        </li>
-                        <li class="list-group-item" style="border: 1px solid grey">
-                            <div><strong>Rating:</strong> 1.1</div>
-                            <div>It needs improvement but I am happy that it is located on Google</div>
-                        </li>
-                        <li class="list-group-item" style="border: 1px solid grey">
-                            <div><strong>Rating:</strong> 1.1</div>
-                            <div>It needs improvement but I am happy that it is located on Google</div>
-                        </li>
-                        <li class="list-group-item" style="border: 1px solid grey">
-                            <div><strong>Rating:</strong> 1.1</div>
-                            <div>It needs improvement but I am happy that it is located on Google</div>
-                        </li>
-                        <li class="list-group-item" style="border: 1px solid grey">
-                            <div><strong>Rating:</strong> 1.1</div>
-                            <div>It needs improvement but I am happy that it is located on Google</div>
-                        </li>
-                        <li class="list-group-item" style="border: 1px solid grey">
-                            <div><strong>Rating:</strong> 1.1</div>
-                            <div>It needs improvement but I am happy that it is located on Google</div>
-                        </li>
+        <div class="row" id="reviews" style="height: 90%;margin: 0">
+            <strong style="font-weight: bold">Reviews:</strong>
+            <div style="overflow-y: scroll;max-height: 100%;">
+                <ul class="list-group" id="reviews_list">
+                    <li class="list-group-item" style="border: 1px solid grey">
+                        <div><strong>Rating:</strong> 1.1</div>
+                        <div>It needs improvement but I am happy that it is located on Google</div>
+                    </li>
+                    <li class="list-group-item" style="border: 1px solid grey">
+                        <div><strong>Rating:</strong> 1.1</div>
+                        <div>It needs improvement but I am happy that it is located on Google</div>
+                    </li>
+                    <li class="list-group-item" style="border: 1px solid grey">
+                        <div><strong>Rating:</strong> 1.1</div>
+                        <div>It needs improvement but I am happy that it is located on Google</div>
+                    </li>
+                    <li class="list-group-item" style="border: 1px solid grey">
+                        <div><strong>Rating:</strong> 1.1</div>
+                        <div>It needs improvement but I am happy that it is located on Google</div>
+                    </li>
+                    <li class="list-group-item" style="border: 1px solid grey">
+                        <div><strong>Rating:</strong> 1.1</div>
+                        <div>It needs improvement but I am happy that it is located on Google</div>
+                    </li>
+                    <li class="list-group-item" style="border: 1px solid grey">
+                        <div><strong>Rating:</strong> 1.1</div>
+                        <div>It needs improvement but I am happy that it is located on Google</div>
+                    </li>
+                    <li class="list-group-item" style="border: 1px solid grey">
+                        <div><strong>Rating:</strong> 1.1</div>
+                        <div>It needs improvement but I am happy that it is located on Google</div>
+                    </li>
+                    <li class="list-group-item" style="border: 1px solid grey">
+                        <div><strong>Rating:</strong> 1.1</div>
+                        <div>It needs improvement but I am happy that it is located on Google</div>
+                    </li>
+                    <li class="list-group-item" style="border: 1px solid grey">
+                        <div><strong>Rating:</strong> 1.1</div>
+                        <div>It needs improvement but I am happy that it is located on Google</div>
+                    </li>
+                    <li class="list-group-item" style="border: 1px solid grey">
+                        <div><strong>Rating:</strong> 1.1</div>
+                        <div>It needs improvement but I am happy that it is located on Google</div>
+                    </li>
+                    <li class="list-group-item" style="border: 1px solid grey">
+                        <div><strong>Rating:</strong> 1.1</div>
+                        <div>It needs improvement but I am happy that it is located on Google</div>
+                    </li>
+                    <li class="list-group-item" style="border: 1px solid grey">
+                        <div><strong>Rating:</strong> 1.1</div>
+                        <div>It needs improvement but I am happy that it is located on Google</div>
+                    </li>
+                    <li class="list-group-item" style="border: 1px solid grey">
+                        <div><strong>Rating:</strong> 1.1</div>
+                        <div>It needs improvement but I am happy that it is located on Google</div>
+                    </li>
+                    <li class="list-group-item" style="border: 1px solid grey">
+                        <div><strong>Rating:</strong> 1.1</div>
+                        <div>It needs improvement but I am happy that it is located on Google</div>
+                    </li>
 
 
-                    </ul>
-                </div>
+                </ul>
             </div>
         </div>
     </div>
-    <%@include file="footer.jsp" %>
+</div>
+<%@include file="footer.jsp" %>
 </body>
 </html>
