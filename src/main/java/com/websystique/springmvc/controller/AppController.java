@@ -1,6 +1,7 @@
 package com.websystique.springmvc.controller;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.websystique.springmvc.model.*;
 import com.websystique.springmvc.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.ParseException;
 import java.util.List;
 import java.util.Locale;
@@ -255,6 +257,7 @@ public class AppController {
 
         String startDate = request.getParameter("start_date");
         String endDate = request.getParameter("end_date");
+        String dateRange = request.getParameter("date_range");
 
         Location location = locationService.getLocationById(locationId);
         Place place = placeService.getPlaceByLocation(location);
@@ -277,7 +280,7 @@ public class AppController {
 
         List<Review> reviewsList = null;
         try {
-            reviewsList = reviewService.getReviewsByPlaceBetweenDates(place,startDate,endDate);
+            reviewsList = reviewService.getReviewsByPlaceBetweenDates(place, startDate, endDate);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -288,15 +291,42 @@ public class AppController {
         model.addAttribute("totalReviews", totalReviews);
         model.addAttribute("reviews", reviewsList);
 
+        if (dateRange == null || dateRange.equals(""))
+            dateRange = "today";
+
+        model.addAttribute("dateRange", dateRange);
+        model.addAttribute("startDate", startDate);
+        model.addAttribute("endDate", endDate);
+
         return "locationdetail";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/fetch-rating-and-reviews/{locationId}", method = RequestMethod.GET, produces = "application/json")
+    public void fetchRatingAndReviewsById(@PathVariable Integer locationId, HttpServletRequest request, HttpServletResponse response) throws ParseException, IOException {
+        response.setContentType("application/json");
+        response.setCharacterEncoding("utf-8");
+        PrintWriter writer = response.getWriter();
+
+        Location location = locationService.getLocationById(locationId);
+        Place place = placeService.getPlaceByLocation(location);
+        PlaceDetail placeDetail = placeDetailService.getPlaceDetailByPlace(place);
+        List<Review> reviews = reviewService.getReviewsByPlaceBetweenDates(place, null, null);
+        Double rating = reviewService.getOverallRatingByPlace(place);
+
+        Gson gson = new Gson();
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("rating", rating);
+        jsonObject.addProperty("reviews", gson.toJson(reviews));
+
+        writer.write(jsonObject.toString());
+
     }
 
     @RequestMapping(value = "/fetch-place-details", method = RequestMethod.GET)
     public String fetchPlaceDetails(ModelMap model) {
 
         List<Place> allPlaces = placeService.getAllPlaces();
-        Gson gson = new Gson();
-//        model.addAttribute("locationsListJson", gson.toJson(allLocations));
         model.addAttribute("placesList", allPlaces);
 
         for (Place place : allPlaces) {
@@ -332,6 +362,14 @@ public class AppController {
         model.addAttribute("locationsListJson", gson.toJson(allLocations));
 
         return "markerdisplay";
+    }
+
+    @RequestMapping(value = "/users-list", method = RequestMethod.GET)
+    public String getUsersList(ModelMap model) {
+        List<User> users = userService.findAllUsers();
+        model.addAttribute("users", users);
+
+        return "userslist";
     }
 
 

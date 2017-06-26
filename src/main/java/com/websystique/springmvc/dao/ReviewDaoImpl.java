@@ -3,6 +3,7 @@ package com.websystique.springmvc.dao;
 import com.websystique.springmvc.model.Place;
 import com.websystique.springmvc.model.Review;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -114,5 +115,13 @@ public class ReviewDaoImpl extends AbstractDao<Integer, Review> implements Revie
             criteria.add(Restrictions.eq("place", place));
         criteria.setProjection(Projections.rowCount());
         return (Long) criteria.uniqueResult();
+    }
+
+    @Override
+    public void deleteAllRecordsByPlace(Place place) {
+        String hql = "delete from Review where place= :place";
+        Query query = getSession().createQuery(hql).setParameter("place", place);
+        int result = query.executeUpdate();
+        System.out.println("Rows affected: " + result);
     }
 }

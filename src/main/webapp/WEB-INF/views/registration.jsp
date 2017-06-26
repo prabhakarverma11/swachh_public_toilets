@@ -50,12 +50,12 @@
 					<div class="col-md-7">
 						<c:choose>
 							<c:when test="${edit}">
-								<form:input type="text" path="username" id="username" class="form-control input-sm" disabled="true"/>
+								<form:input type="text" path="ssoId" id="username" class="form-control input-sm" disabled="true"/>
 							</c:when>
 							<c:otherwise>
-								<form:input type="text" path="username" id="username" class="form-control input-sm" />
+								<form:input type="text" path="ssoId" id="username" class="form-control input-sm" />
 								<div class="has-error">
-									<form:errors path="username" class="help-inline"/>
+									<form:errors path="ssoId" class="help-inline"/>
 								</div>
 							</c:otherwise>
 						</c:choose>

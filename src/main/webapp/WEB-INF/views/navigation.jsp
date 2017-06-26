@@ -49,9 +49,8 @@
                                 </li>
                                 <li class="MenuLi MenuLi2"><a class="menuFirstNode" href="/report">Report</a>
                                 </li>
-                                <%--<li class="MenuLi MenuLi2"><a class="menuFirstNode" href="/marker-display">Map--%>
-                                <%--Marker</a>--%>
-                                <%--</li>--%>
+                                <li class="MenuLi MenuLi2"><a class="menuFirstNode" href="/users-list">Users</a>
+                                </li>
                                 <%--<li class="MenuLi MenuLi2"><a class="menuFirstNode" href="/marker-display">Map--%>
                                 <%--Marker</a>--%>
                                 <%--</li>--%>

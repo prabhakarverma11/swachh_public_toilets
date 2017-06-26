@@ -33,70 +33,19 @@
         <div id="map" style="height: 100%;margin: 5px 0;"></div>
     </div>
     <div class="col-md-6">
-        <div class="row" id="overall_rating" style="height: 5%;margin: 0">
-            <strong style="font-weight: bold">Rating:</strong><span>4.4</span>
+        <div class="row" id="div_location" style="height: 5%; margin: 0">
+
         </div>
-        <div class="row" id="reviews" style="height: 90%;margin: 0">
-            <strong style="font-weight: bold">Reviews:</strong>
-            <div style="overflow-y: scroll;max-height: 100%;">
+        <div class="row" id="overall_rating" style="height: 5%;margin: 0">
+            <strong style="font-weight: bold">Overall Rating: </strong><span>N.A.</span>
+        </div>
+        <div class="row" id="reviews" style="height: 85%;margin: 0">
+            <strong style="font-weight: bold">Reviews: </strong>
+            <div style="overflow-y: scroll;height: 100%;">
                 <ul class="list-group" id="reviews_list">
                     <li class="list-group-item" style="border: 1px solid grey">
-                        <div><strong>Rating:</strong> 1.1</div>
-                        <div>It needs improvement but I am happy that it is located on Google</div>
+                        <div>Please click on the marker you wish to see the reviews of.</div>
                     </li>
-                    <li class="list-group-item" style="border: 1px solid grey">
-                        <div><strong>Rating:</strong> 1.1</div>
-                        <div>It needs improvement but I am happy that it is located on Google</div>
-                    </li>
-                    <li class="list-group-item" style="border: 1px solid grey">
-                        <div><strong>Rating:</strong> 1.1</div>
-                        <div>It needs improvement but I am happy that it is located on Google</div>
-                    </li>
-                    <li class="list-group-item" style="border: 1px solid grey">
-                        <div><strong>Rating:</strong> 1.1</div>
-                        <div>It needs improvement but I am happy that it is located on Google</div>
-                    </li>
-                    <li class="list-group-item" style="border: 1px solid grey">
-                        <div><strong>Rating:</strong> 1.1</div>
-                        <div>It needs improvement but I am happy that it is located on Google</div>
-                    </li>
-                    <li class="list-group-item" style="border: 1px solid grey">
-                        <div><strong>Rating:</strong> 1.1</div>
-                        <div>It needs improvement but I am happy that it is located on Google</div>
-                    </li>
-                    <li class="list-group-item" style="border: 1px solid grey">
-                        <div><strong>Rating:</strong> 1.1</div>
-                        <div>It needs improvement but I am happy that it is located on Google</div>
-                    </li>
-                    <li class="list-group-item" style="border: 1px solid grey">
-                        <div><strong>Rating:</strong> 1.1</div>
-                        <div>It needs improvement but I am happy that it is located on Google</div>
-                    </li>
-                    <li class="list-group-item" style="border: 1px solid grey">
-                        <div><strong>Rating:</strong> 1.1</div>
-                        <div>It needs improvement but I am happy that it is located on Google</div>
-                    </li>
-                    <li class="list-group-item" style="border: 1px solid grey">
-                        <div><strong>Rating:</strong> 1.1</div>
-                        <div>It needs improvement but I am happy that it is located on Google</div>
-                    </li>
-                    <li class="list-group-item" style="border: 1px solid grey">
-                        <div><strong>Rating:</strong> 1.1</div>
-                        <div>It needs improvement but I am happy that it is located on Google</div>
-                    </li>
-                    <li class="list-group-item" style="border: 1px solid grey">
-                        <div><strong>Rating:</strong> 1.1</div>
-                        <div>It needs improvement but I am happy that it is located on Google</div>
-                    </li>
-                    <li class="list-group-item" style="border: 1px solid grey">
-                        <div><strong>Rating:</strong> 1.1</div>
-                        <div>It needs improvement but I am happy that it is located on Google</div>
-                    </li>
-                    <li class="list-group-item" style="border: 1px solid grey">
-                        <div><strong>Rating:</strong> 1.1</div>
-                        <div>It needs improvement but I am happy that it is located on Google</div>
-                    </li>
-
 
                 </ul>
             </div>

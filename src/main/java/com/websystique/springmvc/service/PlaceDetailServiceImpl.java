@@ -45,15 +45,19 @@ public class PlaceDetailServiceImpl implements PlaceDetailService {
                 placeDetail.setRating(jsonElementRating.getAsInt());
 
             PlaceDetail existingPlaceDetail = placeDetailDao.getPlaceDetailByPlace(place);
+            System.out.println("place = [" + place.getPlaceId() + "], url = [" + url + "]");
             if (existingPlaceDetail == null) {
                 placeDetailDao.save(placeDetail);
+                System.out.println("placeDetail saved Successfully");
+            } else {
+                placeDetailDao.update(placeDetail);
+                System.out.println("placeDetail updated Successfully");
             }
 
-            System.out.println("place = [" + place + "], url = [" + url + "]");
-            System.out.println("placeDetail saved Successfully");
 
             JsonArray jsonArray = jsonObject.get("result").getAsJsonObject().getAsJsonArray("reviews");
             if (jsonArray != null) {
+                reviewDao.deleteAllRecordsByPlace(place);
                 for (JsonElement jsonElement : jsonArray) {
                     Review review = new Review();
 

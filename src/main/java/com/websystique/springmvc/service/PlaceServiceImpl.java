@@ -22,24 +22,27 @@ public class PlaceServiceImpl implements PlaceService {
 
     @Override
     public Place fetchPlaceIdByLocation(Location location, String url) throws IOException {
+        System.out.println("location = [" + location.getName() + "], url = [" + url + "]");
 
-        UtilMethods utilMethods = new UtilMethods();
-        JsonObject jsonObject = utilMethods.getJsonObjectFetchingURL(url);
-        if (jsonObject.get("status").getAsString().equals("OK")) {
-            Place place = new Place();
-            place.setLocation(location);
-            String placeIdValue = jsonObject.get("results").getAsJsonArray().get(0).getAsJsonObject().get("place_id").getAsString();
-            place.setPlaceId(placeIdValue);
-            Place existingPlace = placeDao.getPlaceByLocation(location);
-            if (existingPlace == null){
+        if (placeDao.getPlaceByLocation(location) == null) {
+            UtilMethods utilMethods = new UtilMethods();
+            JsonObject jsonObject = utilMethods.getJsonObjectFetchingURL(url);
+            if (jsonObject.get("status").getAsString().equals("OK")) {
+                Place place = new Place();
+                place.setLocation(location);
+                String placeIdValue = jsonObject.get("results").getAsJsonArray().get(0).getAsJsonObject().get("place_id").getAsString();
+                place.setPlaceId(placeIdValue);
                 placeDao.save(place);
-                System.out.println("location = [" + location + "], url = [" + url + "]");
+
                 System.out.println("Place saved successfully");
+
+                return place;
             }
-            return place;
+        } else {
+            System.out.println("place_id already there in database");
         }
-        //print result
         return null;
+        //print result
     }
 
     @Override

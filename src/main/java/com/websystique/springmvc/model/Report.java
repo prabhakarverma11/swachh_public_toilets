@@ -19,7 +19,7 @@ public class Report implements Serializable {
 
     private PlaceDetail placeDetail;
 
-    private String reviewsJson;
+    private Long reviewsCount;
 
     public Location getLocation() {
         return location;
@@ -45,11 +45,11 @@ public class Report implements Serializable {
         this.placeDetail = placeDetail;
     }
 
-    public String getReviews() {
-        return reviewsJson;
+    public Long getReviewsCount() {
+        return reviewsCount;
     }
 
-    public void setReviews(String reviewsJson) {
-        this.reviewsJson = reviewsJson;
+    public void setReviewsCount(Long reviewsCount) {
+        this.reviewsCount = reviewsCount;
     }
 }

@@ -24,5 +24,6 @@ public interface ReviewDao {
 
     Long countReviewsByPlace(Place place);
 
+    void deleteAllRecordsByPlace(Place place);
 }
 

@@ -9,5 +9,6 @@ public interface PlaceDetailDao {
 
     PlaceDetail getPlaceDetailByPlace(Place place);
 
+    void update(PlaceDetail placeDetail);
 }
 

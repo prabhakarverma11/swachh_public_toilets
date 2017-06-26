@@ -22,9 +22,94 @@
             }
         }
     </style>
+    <script>
+        function formatDate(date) {
+            var d = new Date(date),
+                month = '' + (d.getMonth() + 1),
+                day = '' + d.getDate(),
+                year = d.getFullYear();
+
+            if (month.length < 2) month = '0' + month;
+            if (day.length < 2) day = '0' + day;
+
+            return [year, month, day].join('-');
+        }
+
+        function handleOnChangeSelectFilter(value, startDateString = "", endDateString = "") {
+
+            var currentTime = new Date().getTime();
+            var startDate = null;
+            var endDate = null;
+            $("#start_date").attr("readOnly", true);
+            $("#end_date").attr("readOnly", true);
+            switch (value) {
+                case "today": {
+                    startDate = new Date(currentTime);
+                    endDate = new Date(currentTime);
+                    break;
+                }
+                case "yesterday": {
+                    startDate = new Date(currentTime - 86400000);
+                    endDate = new Date(currentTime - 86400000);
+                    break;
+                }
+                case "lasttwodays": {
+                    startDate = new Date(currentTime - 86400000);
+                    endDate = new Date(currentTime);
+                    break;
+                }
+                case "lastthreedays": {
+                    startDate = new Date(currentTime - 86400000 * 2);
+                    endDate = new Date(currentTime);
+                    break;
+                }
+                case "lastweek": {
+                    startDate = new Date(currentTime - 86400000 * 6);
+                    endDate = new Date(currentTime);
+                    break;
+                }
+                case "lasttwoweeks": {
+                    startDate = new Date(currentTime - 86400000 * 13);
+                    endDate = new Date(currentTime);
+                    break;
+                }
+                case "lastmonth": {
+                    startDate = new Date(currentTime - 86400000 * 29);
+                    endDate = new Date(currentTime);
+                    break;
+                }
+                case "custom": {
+                    $("#start_date").removeAttr("readOnly");
+                    $("#end_date").removeAttr("readOnly");
+
+                    startDate = new Date(currentTime);
+                    endDate = new Date(currentTime);
+                    break;
+                }
+                default: {
+                    startDate = new Date(currentTime);
+                    endDate = new Date(currentTime);
+                    console.log("invalid selection");
+                    break;
+                }
+            }
+            if (value === "custom") {
+                $("#start_date").val(startDateString);
+                $("#end_date").val(endDateString);
+            } else {
+                $("#start_date").val(formatDate(startDate));
+                $("#end_date").val(formatDate(endDate));
+            }
+        }
+
+        function setFilter(dateRange, startDate, endDate) {
+            $("#select_date").val(dateRange);
+            handleOnChangeSelectFilter(dateRange, startDate, endDate);
+        }
+    </script>
 </head>
 
-<body>
+<body onload="setFilter('${dateRange}','${startDate}','${endDate}');">
 <%@include file="navigation.jsp" %>
 <div class="row" style="height: 80%; margin: 0;overflow: auto">
     <div class="row" style="height:15%; margin: 0;">
@@ -34,14 +119,16 @@
         <form class="form-inline" action='/location-detail-<c:out value="${location.id}"></c:out>'>
             <div class="col-md-3 form-group">
                 <label for="select_date">Select Range</label>
-                <select class="form-control" id="select_date">
+                <select class="form-control" id="select_date" onchange="handleOnChangeSelectFilter(event.target.value)"
+                        name="date_range">
                     <option value="today">Today</option>
                     <option value="yesterday">Yesterday</option>
+                    <option value="lasttwodays">Last 2 Days</option>
                     <option value="lastthreedays">Last 3 Days</option>
                     <option value="lastweek">Last Week</option>
                     <option value="lasttwoweeks">Last 2 Weeks</option>
                     <option value="lastmonth">Last Month</option>
-                    <option value="all">All</option>
+                    <option value="custom">Custom Range</option>
                 </select>
             </div>
             <div class="col-md-3 form-group">
@@ -74,13 +161,13 @@
                         <strong style="font-weight: bold">Overall Rating: </strong>${overallRating}
                     </li>
                     <li class="list-group-item">
-                        <strong style="font-weight: bold">Average Rating: </strong>${averageRating}
-                    </li>
-                    <li class="list-group-item">
-                        <strong style="font-weight: bold">Reviews Count: </strong>${reviewsCount}
-                    </li>
-                    <li class="list-group-item">
                         <strong style="font-weight: bold">Total Reviews: </strong>${totalReviews}
+                    </li>
+                    <li class="list-group-item">
+                        <strong style="font-weight: bold">Rating in Selected Date Range: </strong>${averageRating}
+                    </li>
+                    <li class="list-group-item">
+                        <strong style="font-weight: bold">Reviews Count in Selected Date Range: </strong>${reviewsCount}
                     </li>
                 </ul>
             </div>
