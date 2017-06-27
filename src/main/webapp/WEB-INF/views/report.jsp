@@ -15,10 +15,10 @@
     <link href="<c:url value='/static/css/2.css' />" rel="stylesheet"/>
     <link href="<c:url value='/static/css/3.css' />" rel="stylesheet"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script async src="//code.jquery.com/ui/1.10.1/jquery-ui.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <style>
         @media screen and (max-width: 992px) {
             .container {
@@ -136,9 +136,34 @@
             handleOnChangeSelectFilter(dateRange, startDate, endDate);
         }
 
-        //        function getCountReviews(reviews) {
-        //            return JSON.parse(reviews).length;
-        //        }
+        function autoFillUsers() {
+            var url = "${pageContext.request.contextPath}/search-users-list";
+
+            $.ajax({
+                url: url,
+                dataType: 'json',
+                success: function (response) {
+                    console.log("response", response);
+
+                    $("#email").autocomplete({
+                        minLength: 2,
+                        source: response,
+                        autoFocus: true,
+                        select: function (event, ui) {
+                            var val1 = ui.item.id;
+                            var val2 = ui.item.label;
+                            console.log("ui.item", ui.item);
+                            <%--$("users_email_search_form").attr("action","listcampaign?userId="+val1+"&rows=${rows}");--%>
+                        }
+                    });
+                },
+                type: "GET",
+                error: function (e) {
+                    alert("An error occurred!!! excepetion: " + e);
+                }
+            });
+        }
+
     </script>
 </head>
 
@@ -174,6 +199,13 @@
             </div>
             <div class="col-md-2 form-group" style="margin: 0">
                 <button type="submit" class="btn btn-success">Apply Filter</button>
+            </div>
+            <div class="col-md-1 form-group" style="margin: 0">
+                <button type="submit" class="btn btn-info btn-sm" data-toggle="modal"
+                        data-target="#mailModal"
+                        onclick="event.preventDefault()"
+                >Mail
+                </button>
             </div>
 
         </form>
@@ -237,6 +269,29 @@
                 </div>
             </div>
 
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="mailModal" role="dialog">
+        <div class="modal-dialog">
+            <form class="form form-vertical" action="" role="form" name="usersemailsearchform"
+                  id="users_email_search_form">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Email This Report</h4>
+                    </div>
+                    <div class="modal-body" style="max-height: 500px;overflow-y: scroll;">
+                        <input type="text" id="email" placeholder="Search"
+                               class="form-control" name="email" onkeyup="autoFillUsers()" onkeydown="autoFillUsers()">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-default">Send</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>

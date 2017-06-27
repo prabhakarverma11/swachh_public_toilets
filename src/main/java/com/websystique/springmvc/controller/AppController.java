@@ -1,5 +1,6 @@
 package com.websystique.springmvc.controller;
 
+import au.com.bytecode.opencsv.CSVWriter;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.websystique.springmvc.model.*;
@@ -19,10 +20,14 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -43,6 +48,12 @@ public class AppController {
 
     @Autowired
     LocationService locationService;
+
+    @Autowired
+    ReportService reportService;
+
+    @Autowired
+    MailServiceImpl mailService;
 
     @Autowired
     ReviewService reviewService;
@@ -168,6 +179,23 @@ public class AppController {
         return "redirect:/list";
     }
 
+    @ResponseBody
+    @RequestMapping(value = {"/search-users-list"}, method = RequestMethod.GET)
+    public void searchUsersList(HttpServletRequest request, HttpServletResponse response) {
+
+        response.setContentType("application/json");
+        response.setCharacterEncoding("utf-8");
+        PrintWriter writer = null;
+        try {
+            writer = response.getWriter();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        List<User> users = userService.findEmailIdsOfAllUsers();
+        Gson gson = new Gson();
+        writer.write(gson.toJson(users));
+    }
 
     /**
      * This method will provide UserProfile list to views
@@ -364,12 +392,52 @@ public class AppController {
         return "markerdisplay";
     }
 
+    @RequestMapping(value = "/admin-dashboard", method = RequestMethod.GET)
+    public String getAdminDashboard(ModelMap modelMap) {
+
+        return "admindashboard";
+    }
+
     @RequestMapping(value = "/users-list", method = RequestMethod.GET)
     public String getUsersList(ModelMap model) {
         List<User> users = userService.findAllUsers();
         model.addAttribute("users", users);
 
         return "userslist";
+    }
+
+    @RequestMapping(value = "/mailReport")
+    public String mailReport(ModelMap model, HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        String fileName = "RatingAndReviewsReport_" + System.currentTimeMillis() + ".csv";
+        //TODO update it0
+        String startDate = "";
+        String endDate = "";
+
+        File csvFile = null;
+        try {
+            csvFile = getReportCSVFile(fileName, request, session, model);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        String mailSubject = "Swachh Public Toilets | Rating and Reviews Report for " + startDate;
+
+        String mailMessage = "Greetings!!<br><br>Please find attached Report for date between " + startDate + " and " + endDate
+                + "<br><br><br>"
+                + "----------------------<br>"
+                + "Thanks & Regards<br>"
+                + "Admin";
+        //TODO update it
+        String toAddresses = "prabhakarverma11@gmail.com,mohan.mahima9@gmail.com";
+
+        try {
+            mailService.sendAttachmentEmail(toAddresses, mailSubject, mailMessage, csvFile.getAbsolutePath());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        model.addAttribute("successMsg", "Mail has been sent successfully");
+
+        return "report";
     }
 
 
@@ -396,5 +464,65 @@ public class AppController {
         return authenticationTrustResolver.isAnonymous(authentication);
     }
 
+    private File getReportCSVFile(String fileName, HttpServletRequest request,
+                                  HttpSession session, ModelMap model) throws IOException {
+        //TODO remove these lines
+        List<Location> locations = locationService.getAllLocations();
+
+
+        String startDate = "";
+        String endDate = "";
+
+        List<Report> reportsList = new ArrayList<>();
+
+//        Location location = locationService.getLocationById(locationId);
+        for (Location location : locations) {
+            Place place = placeService.getPlaceByLocation(location);
+            PlaceDetail placeDetail = placeDetailService.getPlaceDetailByPlace(place);
+
+            Report report = new Report();
+            report.setLocation(location);
+            report.setPlace(place);
+            report.setPlaceDetail(placeDetail);
+            Long reviewsCount = null;
+            try {
+                reviewsCount = reviewService.countReviewsByPlaceBetweenDates(place, startDate, endDate);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            report.setReviewsCount(reviewsCount);
+
+            reportsList.add(report);
+        }
+
+
+        File csvFile = new File(fileName);
+        csvFile.setReadable(true, false);
+        csvFile.setWritable(true, false);
+        csvFile.createNewFile();
+
+        CSVWriter writer = new CSVWriter(new FileWriter(csvFile.getAbsolutePath()));
+
+        writer.writeNext(new String[]{"S.No", "Name", "Address", "Country", "Latitude", "Longitude", "Rating", "Reviews"});
+
+        String line = "";
+        int count = 1;
+        for (Report report : reportsList) {
+            line = "";
+            line += (count++) + "|";
+            line += report.getLocation().getName() + "|";
+            line += report.getLocation().getAddress() + "|";
+            line += report.getLocation().getCountry() + "|";
+            line += report.getLocation().getLatitude() + "|";
+            line += report.getLocation().getLongitude() + "|";
+            line += report.getPlaceDetail().getRating() + "|";
+            line += report.getReviewsCount() + "|";
+
+            writer.writeNext(line.split("\\|"));
+        }
+        writer.close();
+        model.addAttribute("reportsList", reportsList);
+        return csvFile;
+    }
 
 }

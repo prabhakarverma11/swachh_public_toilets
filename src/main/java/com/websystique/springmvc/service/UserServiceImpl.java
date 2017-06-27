@@ -67,5 +67,10 @@ public class UserServiceImpl implements UserService{
 		User user = findBySSO(sso);
 		return ( user == null || ((id != null) && (user.getId() == id)));
 	}
-	
+
+	@Override
+	public List<User> findEmailIdsOfAllUsers() {
+		return dao.findEmailIdsOfAllUsers();
+	}
+
 }

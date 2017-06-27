@@ -44,6 +44,9 @@
                             <ul id="nav" class="hide">
                                 <li class="MenuLi MenuLiFirst MenuLi1"><a class="menuFirstNode" href="/home">Home</a>
                                 </li>
+                                <li class="MenuLi MenuLi2"><a class="menuFirstNode" href="/admin-dashboard">Admin
+                                    Dashboard</a>
+                                </li>
                                 <li class="MenuLi MenuLi2"><a class="menuFirstNode" href="/marker-display">Map
                                     Marker</a>
                                 </li>
@@ -51,9 +54,6 @@
                                 </li>
                                 <li class="MenuLi MenuLi2"><a class="menuFirstNode" href="/users-list">Users</a>
                                 </li>
-                                <%--<li class="MenuLi MenuLi2"><a class="menuFirstNode" href="/marker-display">Map--%>
-                                <%--Marker</a>--%>
-                                <%--</li>--%>
                             </ul>
                         </div>
                     </nav>

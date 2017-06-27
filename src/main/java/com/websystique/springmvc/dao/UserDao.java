@@ -17,5 +17,7 @@ public interface UserDao {
 	
 	List<User> findAllUsers();
 
+    List<User> findEmailIdsOfAllUsers();
+
 }
 

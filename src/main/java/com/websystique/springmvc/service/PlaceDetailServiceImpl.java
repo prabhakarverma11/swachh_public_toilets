@@ -50,8 +50,12 @@ public class PlaceDetailServiceImpl implements PlaceDetailService {
                 placeDetailDao.save(placeDetail);
                 System.out.println("placeDetail saved Successfully");
             } else {
-                placeDetailDao.update(placeDetail);
-                System.out.println("placeDetail updated Successfully");
+                if (placeDetail.getRating() != existingPlaceDetail.getRating()) {
+                    placeDetailDao.update(placeDetail);
+                    System.out.println("placeDetail updated Successfully");
+                } else {
+                    System.out.println("placeDetail is already up-to-date");
+                }
             }
 
 
