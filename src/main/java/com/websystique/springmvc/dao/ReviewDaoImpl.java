@@ -33,6 +33,7 @@ public class ReviewDaoImpl extends AbstractDao<Integer, Review> implements Revie
     @Override
     public List<Review> getReviewsByPlace(Place place) {
         Criteria criteria = createEntityCriteria().add(Restrictions.eq("place", place));
+        criteria.setFirstResult(0).setMaxResults(20);
         List<Review> reviews = criteria.list();
         return reviews;
     }
@@ -41,6 +42,7 @@ public class ReviewDaoImpl extends AbstractDao<Integer, Review> implements Revie
     public List<Review> getAllReviews() {
         Criteria criteria = createEntityCriteria();
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid duplicates.
+        criteria.setFirstResult(0).setMaxResults(20);
         List<Review> reviews = criteria.list();
         return reviews;
     }
@@ -59,6 +61,7 @@ public class ReviewDaoImpl extends AbstractDao<Integer, Review> implements Revie
         if (endDate != null && !endDate.equals(""))
             criteria = criteria.add(Restrictions.le("timeStamp", new SimpleDateFormat("yyyy-MM-dd").parse(endDate)));
 
+        criteria.setFirstResult(0).setMaxResults(20);
         List<Review> reviews = criteria.list();
         return reviews;
     }

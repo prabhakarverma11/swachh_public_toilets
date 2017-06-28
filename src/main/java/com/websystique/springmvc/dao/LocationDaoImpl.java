@@ -18,6 +18,9 @@ public class LocationDaoImpl extends AbstractDao<Integer, Location> implements L
     public List<Location> getAllLocations() {
         Criteria criteria = createEntityCriteria();
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid duplicates.
+
+        criteria.setFirstResult(0).setMaxResults(20);
+
         List<Location> locations = (List<Location>) criteria.list();
         return locations;
     }

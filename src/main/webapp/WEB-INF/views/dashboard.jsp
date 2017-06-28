@@ -7,7 +7,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-    <title>Users List</title>
+    <title>Dashboard</title>
 
     <link href="<c:url value='/static/css/bootstrap.css' />" rel="stylesheet"/>
     <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"/>
@@ -160,7 +160,7 @@
         <table class="table table-hover">
             <thead>
             <tr>
-                <th cla>S.No.</th>
+                <th >S.No.</th>
                 <th>Toilet Name</th>
                 <th>Rating</th>
                 <th>Reviews</th>
@@ -174,7 +174,7 @@
                 <tr>
                     <td>${count}</td>
                     <td>
-                        <a href='/location-detail-<c:out value="${report.location.id}"></c:out>'>${report.location.name},${report.location.address} </a>
+                        <a href='/location-detail-<c:out value="${report.location.id}"></c:out>'>${report.location.address} </a>
                     </td>
                     <td>${report.placeDetail.rating}</td>
                     <td>
