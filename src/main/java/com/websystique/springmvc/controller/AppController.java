@@ -227,6 +227,15 @@ public class AppController {
         }
     }
 
+            @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
+    public String dashbaord(ModelMap model) {
+
+        List<Location> locations = locationService.getAllLocations();
+        List<Report> reports = reportService.getReportsListByLocationsBetweenDates(locations, "", "");
+        model.addAttribute("reportsList", reports);
+        return "dashboard";
+    }
+
     /**
      * This method handles logout requests.
      * Toggle the handlers if you are RememberMe functionality is useless in your app.

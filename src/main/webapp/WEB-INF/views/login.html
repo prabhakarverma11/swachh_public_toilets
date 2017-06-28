@@ -26,64 +26,85 @@
     <link href="./login.css" rel="stylesheet" type="text/css">
 </head>
 <body class="noJS fullBg" onload="FocusOnInput()">
-<div id="wrapper">
-    <form method="post" action="https://swachh.org.in/swachhapp/Login.aspx">
-
-        <div id="uplogin">
-
-            <div id="divLogin" class="loginBox cf">
-                <ul class="logoBlck">
-                    <li class="logoText">
-                        <div class="mainTitle">
-
-                            <img src="./Images/logo-login.png"
-                                 alt="Swachh Bharat Mission, Government of India"
-                                 title="Swachh Bharat Mission, Government of India">
-                        </div>
-                    </li>
-                </ul>
-                <div class="formBlck">
-
-                    <div class="v-middle">
-                        <ul>
-                            <li id="login">
-                                <label for="txtEmail" id="mailLabel" class="loginLabel">Login ID </label>
-                                <input name="txtEmail" type="text" maxlength="100" id="txtEmail" tabindex="1"
-                                       class="loginInput">
-                                <span id="rfvtxtEmail" class="error" style="display:none;">Please enter login id</span>
-                            </li>
-                            <li id="password">
-                                <label for="txtPassword" id="pswdLabel" class="loginLabel">Password </label>
-                                <input name="txtPassword" type="password" maxlength="35" id="txtPassword" tabindex="2"
-                                       class="loginInput"
-                                       style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAAPhJREFUOBHlU70KgzAQPlMhEvoQTg6OPoOjT+JWOnRqkUKHgqWP4OQbOPokTk6OTkVULNSLVc62oJmbIdzd95NcuGjX2/3YVI/Ts+t0WLE2ut5xsQ0O+90F6UxFjAI8qNcEGONia08e6MNONYwCS7EQAizLmtGUDEzTBNd1fxsYhjEBnHPQNG3KKTYV34F8ec/zwHEciOMYyrIE3/ehKAqIoggo9inGXKmFXwbyBkmSQJqmUNe15IRhCG3byphitm1/eUzDM4qR0TTNjEixGdAnSi3keS5vSk2UDKqqgizLqB4YzvassiKhGtZ/jDMtLOnHz7TE+yf8BaDZXA509yeBAAAAAElFTkSuQmCC&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%;">
-                                <span id="rfvtxtPassword" class="error"
-                                      style="display:none;">Please enter password</span>
-                            </li>
-
-
-                            <li id="reme" class="rememberBlck">
-                                <span class="loginLabel">&nbsp;</span>
-                                <input type="checkbox" class="inputChck iCheck" id="remember">
-                                <label for="remember" class="">
-                                    Remember Me</label>
-                            </li>
-                            <li id="loginbutton">
-                                <input type="submit" name="btnLogin" value="Login" id="btnLogin" class="loginBtn">
-                                <input id="Validation" name="Validation" type="hidden">
-                            </li>
-
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
+<div class="row">
+    <div class="cols4">
+        <div class="wrapBox">
+            <div class="wrapTitle dashbord"><a href="dashboard.htm" title="Dashboard"> <span>Dashboard</span> </a></div>
+            <div class="hoverText"><span class="boxTitle">Dashboard</span> <a class="readMore" title="Read More : Dashboard" href="dashboard.htm"> Read More</a></div>
         </div>
-        <div class="footer">
-            <span id="lblFooter">© Content Owned by Swachhata Augmentation Through Corporate Helping Hands.</span>
+    </div>
+    <div class="cols4">
+        <div class="wrapBox wrapGreen">
+            <div class="wrapTitle swachhProject"><a href="swachhata-projects.htm" title="Swachh Projects"> <span>Swachh Projects</span> </a></div>
+            <div class="hoverText"><span class="boxTitle">Swachh Projects</span> <a class="readMore" title="Read More : Swachh Projects" href="swachhata-projects.htm"> Read More</a></div>
         </div>
-    </form>
+    </div>
+    <div class="cols4">
+        <div class="wrapBox wrapPink">
+            <div class="wrapTitle csr"><a href="../../../swachhapp" title="Corporate Social Responsibility" target="_blank"> <span>CSR</span> </a></div>
+            <div class="hoverText"><span class="boxTitle">Corporate Social Responsibility</span> <a class="readMore" title="Read More : Corporate Social Responsibility" href="../../../swachhapp" target="_blank"> Read More</a></div>
+        </div>
+    </div>
 </div>
+<!--<div id="wrapper">-->
+    <!---->
+    <!--<form method="post" action="https://swachh.org.in/swachhapp/Login.aspx">-->
+
+        <!--<div id="uplogin">-->
+
+            <!--<div id="divLogin" class="loginBox cf">-->
+                <!--<ul class="logoBlck">-->
+                    <!--<li class="logoText">-->
+                        <!--<div class="mainTitle">-->
+
+                            <!--<img src="./Images/logo-login.png"-->
+                                 <!--alt="Swachh Bharat Mission, Government of India"-->
+                                 <!--title="Swachh Bharat Mission, Government of India">-->
+                        <!--</div>-->
+                    <!--</li>-->
+                <!--</ul>-->
+                <!--<div class="formBlck">-->
+
+                    <!--<div class="v-middle">-->
+                        <!--<ul>-->
+                            <!--<li id="login">-->
+                                <!--<label for="txtEmail" id="mailLabel" class="loginLabel">Login ID </label>-->
+                                <!--<input name="txtEmail" type="text" maxlength="100" id="txtEmail" tabindex="1"-->
+                                       <!--class="loginInput">-->
+                                <!--<span id="rfvtxtEmail" class="error" style="display:none;">Please enter login id</span>-->
+                            <!--</li>-->
+                            <!--<li id="password">-->
+                                <!--<label for="txtPassword" id="pswdLabel" class="loginLabel">Password </label>-->
+                                <!--<input name="txtPassword" type="password" maxlength="35" id="txtPassword" tabindex="2"-->
+                                       <!--class="loginInput"-->
+                                       <!--style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAAPhJREFUOBHlU70KgzAQPlMhEvoQTg6OPoOjT+JWOnRqkUKHgqWP4OQbOPokTk6OTkVULNSLVc62oJmbIdzd95NcuGjX2/3YVI/Ts+t0WLE2ut5xsQ0O+90F6UxFjAI8qNcEGONia08e6MNONYwCS7EQAizLmtGUDEzTBNd1fxsYhjEBnHPQNG3KKTYV34F8ec/zwHEciOMYyrIE3/ehKAqIoggo9inGXKmFXwbyBkmSQJqmUNe15IRhCG3byphitm1/eUzDM4qR0TTNjEixGdAnSi3keS5vSk2UDKqqgizLqB4YzvassiKhGtZ/jDMtLOnHz7TE+yf8BaDZXA509yeBAAAAAElFTkSuQmCC&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%;">-->
+                                <!--<span id="rfvtxtPassword" class="error"-->
+                                      <!--style="display:none;">Please enter password</span>-->
+                            <!--</li>-->
+
+
+                            <!--<li id="reme" class="rememberBlck">-->
+                                <!--<span class="loginLabel">&nbsp;</span>-->
+                                <!--<input type="checkbox" class="inputChck iCheck" id="remember">-->
+                                <!--<label for="remember" class="">-->
+                                    <!--Remember Me</label>-->
+                            <!--</li>-->
+                            <!--<li id="loginbutton">-->
+                                <!--<input type="submit" name="btnLogin" value="Login" id="btnLogin" class="loginBtn">-->
+                                <!--<input id="Validation" name="Validation" type="hidden">-->
+                            <!--</li>-->
+
+                        <!--</ul>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+
+        <!--</div>-->
+        <!--<div class="footer">-->
+            <!--<span id="lblFooter">© Content Owned by Swachhata Augmentation Through Corporate Helping Hands.</span>-->
+        <!--</div>-->
+    <!--</form>-->
+<!--</div>-->
 
 
 </body>
