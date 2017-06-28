@@ -40,7 +40,7 @@ public class ReportController {
     public String showReport(HttpServletRequest request, ModelMap model) {
 
         //TODO remove these lines
-        List<Location> locations = locationService.getAllLocations();
+        List<Location> locations = locationService.getAllLocationsByPageAndSize(0, 20);
 
 
         String startDate = request.getParameter("start_date");

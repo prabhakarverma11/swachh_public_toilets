@@ -26,9 +26,10 @@
             }
         }
     </style>
+    <script src="/static/js/common.util.js"></script>
     <script>
         function fillModalData(locationName, locationAddress, locationId) {
-            $(".modal-title").html(locationName + ", " + locationAddress);
+            $(".modal-title").html(locationName + ", " + toTitleCase(locationAddress));
 
             $.ajax({
                 url: window.location.origin + "/fetch-rating-and-reviews/" + locationId,
@@ -103,7 +104,7 @@
         </div>
     </div>
 </div>
-<div class="container" style="margin: 10vw auto 0 auto;">
+<div class="container" style="margin: 10vw auto 0 auto;font-size: medium">
     <div class="row" style="height: 10%; margin: 0; margin-top: 1%">
         <form class="form-inline" onsubmit="alert('form-submitted!')">
             <div class="col-md-4 pull-left">
@@ -160,7 +161,7 @@
         <table class="table table-hover">
             <thead>
             <tr>
-                <th >S.No.</th>
+                <th>S.No.</th>
                 <th>Toilet Name</th>
                 <th>Rating</th>
                 <th>Reviews</th>
@@ -174,7 +175,9 @@
                 <tr>
                     <td>${count}</td>
                     <td>
-                        <a href='/location-detail-<c:out value="${report.location.id}"></c:out>'>${report.location.address} </a>
+                        <a href='/location-detail-<c:out value="${report.location.id}"></c:out>'>
+                            <script>document.write(toTitleCase("${report.location.address}"))</script>
+                        </a>
                     </td>
                     <td>${report.placeDetail.rating}</td>
                     <td>

@@ -27,16 +27,34 @@ public class PlaceServiceImpl implements PlaceService {
         if (placeDao.getPlaceByLocation(location) == null) {
             UtilMethods utilMethods = new UtilMethods();
             JsonObject jsonObject = utilMethods.getJsonObjectFetchingURL(url);
-            if (jsonObject.get("status").getAsString().equals("OK")) {
-                Place place = new Place();
-                place.setLocation(location);
-                String placeIdValue = jsonObject.get("results").getAsJsonArray().get(0).getAsJsonObject().get("place_id").getAsString();
-                place.setPlaceId(placeIdValue);
-                placeDao.save(place);
+            if (jsonObject !=null){
+                switch (jsonObject.get("status").getAsString()){
+                    case "OK":{
+                        Place place = new Place();
+                        place.setLocation(location);
+                        String placeIdValue = jsonObject.get("results").getAsJsonArray().get(0).getAsJsonObject().get("place_id").getAsString();
+                        place.setPlaceId(placeIdValue);
+                        placeDao.save(place);
 
-                System.out.println("Place saved successfully");
+                        System.out.println("Place saved successfully");
 
-                return place;
+                        return place;
+                    }
+                    case "ZERO_RESULTS":{
+
+                    }
+                    case "OVER_QUERY_LIMIT":{
+
+                    }
+                    case "REQUEST_DENIED":{
+
+                    }
+                    case "INVALID_REQUEST":{
+
+                    }
+                }
+            }else{
+
             }
         } else {
             System.out.println("place_id already there in database");
@@ -58,5 +76,10 @@ public class PlaceServiceImpl implements PlaceService {
     @Override
     public List<Place> getAllPlaces() {
         return placeDao.getAllPlaces();
+    }
+
+    @Override
+    public List<Place> getAllPlacesByPageAndSize(Integer page, Integer size) {
+        return placeDao.getAllPlacesByPageAndSize(page,size);
     }
 }

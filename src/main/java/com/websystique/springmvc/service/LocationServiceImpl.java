@@ -22,6 +22,11 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
+    public List<Location> getAllLocationsByPageAndSize(Integer page, Integer size) {
+        return locationDao.getAllLocationsByPageAndSize(page,size);
+    }
+
+    @Override
     public Location getLocationById(Integer locationId) {
         return locationDao.getLocationById(locationId);
     }

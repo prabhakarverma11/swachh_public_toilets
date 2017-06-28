@@ -18,8 +18,16 @@ public class LocationDaoImpl extends AbstractDao<Integer, Location> implements L
     public List<Location> getAllLocations() {
         Criteria criteria = createEntityCriteria();
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid duplicates.
+        List<Location> locations = (List<Location>) criteria.list();
+        return locations;
+    }
 
-        criteria.setFirstResult(0).setMaxResults(20);
+    @Override
+    public List<Location> getAllLocationsByPageAndSize(Integer page, Integer size) {
+        Criteria criteria = createEntityCriteria();
+        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid duplicates.
+
+        criteria.setFirstResult((page - 1) * size).setMaxResults(size);
 
         List<Location> locations = (List<Location>) criteria.list();
         return locations;
@@ -29,4 +37,5 @@ public class LocationDaoImpl extends AbstractDao<Integer, Location> implements L
     public Location getLocationById(Integer locationId) {
         return getByKey(locationId);
     }
+
 }

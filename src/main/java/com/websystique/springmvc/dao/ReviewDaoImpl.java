@@ -33,7 +33,7 @@ public class ReviewDaoImpl extends AbstractDao<Integer, Review> implements Revie
     @Override
     public List<Review> getReviewsByPlace(Place place) {
         Criteria criteria = createEntityCriteria().add(Restrictions.eq("place", place));
-        criteria.setFirstResult(0).setMaxResults(20);
+//        criteria.setFirstResult(0).setMaxResults(20);
         List<Review> reviews = criteria.list();
         return reviews;
     }

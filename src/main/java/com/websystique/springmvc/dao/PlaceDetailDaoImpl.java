@@ -25,7 +25,6 @@ public class PlaceDetailDaoImpl extends AbstractDao<Integer, PlaceDetail> implem
     @Override
     public PlaceDetail getPlaceDetailByPlace(Place place) {
         Criteria criteria = createEntityCriteria().add(Restrictions.eq("place", place));
-        criteria.setFirstResult(0).setMaxResults(20);
         List<PlaceDetail> placeDetailList = criteria.list();
         if (placeDetailList.size() > 0)
             return placeDetailList.get(0);

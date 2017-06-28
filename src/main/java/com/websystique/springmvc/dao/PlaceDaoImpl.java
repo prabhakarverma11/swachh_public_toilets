@@ -40,7 +40,15 @@ public class PlaceDaoImpl extends AbstractDao<Integer, Place> implements PlaceDa
     public List<Place> getAllPlaces() {
         Criteria criteria = createEntityCriteria();
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid duplicates.
-        criteria.setFirstResult(0).setMaxResults(20);
+        List<Place> places = (List<Place>) criteria.list();
+        return places;
+    }
+
+    @Override
+    public List<Place> getAllPlacesByPageAndSize(Integer page, Integer size) {
+        Criteria criteria = createEntityCriteria();
+        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid duplicates.
+        criteria.setFirstResult((page - 1) * size).setMaxResults(size);
         List<Place> places = (List<Place>) criteria.list();
         return places;
     }

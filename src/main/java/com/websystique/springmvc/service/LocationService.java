@@ -9,5 +9,7 @@ public interface LocationService {
 
     List<Location> getAllLocations();
 
+    List<Location> getAllLocationsByPageAndSize(Integer page, Integer size);
+
     Location getLocationById(Integer locationId);
 }
