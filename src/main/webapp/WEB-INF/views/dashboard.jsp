@@ -54,10 +54,94 @@
             });
         }
 
+        function formatDate(date) {
+            var d = new Date(date),
+                month = '' + (d.getMonth() + 1),
+                day = '' + d.getDate(),
+                year = d.getFullYear();
+
+            if (month.length < 2) month = '0' + month;
+            if (day.length < 2) day = '0' + day;
+
+            return [year, month, day].join('-');
+        }
+
+        function handleOnChangeSelectFilter(value, startDateString = "", endDateString = "") {
+
+            var currentTime = new Date().getTime();
+            var startDate = null;
+            var endDate = null;
+            $("#start_date").attr("readOnly", true);
+            $("#end_date").attr("readOnly", true);
+            switch (value) {
+                case "today": {
+                    startDate = new Date(currentTime);
+                    endDate = new Date(currentTime);
+                    break;
+                }
+                case "yesterday": {
+                    startDate = new Date(currentTime - 86400000);
+                    endDate = new Date(currentTime - 86400000);
+                    break;
+                }
+                case "lasttwodays": {
+                    startDate = new Date(currentTime - 86400000);
+                    endDate = new Date(currentTime);
+                    break;
+                }
+                case "lastthreedays": {
+                    startDate = new Date(currentTime - 86400000 * 2);
+                    endDate = new Date(currentTime);
+                    break;
+                }
+                case "lastweek": {
+                    startDate = new Date(currentTime - 86400000 * 6);
+                    endDate = new Date(currentTime);
+                    break;
+                }
+                case "lasttwoweeks": {
+                    startDate = new Date(currentTime - 86400000 * 13);
+                    endDate = new Date(currentTime);
+                    break;
+                }
+                case "lastmonth": {
+                    startDate = new Date(currentTime - 86400000 * 29);
+                    endDate = new Date(currentTime);
+                    break;
+                }
+                case "custom": {
+                    $("#start_date").removeAttr("readOnly");
+                    $("#end_date").removeAttr("readOnly");
+
+                    startDate = new Date(currentTime);
+                    endDate = new Date(currentTime);
+                    break;
+                }
+                default: {
+                    startDate = new Date(currentTime);
+                    endDate = new Date(currentTime);
+                    console.log("invalid selection");
+                    break;
+                }
+            }
+            if (value === "custom") {
+                $("#start_date").val(startDateString);
+                $("#end_date").val(endDateString);
+            } else {
+                $("#start_date").val(formatDate(startDate));
+                $("#end_date").val(formatDate(endDate));
+            }
+        }
+
+        function setFilter(dateRange, startDate, endDate) {
+            $("#select_date").val(dateRange);
+            handleOnChangeSelectFilter(dateRange, startDate, endDate);
+        }
+
     </script>
 </head>
 
-<body style="height: auto;">
+<body style="height: auto;" onload="setFilter('${dateRange}','${startDate}','${endDate}');">
 <%@include file="navigation.jsp" %>
 <div class="row" style="height: 25%;margin-top: 50px;width: 100%;margin-bottom: 0;">
     <div class="row" style="margin: 0;">
@@ -74,7 +158,7 @@
         <div class="cols4">
             <div class="wrapBox">
                 <div class="wrapTitle swachhProject">
-                    <abc style="font-size: 5em;padding: 3vw 0vw 0vw 0vw;border-radius: 50%;background-color: white;height: 13vw;width: 13vw;float: left;margin: 3vw 0 0 7vw;color: #144887;">
+                    <abc style="font-size: 4.5em;padding: 3vw 0vw 0vw 0vw;border-radius: 50%;background-color: white;height: 13vw;width: 13vw;float: left;margin: 3vw 0 0 7vw;color: #144887;">
                         1001
                     </abc>
                     <%--/* vertical-align: text-bottom; */--%>
@@ -105,20 +189,18 @@
     </div>
 </div>
 <div class="container" style="margin: 10vw auto 0 auto;font-size: medium">
-    <div class="row" style="height: 10%; margin: 0; margin-top: 1%">
-        <form class="form-inline" onsubmit="alert('form-submitted!')">
-            <div class="col-md-4 pull-left">
-                <div class="form-group">
+    <div class="row" style="">
+        <form class="form-inline" action="/dashboard">
+
+            <div class="col-sm-12" style="padding: 0;">
+                <div class="col-md-3">
                     <label for="select_date">Rating</label>
                     <select class="form-control" id="select_date"
-                            onchange="handleOnChangeSelectFilter(event.target.value)"
-                            name="date_range">
+                            onchange="handleOnChangeSelectFilter(event.target.value)" name="date_range">
                         <option value="today">&gt;</option>
                         <option value="yesterday">&lt;</option>
                         <option value="lasttwodays">=</option>
                     </select>
-                </div>
-                <div class="form-group">
                     <select class="form-control" onchange="handleOnChangeSelectFilter(event.target.value)"
                             name="date_range">
                         <option value="today">0</option>
@@ -127,37 +209,38 @@
                         <option value="lasttwodays">3</option>
                         <option value="lastthreedays">4</option>
                         <option value="lastweek">5</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-md-4 pull-right">
-                <div class="form-group">
-                    <label for="select_date">Items Per Page</label>
-                    <select class="form-control" id="" onchange="handleOnChangeSelectFilter(event.target.value)"
+                    </select></div>
+                <div class="col-md-3">
+                    <label for="select_date">Select Range</label>
+                    <select class="form-control" onchange="handleOnChangeSelectFilter(event.target.value)"
                             name="date_range">
-                        <option value="today">10</option>
-                        <option value="today">20</option>
-                        <option value="today">30</option>
-                        <option value="today">40</option>
-                        <option value="today">50</option>
-                        <option value="today">100</option>
+                        <option value="today">Today</option>
+                        <option value="yesterday">Yesterday</option>
+                        <option value="lasttwodays">Last 2 Days</option>
+                        <option value="lastthreedays">Last 3 Days</option>
+                        <option value="lastweek">Last Week</option>
+                        <option value="lasttwoweeks">Last 2 Weeks</option>
+                        <option value="lastmonth">Last Month</option>
+                        <option value="custom">Custom Range</option>
                     </select>
                 </div>
+                <div class="col-sm-5" style="margin: 0">
+                    <label for="start_date">From</label>
+                    <input type="date" class="form-control" id="start_date" name="start_date" readonly="">
+                    <%--</div>--%>
+                    <%--<div class="col-sm-3" style="margin:0;">--%>
+                    <label for="end_date">To</label>
+                    <input type="date" class="form-control" id="end_date" name="end_date" readonly="">
+                </div>
+                <div class="col-sm-1" style="margin: 0">
+                    <button type="submit" class="btn btn-primary">Apply</button>
+                </div>
             </div>
-            <%--<div class="col-md-2 form-group" style="margin: 0">--%>
-            <%--<button type="submit" class="btn btn-success">Apply Filter</button>--%>
-            <%--</div>--%>
-            <%--<div class="col-md-1 form-group" style="margin: 0">--%>
-            <%--<button type="submit" class="btn btn-info btn-sm" data-toggle="modal"--%>
-            <%--data-target="#mailModal"--%>
-            <%--onclick="event.preventDefault()"--%>
-            <%-->Mail--%>
-            <%--</button>--%>
-            <%--</div>--%>
+
 
         </form>
     </div>
-    <div class="table-responsive" style="height: 100%; overflow-y: auto">
+    <div class="table-responsive" style="">
         <table class="table table-hover">
             <thead>
             <tr>
@@ -180,7 +263,7 @@
                         </a>
                     </td>
                     <td>${report.placeDetail.rating}</td>
-                    <td>
+                    <td style="min-width: 10vw;">
                         <span class="badge">${report.reviewsCount}</span>
                         <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
                                 data-target="#myModal"
@@ -194,6 +277,28 @@
             </tbody>
         </table>
     </div>
+    <div class="row" style="">
+        <form class="form-inline">
+
+            <div class="col-sm-12" style="padding: 0;">
+                <div class="col-md-3">
+                    <label for="select_date">Items Per page</label>
+                    <select class="form-control"
+                            onchange="handleOnChangeSelectFilter(event.target.value)" name="date_range">
+                        <option value="today">10</option>
+                        <option value="today">20</option>
+                        <option value="today">30</option>
+                        <option value="today">40</option>
+                        <option value="today">50</option>
+                        <option value="today">100</option>
+                        <option value="today">200</option>
+                    </select>
+                </div>
+            </div>
+
+
+        </form>
+    </div>
 </div>
 <!-- Modal -->
 <div class="modal fade" id="myModal" role="dialog">
@@ -205,12 +310,12 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Modal Header</h4>
             </div>
-            <div class="modal-body" style="max-height: 500px;overflow-y: scroll;">
+            <div class="modal-body" style="max-height: 500px;overflow-y: auto;">
                 <p>Some text in the modal.</p>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
+            <%--<div class="modal-footer">--%>
+            <%--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>--%>
+            <%--</div>--%>
         </div>
 
     </div>

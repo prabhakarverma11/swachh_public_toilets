@@ -247,26 +247,26 @@
                 "method": function( e ) {
                     var chart = e.chart;
 
-                    function getCurrentData() {
-                        var data = chartData[currentYear];
-                        currentYear++;
-                        if (currentYear > 2014)
-                            currentYear = 1995;
-                        return data;
-                    }
-
-                    function loop() {
-                        chart.allLabels[0].text = currentYear;
-                        var data = getCurrentData();
-                        chart.animateData( data, {
-                            duration: 1000,
-                            complete: function() {
-                                setTimeout( loop, 3000 );
-                            }
-                        } );
-                    }
-
-                    loop();
+//                    function getCurrentData() {
+//                        var data = chartData[currentYear];
+//                        currentYear++;
+//                        if (currentYear > 2014)
+//                            currentYear = 1995;
+//                        return data;
+//                    }
+//
+//                    function loop() {
+//                        chart.allLabels[0].text = currentYear;
+//                        var data = getCurrentData();
+//                        chart.animateData( data, {
+//                            duration: 1000,
+//                            complete: function() {
+//                                setTimeout( loop, 3000 );
+//                            }
+//                        } );
+//                    }
+//
+//                    loop();
                 }
             } ],
             "export": {
@@ -469,9 +469,9 @@
                         </c:forEach>
                     </ul>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
+                <%--<div class="modal-footer">--%>
+                    <%--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>--%>
+                <%--</div>--%>
             </div>
 
         </div>

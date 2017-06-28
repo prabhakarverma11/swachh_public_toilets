@@ -22,7 +22,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/")
-public class EmailController {
+public class MailController {
 
     @Autowired
     LocationService locationService;
