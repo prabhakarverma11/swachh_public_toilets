@@ -2,10 +2,12 @@ package com.websystique.springmvc.dao;
 
 import com.websystique.springmvc.model.Place;
 import com.websystique.springmvc.model.Review;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
 import java.util.List;
 
+@Transactional
 public interface ReviewDao {
 
     void save(Review review);

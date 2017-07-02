@@ -40,7 +40,7 @@ public class DashboardController {
     @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
     public String dashBoard(ModelMap model) {
 
-        List<Location> locations = locationService.getAllLocationsByPageAndSize(0, 20);
+        List<Location> locations = locationService.getAllLocationsByPageAndSize(0, 100);
         List<Report> reports = reportService.getReportsListByLocationsBetweenDates(locations, "", "");
         model.addAttribute("reportsList", reports);
         return "dashboard";

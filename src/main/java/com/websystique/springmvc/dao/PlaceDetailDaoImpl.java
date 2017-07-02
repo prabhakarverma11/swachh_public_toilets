@@ -31,10 +31,4 @@ public class PlaceDetailDaoImpl extends AbstractDao<Integer, PlaceDetail> implem
         else
             return null;
     }
-
-    @Override
-    public void update(PlaceDetail placeDetail) {
-        update(placeDetail);
-    }
-
 }

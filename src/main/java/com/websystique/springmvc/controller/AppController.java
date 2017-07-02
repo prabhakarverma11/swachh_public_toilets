@@ -2,7 +2,11 @@ package com.websystique.springmvc.controller;
 
 import com.google.gson.Gson;
 import com.websystique.springmvc.model.Location;
+import com.websystique.springmvc.model.PinCodeDetail;
+import com.websystique.springmvc.model.PlaceULBMap;
 import com.websystique.springmvc.service.LocationService;
+import com.websystique.springmvc.service.PinCodeDetailService;
+import com.websystique.springmvc.service.PlaceULBMapService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -20,6 +24,13 @@ public class AppController {
 
     @Autowired
     LocationService locationService;
+
+    @Autowired
+    PlaceULBMapService placeULBMapService;
+
+    @Autowired
+    PinCodeDetailService pinCodeDetailService;
+
 
     /**
      * This method will list all existing users.
@@ -49,4 +60,19 @@ public class AppController {
         return "markerdisplay";
     }
 
+    @RequestMapping(value = "/map-place-pincode-ulb", method = RequestMethod.GET)
+    public String mapPlaceToULBName(ModelMap model) {
+
+        List<PlaceULBMap> placeULBMaps = placeULBMapService.getAllPlaceULBMapByPageAndSize(1, 5136);
+        for (PlaceULBMap placeULBMap : placeULBMaps) {
+            Integer pinCode = placeULBMap.getPostalCode();
+            PinCodeDetail pinCodeDetail = pinCodeDetailService.getPinCodeDetailByPinCode(pinCode);
+            if (pinCodeDetail != null) {
+                placeULBMap.setULBName(pinCodeDetail.getDistrict());
+                placeULBMapService.update(placeULBMap);
+            }
+
+        }
+        return "redirect:/home";
+    }
 }

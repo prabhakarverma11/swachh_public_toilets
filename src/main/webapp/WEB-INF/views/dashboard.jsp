@@ -28,6 +28,7 @@
     </style>
     <script src="/static/js/common.util.js"></script>
     <script>
+
         function fillModalData(locationName, locationAddress, locationId) {
             $(".modal-title").html(locationName + ", " + toTitleCase(locationAddress));
 
@@ -40,11 +41,49 @@
                     var reviews = JSON.parse(response.reviews);
                     var modalBody = "<ul class='list-group'>";
 
+                    var blackStar = '<span class="stars-container stars-0">&#9733;</span>';
+                    var whiteStar = '<span class="stars-container stars-0">&#9734;</span>';
+
                     reviews.forEach(function (review) {
-                        modalBody += "<li class='list-group-item'>" +
-                            "Author: <a href='" + review.authorURL + "' target='_blank'>" + review.authorName + "</a><br>" +
-                            "Rating: " + review.rating + "<br>" +
-                            "Review: " + review.reviewText +
+                        var stars = blackStar;
+                        switch (parseInt(review.rating)) {
+                            case 1: {
+                                stars += whiteStar + whiteStar + whiteStar + whiteStar;
+                                break;
+                            }
+                            case 2: {
+                                stars += blackStar;
+                                stars += whiteStar + whiteStar + whiteStar;
+                                break;
+                            }
+                            case 3: {
+                                stars += blackStar + blackStar;
+                                stars += whiteStar + whiteStar;
+                                break;
+                            }
+                            case 4: {
+                                stars += blackStar + blackStar + blackStar;
+                                stars += whiteStar;
+                                break;
+                            }
+                            case 5: {
+                                stars += blackStar + blackStar + blackStar + blackStar;
+                                break;
+                            }
+                            default: {
+                                break;
+                            }
+                        }
+
+                        modalBody += "<li class='list-group-item' style='font-size: medium;border: none;height: 9vw;'>" +
+                            "<div style='width: 25%;height: 100%;float: left;'>" +
+                            "<img src='" + review.profilePhotoURL + "' style='font-size: 4.5em;border-radius: 50%;background-color: rgba(203, 120, 207, 0.55);height: 7vw;w;w;width: 7vw;float: left;margin: 0;'/>" +
+                            "</div>" +
+                            "<div style='width: 75%;height: 100%;float: right;'>" +
+                            "<a href='" + review.authorURL + "' target='_blank'>" + review.authorName + "</a><br>" +
+                            stars + "<br>" +
+                            review.reviewText +
+                            "</div>" +
                             "</li>";
                     });
                     modalBody += "</ul>";
@@ -277,28 +316,28 @@
             </tbody>
         </table>
     </div>
-    <div class="row" style="">
-        <form class="form-inline">
+    <%--<div class="row" style="">--%>
+        <%--<form class="form-inline">--%>
 
-            <div class="col-sm-12" style="padding: 0;">
-                <div class="col-md-3">
-                    <label for="select_date">Items Per page</label>
-                    <select class="form-control"
-                            onchange="handleOnChangeSelectFilter(event.target.value)" name="date_range">
-                        <option value="today">10</option>
-                        <option value="today">20</option>
-                        <option value="today">30</option>
-                        <option value="today">40</option>
-                        <option value="today">50</option>
-                        <option value="today">100</option>
-                        <option value="today">200</option>
-                    </select>
-                </div>
-            </div>
+            <%--<div class="col-sm-12" style="padding: 0;">--%>
+                <%--<div class="col-md-3">--%>
+                    <%--<label for="select_date">Items Per page</label>--%>
+                    <%--<select class="form-control"--%>
+                            <%--onchange="handleOnChangeSelectFilter(event.target.value)" name="date_range">--%>
+                        <%--<option value="today">10</option>--%>
+                        <%--<option value="today">20</option>--%>
+                        <%--<option value="today">30</option>--%>
+                        <%--<option value="today">40</option>--%>
+                        <%--<option value="today">50</option>--%>
+                        <%--<option value="today">100</option>--%>
+                        <%--<option value="today">200</option>--%>
+                    <%--</select>--%>
+                <%--</div>--%>
+            <%--</div>--%>
 
 
-        </form>
-    </div>
+        <%--</form>--%>
+    <%--</div>--%>
 </div>
 <!-- Modal -->
 <div class="modal fade" id="myModal" role="dialog">

@@ -7,14 +7,13 @@ import com.websystique.springmvc.model.Place;
 import com.websystique.springmvc.utils.UtilMethods;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.util.List;
 
 
 @Service("placeIdsService")
-@Transactional
+//@Transactional
 public class PlaceServiceImpl implements PlaceService {
 
     @Autowired
@@ -27,9 +26,9 @@ public class PlaceServiceImpl implements PlaceService {
         if (placeDao.getPlaceByLocation(location) == null) {
             UtilMethods utilMethods = new UtilMethods();
             JsonObject jsonObject = utilMethods.getJsonObjectFetchingURL(url);
-            if (jsonObject !=null){
-                switch (jsonObject.get("status").getAsString()){
-                    case "OK":{
+            if (jsonObject != null) {
+                switch (jsonObject.get("status").getAsString()) {
+                    case "OK": {
                         Place place = new Place();
                         place.setLocation(location);
                         String placeIdValue = jsonObject.get("results").getAsJsonArray().get(0).getAsJsonObject().get("place_id").getAsString();
@@ -40,20 +39,28 @@ public class PlaceServiceImpl implements PlaceService {
 
                         return place;
                     }
-                    case "ZERO_RESULTS":{
-
+                    case "ZERO_RESULTS": {
+                        System.out.println("\nZERO_RESULTS\n");
+                        return null;
                     }
-                    case "OVER_QUERY_LIMIT":{
-
+                    case "OVER_QUERY_LIMIT": {
+                        System.out.println("\nOVER_QUERY_LIMIT\n");
+                        return null;
                     }
-                    case "REQUEST_DENIED":{
-
+                    case "REQUEST_DENIED": {
+                        System.out.println("\nREQUEST_DENIED\n");
+                        return null;
                     }
-                    case "INVALID_REQUEST":{
-
+                    case "INVALID_REQUEST": {
+                        System.out.println("\nINVALID_REQUEST\n");
+                        return null;
+                    }
+                    default: {
+                        System.out.println("\nDOESN'T KNOW WHAT HAPPENED\n");
+                        return null;
                     }
                 }
-            }else{
+            } else {
 
             }
         } else {
@@ -80,6 +87,6 @@ public class PlaceServiceImpl implements PlaceService {
 
     @Override
     public List<Place> getAllPlacesByPageAndSize(Integer page, Integer size) {
-        return placeDao.getAllPlacesByPageAndSize(page,size);
+        return placeDao.getAllPlacesByPageAndSize(page, size);
     }
 }

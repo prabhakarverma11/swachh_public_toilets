@@ -2,9 +2,11 @@ package com.websystique.springmvc.dao;
 
 import com.websystique.springmvc.model.Location;
 import com.websystique.springmvc.model.Place;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Transactional
 public interface PlaceDao {
     void save(Place place);
 

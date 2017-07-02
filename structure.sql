@@ -18,10 +18,35 @@ create table APP_LOCATION (
   country VARCHAR(10) NOT NULL,
   latitude DOUBLE NOT NULL,
   longitude DOUBLE NOT NULL,
-  imageURL VARCHAR(200) NOT NULL,
+  image_URL VARCHAR(200) NOT NULL,
   type VARCHAR(30) NOT NULL,
   PRIMARY KEY (id)
 );
+
+create table APP_LOCATION_ULB_MAP (
+  id BIGINT NOT NULL AUTO_INCREMENT,
+  postal_code BIGINT NOT NULL,
+  ulb_name VARCHAR(10) NOT NULL,
+  location_id INT NOT NULL,
+  PRIMARY KEY (id)
+);
+
+create table APP_PLACE_PHOTOS_MAP (
+  id BIGINT NOT NULL AUTO_INCREMENT,
+  place_id BIGINT NOT NULL,
+  photo_url VARCHAR(500),
+  PRIMARY KEY (id)
+);
+
+create table APP_PIN_CODE (
+  id BIGINT NOT NULL AUTO_INCREMENT,
+  location VARCHAR(150) NOT NULL,
+  pin_code INT NOT NULL,
+  state VARCHAR(150) NOT NULL,
+  district VARCHAR(150) NOT NULL,
+  PRIMARY KEY (id)
+);
+
 
 /* USER_PROFILE table contains all possible roles */
 create table USER_PROFILE(
