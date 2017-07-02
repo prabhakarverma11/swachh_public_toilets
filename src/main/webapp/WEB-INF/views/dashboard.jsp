@@ -317,26 +317,26 @@
         </table>
     </div>
     <%--<div class="row" style="">--%>
-        <%--<form class="form-inline">--%>
+    <%--<form class="form-inline">--%>
 
-            <%--<div class="col-sm-12" style="padding: 0;">--%>
-                <%--<div class="col-md-3">--%>
-                    <%--<label for="select_date">Items Per page</label>--%>
-                    <%--<select class="form-control"--%>
-                            <%--onchange="handleOnChangeSelectFilter(event.target.value)" name="date_range">--%>
-                        <%--<option value="today">10</option>--%>
-                        <%--<option value="today">20</option>--%>
-                        <%--<option value="today">30</option>--%>
-                        <%--<option value="today">40</option>--%>
-                        <%--<option value="today">50</option>--%>
-                        <%--<option value="today">100</option>--%>
-                        <%--<option value="today">200</option>--%>
-                    <%--</select>--%>
-                <%--</div>--%>
-            <%--</div>--%>
+    <%--<div class="col-sm-12" style="padding: 0;">--%>
+    <%--<div class="col-md-3">--%>
+    <%--<label for="select_date">Items Per page</label>--%>
+    <%--<select class="form-control"--%>
+    <%--onchange="handleOnChangeSelectFilter(event.target.value)" name="date_range">--%>
+    <%--<option value="today">10</option>--%>
+    <%--<option value="today">20</option>--%>
+    <%--<option value="today">30</option>--%>
+    <%--<option value="today">40</option>--%>
+    <%--<option value="today">50</option>--%>
+    <%--<option value="today">100</option>--%>
+    <%--<option value="today">200</option>--%>
+    <%--</select>--%>
+    <%--</div>--%>
+    <%--</div>--%>
 
 
-        <%--</form>--%>
+    <%--</form>--%>
     <%--</div>--%>
 </div>
 <!-- Modal -->

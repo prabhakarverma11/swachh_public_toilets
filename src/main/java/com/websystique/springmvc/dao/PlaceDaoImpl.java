@@ -16,10 +16,9 @@ import java.util.List;
 @Repository("placeIdsDao")
 public class PlaceDaoImpl extends AbstractDao<Integer, Place> implements PlaceDao {
 
+    static final Logger logger = LoggerFactory.getLogger(PlaceDaoImpl.class);
     @Autowired
     private SessionFactory sessionFactory;
-
-    static final Logger logger = LoggerFactory.getLogger(PlaceDaoImpl.class);
 
     @Override
     public void save(Place place) {

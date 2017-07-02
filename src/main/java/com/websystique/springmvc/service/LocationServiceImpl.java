@@ -23,7 +23,7 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public List<Location> getAllLocationsByPageAndSize(Integer page, Integer size) {
-        return locationDao.getAllLocationsByPageAndSize(page,size);
+        return locationDao.getAllLocationsByPageAndSize(page, size);
     }
 
     @Override

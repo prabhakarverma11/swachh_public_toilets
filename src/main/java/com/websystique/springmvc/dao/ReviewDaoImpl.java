@@ -20,10 +20,9 @@ import java.util.List;
 @Repository("reviewDao")
 public class ReviewDaoImpl extends AbstractDao<Integer, Review> implements ReviewDao {
 
+    static final Logger logger = LoggerFactory.getLogger(ReviewDaoImpl.class);
     @Autowired
     private SessionFactory sessionFactory;
-
-    static final Logger logger = LoggerFactory.getLogger(ReviewDaoImpl.class);
 
     @Override
     public void save(Review review) {

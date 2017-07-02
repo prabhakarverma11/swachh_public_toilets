@@ -8,7 +8,7 @@ import java.util.Properties;
  * Created by prabhakar on 23/6/17.
  */
 public class UtilConstants {
-    
+
     public static String hostname;
     public static String port;
     public static String username;

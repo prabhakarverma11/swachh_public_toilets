@@ -32,7 +32,6 @@ html {
     height: 100%
 }
 
-
 figure {
     margin: 0;
 }
@@ -79,7 +78,6 @@ th, td {
     border: none;
     padding: 8px 10px
 }
-
 
 /* ******** 2. Form fields ******** */
 form {
@@ -155,7 +153,6 @@ fieldset {
     margin: 0;
     padding: 0
 }
-
 
 /*---- Pagination End ----*/
 /*---- Search Panel start ----*/
@@ -255,8 +252,6 @@ select.searchInput {
 .search:hover {
     background-color: #333;
 }
-
-
 
 .searchDiv li.row.nobdr:last-child {
     padding-left: 0;
@@ -481,7 +476,6 @@ input:-moz-placeholder {
     text-decoration: none;
     margin-left: 40px;
 }
-
 
 .keepLogin {
     border: medium none;

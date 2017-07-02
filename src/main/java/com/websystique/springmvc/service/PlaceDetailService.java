@@ -4,7 +4,6 @@ import com.websystique.springmvc.model.Place;
 import com.websystique.springmvc.model.PlaceDetail;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 
 public interface PlaceDetailService {
 

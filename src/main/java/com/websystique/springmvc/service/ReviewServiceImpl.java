@@ -30,12 +30,12 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public Double getAverageRatingByPlaceBetweenDates(Place place, String startDate, String endDate) throws ParseException {
-        return reviewDao.getAverageRatingByPlaceBetweenDates(place, startDate,endDate);
+        return reviewDao.getAverageRatingByPlaceBetweenDates(place, startDate, endDate);
     }
 
     @Override
     public Long countReviewsByPlaceBetweenDates(Place place, String startDate, String endDate) throws ParseException {
-        return reviewDao.countReviewsByPlaceBetweenDates(place,startDate,endDate);
+        return reviewDao.countReviewsByPlaceBetweenDates(place, startDate, endDate);
     }
 
     @Override

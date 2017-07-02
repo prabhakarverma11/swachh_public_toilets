@@ -5,105 +5,104 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
-@Table(name="APP_LOCATION")
-public class Location implements Serializable{
+@Table(name = "APP_LOCATION")
+public class Location implements Serializable {
 
-	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-	@NotEmpty
-	@Column(name="NAME", unique=false, nullable=false)
-	private String name;
-	
-	@NotEmpty
-	@Column(name="ADDRESS", nullable=false)
-	private String address;
-		
-	@NotEmpty
-	@Column(name="COUNTRY", nullable=false)
-	private String country;
+    @NotEmpty
+    @Column(name = "NAME", unique = false, nullable = false)
+    private String name;
 
-	@NotNull
-	@Column(name="LATITUDE", nullable=false)
-	private Double latitude;
+    @NotEmpty
+    @Column(name = "ADDRESS", nullable = false)
+    private String address;
 
-	@NotNull
-	@Column(name="LONGITUDE", nullable=false)
-	private Double longitude;
+    @NotEmpty
+    @Column(name = "COUNTRY", nullable = false)
+    private String country;
 
-	@NotEmpty
-	@Column(name="IMAGE_URL", nullable=false)
-	private String imageURL;
+    @NotNull
+    @Column(name = "LATITUDE", nullable = false)
+    private Double latitude;
 
-	@NotEmpty
-	@Column(name="TYPE", nullable=false)
-	private String type;
+    @NotNull
+    @Column(name = "LONGITUDE", nullable = false)
+    private Double longitude;
 
-	public Integer getId() {
-		return id;
-	}
+    @NotEmpty
+    @Column(name = "IMAGE_URL", nullable = false)
+    private String imageURL;
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    @NotEmpty
+    @Column(name = "TYPE", nullable = false)
+    private String type;
 
-	public String getName() {
-		return name;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public String getAddress() {
-		return address;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setAddress(String address) {
-		this.address = address;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getCountry() {
-		return country;
-	}
+    public String getAddress() {
+        return address;
+    }
 
-	public void setCountry(String country) {
-		this.country = country;
-	}
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
-	public Double getLatitude() {
-		return latitude;
-	}
+    public String getCountry() {
+        return country;
+    }
 
-	public void setLatitude(Double latitude) {
-		this.latitude = latitude;
-	}
+    public void setCountry(String country) {
+        this.country = country;
+    }
 
-	public Double getLongitude() {
-		return longitude;
-	}
+    public Double getLatitude() {
+        return latitude;
+    }
 
-	public void setLongitude(Double longitude) {
-		this.longitude = longitude;
-	}
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
 
-	public String getImageURL() {
-		return imageURL;
-	}
+    public Double getLongitude() {
+        return longitude;
+    }
 
-	public void setImageURL(String imageURL) {
-		this.imageURL = imageURL;
-	}
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
 
-	public String getType() {
-		return type;
-	}
+    public String getImageURL() {
+        return imageURL;
+    }
 
-	public void setType(String type) {
-		this.type = type;
-	}
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 }

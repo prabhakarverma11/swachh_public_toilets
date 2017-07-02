@@ -34,6 +34,6 @@ public class PlaceULBMapServiceImpl implements PlaceULBMapService {
 
     @Override
     public List<PlaceULBMap> getAllPlaceULBMapByPageAndSize(Integer page, Integer size) {
-        return placeULBMapDao.getAllPlaceULBMapByPageAndSize(page,size);
+        return placeULBMapDao.getAllPlaceULBMapByPageAndSize(page, size);
     }
 }

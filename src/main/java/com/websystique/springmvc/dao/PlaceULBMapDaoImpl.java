@@ -33,6 +33,6 @@ public class PlaceULBMapDaoImpl extends AbstractDao<Integer, PlaceULBMap> implem
 
     @Override
     public List<PlaceULBMap> getAllPlaceULBMapByPageAndSize(Integer page, Integer size) {
-        return createEntityCriteria().setFirstResult((page-1)*size).setMaxResults(size).list();
+        return createEntityCriteria().setFirstResult((page - 1) * size).setMaxResults(size).list();
     }
 }
