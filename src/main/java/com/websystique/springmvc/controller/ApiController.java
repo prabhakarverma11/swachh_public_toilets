@@ -40,23 +40,34 @@ public class ApiController {
 
     @ResponseBody
     @RequestMapping(value = "/get-report-of-locations/{startDate}/{endDate}/{page}/{size}", method = RequestMethod.GET, produces = "application/json")
-    public void getReportOfLocationsBetweenDateByPageAndSize(@PathVariable String startDate, @PathVariable String endDate, @PathVariable Integer page, @PathVariable Integer size, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void getReportOfLocationsBetweenDateByPageAndSize(@PathVariable String startDate, @PathVariable String endDate, @PathVariable Integer page, @PathVariable Integer size, HttpServletRequest request, HttpServletResponse response) {
+        Long startTime = System.currentTimeMillis();
         response.setContentType("application/json");
         response.setCharacterEncoding("utf-8");
 
         List<Location> locations = locationService.getAllLocationsByPageAndSize(page, size);
         List<Report> reports = reportService.getReportsListByLocationsBetweenDates(locations, startDate, endDate);
+        try {
+            PrintWriter writer = response.getWriter();
+            Gson gson = new Gson();
 
-        PrintWriter writer = response.getWriter();
-        Gson gson = new Gson();
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("content", gson.toJson(reports));
-        jsonObject.addProperty("startDate", gson.toJson(startDate));
-        jsonObject.addProperty("endDate", gson.toJson(endDate));
-        jsonObject.addProperty("page", gson.toJson(page));
-        jsonObject.addProperty("size", gson.toJson(size));
-        jsonObject.addProperty("noOfElements", gson.toJson(reports.size()));
-        jsonObject.addProperty("totalNoOfElements", gson.toJson(locations.size()));
-        writer.write(jsonObject.toString());
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("content", gson.toJson(reports));
+            jsonObject.addProperty("startDate", startDate);
+            jsonObject.addProperty("endDate", endDate);
+            jsonObject.addProperty("page", page);
+            jsonObject.addProperty("size", size);
+            Long endTime = System.currentTimeMillis();
+            jsonObject.addProperty("timeTaken", (endTime - startTime) / 1000);
+
+            writer.print(jsonObject);
+            writer.flush();
+            response.setStatus(200);
+        } catch (IOException e) {
+            response.setStatus(500);
+            e.printStackTrace();
+        }
+
+
     }
 }
