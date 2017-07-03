@@ -2,7 +2,10 @@ package com.websystique.springmvc.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.websystique.springmvc.model.*;
+import com.websystique.springmvc.model.Location;
+import com.websystique.springmvc.model.Place;
+import com.websystique.springmvc.model.PlaceDetail;
+import com.websystique.springmvc.model.Review;
 import com.websystique.springmvc.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,14 +40,25 @@ public class DashboardController {
     @Autowired
     ReviewService reviewService;
 
+
     @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
     public String dashBoard(ModelMap model) {
-
-        List<Location> locations = locationService.getAllLocationsByPageAndSize(0, 100);
-        List<Report> reports = reportService.getReportsListByLocationsBetweenDates(locations, "", "");
-        model.addAttribute("reportsList", reports);
         return "dashboard";
     }
+
+    @RequestMapping(value = {"/", "/home"}, method = RequestMethod.GET)
+    public String home(ModelMap model) {
+        return "home";
+    }
+
+
+//        List<Location> locations = locationService.getAllLocationsByPageAndSize(0, 100);
+//        List<Report> reports = reportService.getReportsListByLocationsBetweenDates(locations, "", "");
+//        model.addAttribute("reportsList", reports);
+
+//        List<Location> allLocations = locationService.getAllLocationsByPageAndSize(0, 20);
+//        model.addAttribute("locationsList", allLocations);
+
 
     /**
      * This method handles logout requests.
@@ -131,14 +145,6 @@ public class DashboardController {
 
     }
 
-    @RequestMapping(value = {"/", "/home"}, method = RequestMethod.GET)
-    public String home(ModelMap model) {
-
-        List<Location> allLocations = locationService.getAllLocationsByPageAndSize(0, 20);
-        model.addAttribute("locationsList", allLocations);
-
-        return "home";
-    }
 
     @RequestMapping(value = "/admin-dashboard", method = RequestMethod.GET)
     public String getAdminDashboard(ModelMap modelMap) {
