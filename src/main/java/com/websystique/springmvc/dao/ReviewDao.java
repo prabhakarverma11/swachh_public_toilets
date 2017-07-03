@@ -30,5 +30,7 @@ public interface ReviewDao {
 
     Long countReviewsByPlaceAndRatingRangeBetweenDates(Place place, Double ratingFrom, Double ratingEnd, String startDate, String endDate) throws ParseException;
 
+    List<Review> getAllReviewsByPlacePageAndSizeOrderByDate(Place place, Integer page, Integer size);
+
 }
 

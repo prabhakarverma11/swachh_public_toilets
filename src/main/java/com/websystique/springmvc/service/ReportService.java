@@ -10,6 +10,6 @@ public interface ReportService {
 
     List<Report> getReportsListByLocationsBetweenDates(List<Location> locations, String startDate, String endDate);
 
-    List<Report> getReportsListByPlaceDetailsRatingRangeBetweenDates(List<PlaceDetail> placeDetails, Double ratingFrom, Double ratingEnd, String startDate, String endDate);
+    List<Report> getReportsListByPlaceDetailsBetweenDates(List<PlaceDetail> placeDetails, String startDate, String endDate);
 
 }

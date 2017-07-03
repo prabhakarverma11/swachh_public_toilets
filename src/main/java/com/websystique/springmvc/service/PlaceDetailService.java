@@ -16,4 +16,6 @@ public interface PlaceDetailService {
 
     List<PlaceDetail> getAllPlaceDetailsByLocationTypeRatingRangePageAndSize(String locationType, Double ratingFrom, Double ratingEnd, Integer page, Integer size);
 
+    Long countPlaceDetailsByLocationTypeAndRatingRange(String locationType, Double ratingFrom, Double ratingEnd);
+
 }

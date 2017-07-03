@@ -5,6 +5,7 @@ import com.websystique.springmvc.model.Review;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
@@ -144,5 +145,13 @@ public class ReviewDaoImpl extends AbstractDao<Integer, Review> implements Revie
 
         criteria.setProjection(Projections.rowCount());
         return (Long) criteria.uniqueResult();
+    }
+
+    @Override
+    public List<Review> getAllReviewsByPlacePageAndSizeOrderByDate(Place place, Integer page, Integer size) {
+
+        return createEntityCriteria().add(Restrictions.eq("place", place))
+                .setFirstResult((page - 1) * size).setMaxResults(size)
+                .addOrder(Order.desc("timeStamp")).list();
     }
 }

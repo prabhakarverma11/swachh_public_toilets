@@ -3,6 +3,7 @@ package com.websystique.springmvc.dao;
 import com.websystique.springmvc.model.Place;
 import com.websystique.springmvc.model.PlaceDetail;
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,9 +39,22 @@ public class PlaceDetailDaoImpl extends AbstractDao<Integer, PlaceDetail> implem
                 .add(Restrictions.ge("rating", ratingFrom))
                 .add(Restrictions.le("rating", ratingEnd))
                 .createCriteria("place", "place")
-                .createCriteria("location", "location")
-                .add(Restrictions.eq("location.type", locationType))
-                .setFirstResult((page - 1) * size).setMaxResults(size);
+                .createCriteria("location", "location");
+        if (locationType != null)
+            criteria.add(Restrictions.eq("location.type", locationType));
+        criteria.setFirstResult((page - 1) * size).setMaxResults(size);
         return criteria.list();
+    }
+
+    @Override
+    public Long countPlaceDetailsByLocationTypeAndRatingRange(String locationType, Double ratingFrom, Double ratingEnd) {
+        Criteria criteria = getSession().createCriteria(PlaceDetail.class, "placeDetail")
+                .add(Restrictions.ge("rating", ratingFrom))
+                .add(Restrictions.le("rating", ratingEnd))
+                .createCriteria("place", "place")
+                .createCriteria("location", "location");
+        if (locationType != null)
+            criteria.add(Restrictions.eq("location.type", locationType));
+        return (Long) criteria.setProjection(Projections.rowCount()).uniqueResult();
     }
 }

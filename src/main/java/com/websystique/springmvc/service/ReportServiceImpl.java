@@ -59,7 +59,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public List<Report> getReportsListByPlaceDetailsRatingRangeBetweenDates(List<PlaceDetail> placeDetails, Double ratingFrom, Double ratingEnd, String startDate, String endDate) {
+    public List<Report> getReportsListByPlaceDetailsBetweenDates(List<PlaceDetail> placeDetails, String startDate, String endDate) {
         List<Report> reportsList = new ArrayList<Report>();
 
 //        Location location = locationService.getLocationById(locationId);

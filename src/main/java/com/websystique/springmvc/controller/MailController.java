@@ -157,7 +157,7 @@ public class MailController {
 
         CSVWriter writer = new CSVWriter(new FileWriter(csvFile.getAbsolutePath()));
 
-        writer.writeNext(new String[]{"S.No", "Location Id", "Address", "Pin Code", "District"});
+        writer.writeNext(new String[]{"S.No", "Location Id", "Address", "Latitude", "Longitude", "Pin Code", "District"});
 
         String line = "";
         int count = 1;
@@ -166,6 +166,8 @@ public class MailController {
             line += (count++) + "|";
             line += placeULBMap.getPlace().getLocation().getId() + "|";
             line += placeULBMap.getPlace().getLocation().getAddress() + "|";
+            line += placeULBMap.getPlace().getLocation().getLatitude() + "|";
+            line += placeULBMap.getPlace().getLocation().getLongitude() + "|";
             line += placeULBMap.getPostalCode() + "|";
             line += placeULBMap.getULBName() + "|";
 
