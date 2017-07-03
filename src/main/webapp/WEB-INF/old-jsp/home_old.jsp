@@ -24,7 +24,7 @@
 </head>
 
 <body style="height: auto;">
-<%@include file="../old-jsp/navigation_old.jsp" %>
+<%@include file="navigation_old.jsp" %>
 <div class="row" style="height: 80%; margin:0;overflow: auto">
     <div class="container" style="height: 100%; overflow-y: scroll">
         <div class="table-responsive">
@@ -60,6 +60,6 @@
     </div>
 </div>
 
-<%@include file="../old-jsp/footer_old.jsp" %>
+<%@include file="footer_old.jsp" %>
 </body>
 </html>

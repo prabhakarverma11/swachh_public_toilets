@@ -24,7 +24,7 @@
 </head>
 
 <body style="height: auto;">
-<%@include file="navigation.jsp" %>
+<%@include file="navigation_old.jsp" %>
 <div class="row" style="height: 80%; margin:0;overflow: auto">
     <div class="col-md-6" style="height: 100%;margin: 0">
         <div class="form-group">
@@ -38,6 +38,6 @@
     </div>
 </div>
 
-<%@include file="footer.jsp" %>
+<%@include file="footer_old.jsp" %>
 </body>
 </html>

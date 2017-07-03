@@ -16,7 +16,7 @@
 </head>
 
 <body>
-<%@include file="navigation.jsp" %>
+<%@include file="navigation_old.jsp" %>
 <div class="row" style="height: 80%; margin-top: 0;margin-bottom: 0">
     <div class="panel panel-default">
         <!-- Default panel contents -->
@@ -58,6 +58,6 @@
         </table>
     </div>
 </div>
-<%@include file="footer.jsp" %>
+<%@include file="footer_old.jsp" %>
 </body>
 </html>

@@ -119,7 +119,7 @@
 
 </div>
 
-<%@include file="../old-jsp/footer_old.jsp" %>
+<%@include file="footer_old.jsp" %>
 
 </body>
 </html>

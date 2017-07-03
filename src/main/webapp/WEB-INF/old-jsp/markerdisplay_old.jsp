@@ -27,7 +27,7 @@
 </head>
 
 <body style="height: auto;" onload="createMarker(<c:out value='${locationsListJson}'/>);">
-<%@include file="navigation.jsp" %>
+<%@include file="navigation_old.jsp" %>
 <div class="row" style="height: 80%;margin: 0; overflow: auto">
     <div class="col-md-6">
         <div id="map" style="height: 100%;margin: 5px 0;"></div>
@@ -52,6 +52,6 @@
         </div>
     </div>
 </div>
-<%@include file="footer.jsp" %>
+<%@include file="footer_old.jsp" %>
 </body>
 </html>

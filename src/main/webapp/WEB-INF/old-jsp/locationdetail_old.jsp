@@ -372,7 +372,7 @@
 </head>
 
 <body onload="setFilter('${dateRange}','${startDate}','${endDate}');">
-<%@include file="navigation.jsp" %>
+<%@include file="navigation_old.jsp" %>
 <div class="row" style="height: 80%; margin: 0;overflow: auto">
     <div class="row" style="height:15%; margin: 0;">
         <h1 class="text-center">${location.name},
@@ -479,6 +479,6 @@
         </div>
     </div>
 </div>
-<%@include file="footer.jsp" %>
+<%@include file="footer_old.jsp" %>
 </body>
 </html>

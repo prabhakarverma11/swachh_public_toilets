@@ -169,7 +169,7 @@
 
 <body style="height: auto;"
       onload="setFilter('${dateRange}','${startDate}','${endDate}');">
-<%@include file="navigation.jsp" %>
+<%@include file="navigation_old.jsp" %>
 <div class="row" style="height: 80%; margin: 0">
     <div class="row" style="height: 10%; margin: 0; margin-top: 1%">
         <form class="form-inline" action="/report">
@@ -295,6 +295,6 @@
         </div>
     </div>
 </div>
-<%@include file="footer.jsp" %>
+<%@include file="footer_old.jsp" %>
 </body>
 </html>

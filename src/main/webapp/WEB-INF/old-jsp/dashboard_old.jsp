@@ -181,7 +181,7 @@
 </head>
 
 <body style="height: auto;" onload="setFilter('${dateRange}','${startDate}','${endDate}');">
-<%@include file="../old-jsp/navigation_old.jsp" %>
+<%@include file="navigation_old.jsp" %>
 <div class="row" style="height: 25%;margin-top: 50px;width: 100%;margin-bottom: 0;">
     <div class="row" style="margin: 0;">
         <h2 class="text-center" style="margin: 0">Welcome to the Swachhata Dashboard</h2>
@@ -360,6 +360,6 @@
     </div>
 </div>
 
-<%@include file="../old-jsp/footer_old.jsp" %>
+<%@include file="footer_old.jsp" %>
 </body>
 </html>
