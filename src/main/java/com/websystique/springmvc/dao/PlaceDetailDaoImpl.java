@@ -31,4 +31,16 @@ public class PlaceDetailDaoImpl extends AbstractDao<Integer, PlaceDetail> implem
         else
             return null;
     }
+
+    @Override
+    public List<PlaceDetail> getAllPlaceDetailsByLocationTypeRatingRangePageAndSize(String locationType, Double ratingFrom, Double ratingEnd, Integer page, Integer size) {
+        Criteria criteria = getSession().createCriteria(PlaceDetail.class, "placeDetail")
+                .add(Restrictions.ge("rating", ratingFrom))
+                .add(Restrictions.le("rating", ratingEnd))
+                .createCriteria("place", "place")
+                .createCriteria("location", "location")
+                .add(Restrictions.eq("location.type", locationType))
+                .setFirstResult((page - 1) * size).setMaxResults(size);
+        return criteria.list();
+    }
 }

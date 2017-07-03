@@ -4,6 +4,7 @@ import com.websystique.springmvc.model.Place;
 import com.websystique.springmvc.model.PlaceDetail;
 
 import java.io.IOException;
+import java.util.List;
 
 public interface PlaceDetailService {
 
@@ -12,5 +13,7 @@ public interface PlaceDetailService {
     void save(PlaceDetail placeDetail);
 
     PlaceDetail getPlaceDetailByPlace(Place place);
+
+    List<PlaceDetail> getAllPlaceDetailsByLocationTypeRatingRangePageAndSize(String locationType, Double ratingFrom, Double ratingEnd, Integer page, Integer size);
 
 }

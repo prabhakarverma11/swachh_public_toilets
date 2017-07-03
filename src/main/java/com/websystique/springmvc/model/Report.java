@@ -21,6 +21,8 @@ public class Report implements Serializable {
 
     private Long reviewsCount;
 
+    private Double averageRating;
+
     public Location getLocation() {
         return location;
     }
@@ -51,5 +53,13 @@ public class Report implements Serializable {
 
     public void setReviewsCount(Long reviewsCount) {
         this.reviewsCount = reviewsCount;
+    }
+
+    public Double getAverageRating() {
+        return averageRating;
+    }
+
+    public void setAverageRating(Double averageRating) {
+        this.averageRating = averageRating;
     }
 }

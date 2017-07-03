@@ -12,4 +12,7 @@ public interface LocationService {
     List<Location> getAllLocationsByPageAndSize(Integer page, Integer size);
 
     Location getLocationById(Integer locationId);
+
+    List<Location> getAllLocationsByTypePageAndSize(String locationType, Integer page, Integer size);
+
 }

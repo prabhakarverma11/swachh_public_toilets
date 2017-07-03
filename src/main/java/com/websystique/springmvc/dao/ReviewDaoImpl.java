@@ -126,4 +126,23 @@ public class ReviewDaoImpl extends AbstractDao<Integer, Review> implements Revie
         int result = query.executeUpdate();
         System.out.println("Rows affected: " + result);
     }
+
+    @Override
+    public Long countReviewsByPlaceAndRatingRangeBetweenDates(Place place, Double ratingFrom, Double ratingEnd, String startDate, String endDate) throws ParseException {
+        Criteria criteria = createEntityCriteria();
+
+        if (place != null)
+            criteria.add(Restrictions.eq("place", place));
+
+        criteria.add(Restrictions.ge("rating", ratingFrom)).add(Restrictions.le("rating", ratingEnd));
+
+        if (startDate != null && !startDate.equals(""))
+            criteria.add(Restrictions.ge("timeStamp", new SimpleDateFormat("yyyy-MM-dd").parse(startDate)));
+
+        if (endDate != null && !endDate.equals(""))
+            criteria.add(Restrictions.le("timeStamp", new SimpleDateFormat("yyyy-MM-dd").parse(endDate)));
+
+        criteria.setProjection(Projections.rowCount());
+        return (Long) criteria.uniqueResult();
+    }
 }

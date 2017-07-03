@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 
 
 @Service("placeDetailService")
@@ -168,4 +169,8 @@ public class PlaceDetailServiceImpl implements PlaceDetailService {
         return placeDetailDao.getPlaceDetailByPlace(place);
     }
 
+    @Override
+    public List<PlaceDetail> getAllPlaceDetailsByLocationTypeRatingRangePageAndSize(String locationType, Double ratingFrom, Double ratingEnd, Integer page, Integer size) {
+        return placeDetailDao.getAllPlaceDetailsByLocationTypeRatingRangePageAndSize(locationType, ratingFrom, ratingEnd, page, size);
+    }
 }

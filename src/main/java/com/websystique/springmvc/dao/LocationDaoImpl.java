@@ -2,6 +2,7 @@ package com.websystique.springmvc.dao;
 
 import com.websystique.springmvc.model.Location;
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -31,6 +32,12 @@ public class LocationDaoImpl extends AbstractDao<Integer, Location> implements L
 
         List<Location> locations = (List<Location>) criteria.list();
         return locations;
+    }
+
+    @Override
+    public List<Location> getAllLocationsByTypePageAndSize(String locationType, Integer page, Integer size) {
+        return createEntityCriteria().add(Restrictions.eq("type", locationType))
+                .setFirstResult((page - 1) * size).setMaxResults(size).list();
     }
 
     @Override

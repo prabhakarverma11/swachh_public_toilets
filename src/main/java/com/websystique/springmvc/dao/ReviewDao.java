@@ -27,5 +27,8 @@ public interface ReviewDao {
     Long countReviewsByPlace(Place place);
 
     void deleteAllRecordsByPlace(Place place);
+
+    Long countReviewsByPlaceAndRatingRangeBetweenDates(Place place, Double ratingFrom, Double ratingEnd, String startDate, String endDate) throws ParseException;
+
 }
 

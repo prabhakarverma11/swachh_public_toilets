@@ -42,12 +42,43 @@ public class ReportServiceImpl implements ReportService {
             report.setLocation(location);
             report.setPlace(place);
             report.setPlaceDetail(placeDetail);
+            Double averageRating = null;
             Long reviewsCount = null;
             try {
+                averageRating = reviewDao.getAverageRatingByPlaceBetweenDates(place, startDate, endDate);
                 reviewsCount = reviewDao.countReviewsByPlaceBetweenDates(place, startDate, endDate);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
+            report.setAverageRating(averageRating);
+            report.setReviewsCount(reviewsCount);
+
+            reportsList.add(report);
+        }
+        return reportsList;
+    }
+
+    @Override
+    public List<Report> getReportsListByPlaceDetailsRatingRangeBetweenDates(List<PlaceDetail> placeDetails, Double ratingFrom, Double ratingEnd, String startDate, String endDate) {
+        List<Report> reportsList = new ArrayList<Report>();
+
+//        Location location = locationService.getLocationById(locationId);
+        for (PlaceDetail placeDetail : placeDetails) {
+
+            Report report = new Report();
+            report.setPlaceDetail(placeDetail);
+            report.setPlace(placeDetail.getPlace());
+            report.setLocation(placeDetail.getPlace().getLocation());
+
+            Double averageRating = null;
+            Long reviewsCount = null;
+            try {
+                averageRating = reviewDao.getAverageRatingByPlaceBetweenDates(placeDetail.getPlace(), startDate, endDate);
+                reviewsCount = reviewDao.countReviewsByPlaceBetweenDates(placeDetail.getPlace(), startDate, endDate);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            report.setAverageRating(averageRating);
             report.setReviewsCount(reviewsCount);
 
             reportsList.add(report);
