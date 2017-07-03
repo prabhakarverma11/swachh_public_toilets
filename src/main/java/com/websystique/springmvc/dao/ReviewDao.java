@@ -32,5 +32,7 @@ public interface ReviewDao {
 
     List<Review> getAllReviewsByPlacePageAndSizeOrderByDate(Place place, Integer page, Integer size);
 
+    Long countReviewsByPlaceAndRating(Place place, Integer rating);
+
 }
 

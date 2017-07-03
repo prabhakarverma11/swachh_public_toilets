@@ -95,6 +95,11 @@ public class ApiController {
             Place place = placeService.getPlaceByLocation(location);
             List<Review> reviews = reviewService.getAllReviewsByPlacePageAndSizeOrderByDate(place, page, size);
             Long noOfElements = reviewService.countReviewsByPlace(place);
+            Long oneStarRated = reviewService.countReviewsByPlaceAndRating(place, 1);
+            Long twoStarRated = reviewService.countReviewsByPlaceAndRating(place, 2);
+            Long threeStarRated = reviewService.countReviewsByPlaceAndRating(place, 3);
+            Long fourStarRated = reviewService.countReviewsByPlaceAndRating(place, 4);
+            Long fiveStarRated = reviewService.countReviewsByPlaceAndRating(place, 5);
             try {
                 PrintWriter writer = response.getWriter();
                 Gson gson = new Gson();
@@ -105,6 +110,11 @@ public class ApiController {
                 jsonObject.addProperty("page", page);
                 jsonObject.addProperty("size", size);
                 jsonObject.addProperty("noOfElements", noOfElements);
+                jsonObject.addProperty("oneStarRated", oneStarRated);
+                jsonObject.addProperty("twoStarRated", twoStarRated);
+                jsonObject.addProperty("threeStarRated", threeStarRated);
+                jsonObject.addProperty("fourStarRated", fourStarRated);
+                jsonObject.addProperty("fiveStarRated", fiveStarRated);
                 Long endTime = System.currentTimeMillis();
                 jsonObject.addProperty("timeTaken", (endTime - startTime) / 1000);
 

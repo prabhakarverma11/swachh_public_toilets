@@ -154,4 +154,11 @@ public class ReviewDaoImpl extends AbstractDao<Integer, Review> implements Revie
                 .setFirstResult((page - 1) * size).setMaxResults(size)
                 .addOrder(Order.desc("timeStamp")).list();
     }
+
+    @Override
+    public Long countReviewsByPlaceAndRating(Place place, Integer rating) {
+        return (Long) createEntityCriteria().add(Restrictions.eq("place", place))
+                .add(Restrictions.eq("rating", rating))
+                .setProjection(Projections.rowCount()).uniqueResult();
+    }
 }

@@ -20,4 +20,6 @@ public interface ReviewService {
 
     List<Review> getAllReviewsByPlacePageAndSizeOrderByDate(Place place, Integer page, Integer size);
 
+    Long countReviewsByPlaceAndRating(Place place, Integer rating);
+
 }

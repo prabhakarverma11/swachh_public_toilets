@@ -44,7 +44,12 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public List<Review> getAllReviewsByPlacePageAndSizeOrderByDate(Place place,Integer page,Integer size) {
-        return reviewDao.getAllReviewsByPlacePageAndSizeOrderByDate(place, page,size);
+    public List<Review> getAllReviewsByPlacePageAndSizeOrderByDate(Place place, Integer page, Integer size) {
+        return reviewDao.getAllReviewsByPlacePageAndSizeOrderByDate(place, page, size);
+    }
+
+    @Override
+    public Long countReviewsByPlaceAndRating(Place place, Integer rating) {
+        return reviewDao.countReviewsByPlaceAndRating(place, rating);
     }
 }
