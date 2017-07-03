@@ -57,4 +57,16 @@ public class PlaceDetailDaoImpl extends AbstractDao<Integer, PlaceDetail> implem
             criteria.add(Restrictions.eq("location.type", locationType));
         return (Long) criteria.setProjection(Projections.rowCount()).uniqueResult();
     }
+
+    @Override
+    public Long countPlaceDetails() {
+        return (Long) createEntityCriteria().setProjection(Projections.rowCount()).uniqueResult();
+    }
+
+    @Override
+    public Long countPlaceDetailsByRatingRange(Double ratingFrom, Double ratingTo) {
+        return (Long) createEntityCriteria().add(Restrictions.ge("rating", ratingFrom))
+                .add(Restrictions.le("rating", ratingTo))
+                .setProjection(Projections.rowCount()).uniqueResult();
+    }
 }

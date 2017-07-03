@@ -19,5 +19,9 @@ public interface PlaceDetailDao {
 
     Long countPlaceDetailsByLocationTypeAndRatingRange(String locationType, Double ratingFrom, Double ratingEnd);
 
+    Long countPlaceDetails();
+
+    Long countPlaceDetailsByRatingRange(Double ratingFrom, Double ratingTo);
+
 }
 

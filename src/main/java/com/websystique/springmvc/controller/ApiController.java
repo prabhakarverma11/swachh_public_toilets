@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -127,6 +128,44 @@ public class ApiController {
             }
         } else {
             response.setStatus(404);
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/get-dashboard", method = RequestMethod.GET, produces = "application/json")
+    public void getdashboard(HttpServletRequest request, HttpServletResponse response) {
+        Long startTime = System.currentTimeMillis();
+        response.setContentType("application/json");
+        response.setCharacterEncoding("utf-8");
+
+        //validataion TODO
+        Long totalToilets = placeDetailService.countPlaceDetails();
+        Long fiveStarsRated = placeDetailService.countPlaceDetailsByRatingRange(5.0, 5.0);
+        Long threeOrLessStarsRated = placeDetailService.countPlaceDetailsByRatingRange(0.0, 3.0);
+
+        List<String> wardsList = new ArrayList<>();
+        List<String> staffsList = new ArrayList<>();
+        List<String> locationTypes = new ArrayList<>();
+        try {
+            PrintWriter writer = response.getWriter();
+            Gson gson = new Gson();
+
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("totalToilets", totalToilets);
+            jsonObject.addProperty("fiveStarsRated", fiveStarsRated);
+            jsonObject.addProperty("threeOrLessStarsRated", threeOrLessStarsRated);
+            jsonObject.addProperty("wardsList", gson.toJson(wardsList));
+            jsonObject.addProperty("staffsList", gson.toJson(staffsList));
+            jsonObject.addProperty("locationTypes", gson.toJson(locationTypes));
+            Long endTime = System.currentTimeMillis();
+            jsonObject.addProperty("timeTaken", (endTime - startTime) / 1000);
+
+            writer.print(jsonObject);
+            writer.flush();
+            response.setStatus(200);
+        } catch (IOException e) {
+            response.setStatus(500);
+            e.printStackTrace();
         }
     }
 

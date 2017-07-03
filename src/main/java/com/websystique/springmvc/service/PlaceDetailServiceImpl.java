@@ -178,4 +178,14 @@ public class PlaceDetailServiceImpl implements PlaceDetailService {
     public Long countPlaceDetailsByLocationTypeAndRatingRange(String locationType, Double ratingFrom, Double ratingEnd) {
         return placeDetailDao.countPlaceDetailsByLocationTypeAndRatingRange(locationType, ratingFrom, ratingEnd);
     }
+
+    @Override
+    public Long countPlaceDetails() {
+        return placeDetailDao.countPlaceDetails();
+    }
+
+    @Override
+    public Long countPlaceDetailsByRatingRange(Double ratingFrom, Double ratingTo) {
+        return placeDetailDao.countPlaceDetailsByRatingRange(ratingFrom, ratingTo);
+    }
 }
