@@ -41,6 +41,7 @@ public class ApiController {
     @Autowired
     PinCodeDetailService pinCodeDetailService;
 
+    @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/get-report-of-locations/{ratingFrom}/{ratingEnd}/{page}/{size}", method = RequestMethod.GET, produces = "application/json")
     public void getReportOfLocationsByLocationTypeRatingRangeAndBetweenDateByPageAndSize(@RequestParam(required = false) String locationType, @PathVariable Double ratingFrom, @PathVariable Double ratingEnd, @RequestParam(required = false) String startDate, @RequestParam(required = false) String endDate, @PathVariable Integer page, @PathVariable Integer size, HttpServletRequest request, HttpServletResponse response) {
@@ -83,6 +84,7 @@ public class ApiController {
     }
 
 
+    @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/get-reviews-of-location/{locationId}/{page}/{size}", method = RequestMethod.GET, produces = "application/json")
     public void getReviewsOfLocationByLocationIdPageAndSize(@PathVariable Integer locationId, @PathVariable Integer page, @PathVariable Integer size, HttpServletRequest request, HttpServletResponse response) {
@@ -131,14 +133,16 @@ public class ApiController {
         }
     }
 
+    @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/get-dashboard", method = RequestMethod.GET, produces = "application/json")
-    public void getdashboard(HttpServletRequest request, HttpServletResponse response) {
+    public void getdashboard(@RequestParam(required = false) String wardName, HttpServletRequest request, HttpServletResponse response) {
         Long startTime = System.currentTimeMillis();
         response.setContentType("application/json");
         response.setCharacterEncoding("utf-8");
 
         //validataion TODO
+        //TODO add wardName
         Long totalToilets = placeDetailService.countPlaceDetails();
         Long fiveStarsRated = placeDetailService.countPlaceDetailsByRatingRange(5.0, 5.0);
         Long threeOrLessStarsRated = placeDetailService.countPlaceDetailsByRatingRange(0.0, 3.0);
