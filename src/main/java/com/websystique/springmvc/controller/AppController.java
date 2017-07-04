@@ -3,9 +3,11 @@ package com.websystique.springmvc.controller;
 import com.google.gson.Gson;
 import com.websystique.springmvc.model.Location;
 import com.websystique.springmvc.model.PinCodeDetail;
+import com.websystique.springmvc.model.Place;
 import com.websystique.springmvc.model.PlaceULBMap;
 import com.websystique.springmvc.service.LocationService;
 import com.websystique.springmvc.service.PinCodeDetailService;
+import com.websystique.springmvc.service.PlaceService;
 import com.websystique.springmvc.service.PlaceULBMapService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -30,6 +36,9 @@ public class AppController {
 
     @Autowired
     PinCodeDetailService pinCodeDetailService;
+
+    @Autowired
+    PlaceService placeService;
 
 
     /**
@@ -72,6 +81,39 @@ public class AppController {
                 placeULBMapService.update(placeULBMap);
             }
 
+        }
+        return "redirect:/home";
+    }
+
+    @RequestMapping(value = "/map-place-ulb", method = RequestMethod.GET)
+    public String mapPlaceToULB(ModelMap model) {
+        String csvFile = "/home/prabhakar/Documents/work/mahi/SpringMVCHibernateWithSpringSecurityExample/src/main/resources/LocationDataWithDistrictName.csv";
+        BufferedReader br;
+        String line;
+        String cvsSplitBy = ",";
+
+        try {
+
+            br = new BufferedReader(new FileReader(csvFile));
+            br.readLine();
+
+            while ((line = br.readLine()) != null) {
+
+                // use comma as separator
+                String[] country = line.split(cvsSplitBy);
+
+
+                Integer locationId = Integer.parseInt(country[1]);
+                Location location = locationService.getLocationById(locationId);
+                Place place = placeService.getPlaceByLocation(location);
+                PlaceULBMap placeULBMap = placeULBMapService.getPlaceULBMapByPlace(place);
+                placeULBMap.setULBName(country.length == 8 ? country[7] : "-");
+                placeULBMapService.update(placeULBMap);
+                System.out.println(Arrays.toString(country));
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return "redirect:/home";
     }

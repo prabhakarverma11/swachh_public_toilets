@@ -1,5 +1,7 @@
 package com.websystique.springmvc.configuration;
 
+import com.websystique.springmvc.cron.CronJobs;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -10,15 +12,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @ComponentScan({"com.websystique.springmvc.configuration"})
 @PropertySource(value = {"classpath:application.properties"})
 public class TaskSchedulerConfiguration {
-
-    /**
-     * annotated with @Scheduler must return void and must not have any parameters
-     */
-//    @Bean
-//    public MyBean bean() {
-//        return new MyBean();
-////        System.out.println("I'm called by spring scheduler");
-//    }
 
 //    @Bean
 //    public CronJobs beanCronJob() {

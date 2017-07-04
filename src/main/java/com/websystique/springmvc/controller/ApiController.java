@@ -93,7 +93,7 @@ public class ApiController {
             response.setStatus(200);
 
             logger.info(request.getServletPath() +
-                    "placeDetails.size: " + placeDetails.size() +
+                    ", placeDetails.size: " + placeDetails.size() +
                     ", reports.size: " + reports.size() +
                     ", noOfElements: " + noOfElements +
                     ", timeTaken: " + (endTime - startTime) / 1000
@@ -104,7 +104,7 @@ public class ApiController {
 
             Long endTime = System.currentTimeMillis();
             logger.info(request.getServletPath() +
-                    "placeDetails.size: " + placeDetails.size() +
+                    ", placeDetails.size: " + placeDetails.size() +
                     ", reports.size: " + reports.size() +
                     ", noOfElements: " + noOfElements +
                     ", timeTaken: " + (endTime - startTime) / 1000 +
@@ -199,9 +199,9 @@ public class ApiController {
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/get-dashboard", method = RequestMethod.GET, produces = "application/json")
-    public void getDashboard(@RequestParam(required = false) String wardName, HttpServletRequest request, HttpServletResponse response) {
+    public void getDashboard(@RequestParam(required = false) String ulbName, HttpServletRequest request, HttpServletResponse response) {
         logger.info(request.getServletPath() +
-                ", wardName: " + wardName
+                ", ulbName: " + ulbName
         );
 
         Long startTime = System.currentTimeMillis();
@@ -209,12 +209,12 @@ public class ApiController {
         response.setCharacterEncoding("utf-8");
 
         //validataion TODO
-        //TODO add wardName
+        //TODO add ulbName
         Long totalToilets = placeDetailService.countPlaceDetails();
         Long fiveStarsRated = placeDetailService.countPlaceDetailsByRatingRange(5.0, 5.0);
         Long threeOrLessStarsRated = placeDetailService.countPlaceDetailsByRatingRange(0.0, 3.0);
 
-        List<String> wardsList = new ArrayList<>();
+        List<String> ulbsList = new ArrayList<>();
         List<String> staffsList = new ArrayList<>();
         List<String> locationTypes = new ArrayList<>();
         try {
@@ -225,7 +225,7 @@ public class ApiController {
             jsonObject.addProperty("totalToilets", totalToilets);
             jsonObject.addProperty("fiveStarsRated", fiveStarsRated);
             jsonObject.addProperty("threeOrLessStarsRated", threeOrLessStarsRated);
-            jsonObject.addProperty("wardsList", gson.toJson(wardsList));
+            jsonObject.addProperty("ulbsList", gson.toJson(ulbsList));
             jsonObject.addProperty("staffsList", gson.toJson(staffsList));
             jsonObject.addProperty("locationTypes", gson.toJson(locationTypes));
             Long endTime = System.currentTimeMillis();
@@ -239,7 +239,7 @@ public class ApiController {
                     ", totalToilets: " + totalToilets +
                     ", fiveStarsRated: " + fiveStarsRated +
                     ", threeOrLessStarsRated" + threeOrLessStarsRated +
-                    ", wardsList.size: " + wardsList.size() +
+                    ", ulbsList.size: " + ulbsList.size() +
                     ", staffsList.size: " + staffsList.size() +
                     ", locationTypes.size: " + locationTypes.size() +
                     ", timeTaken: " + (endTime - startTime) / 1000
@@ -253,7 +253,7 @@ public class ApiController {
                     ", totalToilets: " + totalToilets +
                     ", fiveStarsRated: " + fiveStarsRated +
                     ", threeOrLessStarsRated" + threeOrLessStarsRated +
-                    ", wardsList.size: " + wardsList.size() +
+                    ", ulbsList.size: " + ulbsList.size() +
                     ", staffsList.size: " + staffsList.size() +
                     ", locationTypes.size: " + locationTypes.size() +
                     ", timeTaken: " + (endTime - startTime) / 1000 +
