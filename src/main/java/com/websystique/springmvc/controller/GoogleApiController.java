@@ -3,7 +3,6 @@ package com.websystique.springmvc.controller;
 import com.google.gson.Gson;
 import com.websystique.springmvc.model.Location;
 import com.websystique.springmvc.model.Place;
-import com.websystique.springmvc.model.PlaceDetail;
 import com.websystique.springmvc.service.LocationService;
 import com.websystique.springmvc.service.PlaceDetailService;
 import com.websystique.springmvc.service.PlaceService;
@@ -81,7 +80,7 @@ public class GoogleApiController {
                     "&key=" + API_KEY[7];
 
             try {
-                PlaceDetail placeDetail = placeDetailService.fetchPlaceDetailByPlace(place, url);
+                String response = placeDetailService.fetchPlaceDetailByPlace(place, url);
                 System.out.println("Done with place id: " + place.getId());
             } catch (IOException e) {
                 e.printStackTrace();

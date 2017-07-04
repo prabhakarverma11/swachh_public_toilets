@@ -34,7 +34,7 @@ public class PlaceDetailServiceImpl implements PlaceDetailService {
     PlacePhotoMapDao placePhotoMapDao;
 
     @Override
-    public PlaceDetail fetchPlaceDetailByPlace(Place place, String url) throws IOException {
+    public String fetchPlaceDetailByPlace(Place place, String url) throws IOException {
         System.out.println("\nplace = [" + place.getId() + "], url = [" + url + "]\n");
         UtilMethods utilMethods = new UtilMethods();
         JsonObject jsonObject = utilMethods.getJsonObjectFetchingURL(url);
@@ -131,32 +131,30 @@ public class PlaceDetailServiceImpl implements PlaceDetailService {
                         }
                     }
                 }
-
-                return placeDetail;
-//                TODO
-//                return null;
+                break;
             }
             case "ZERO_RESULTS": {
                 System.out.println("\nZERO_RESULTS\n");
-                return null;
+                break;
             }
             case "OVER_QUERY_LIMIT": {
                 System.out.println("\nOVER_QUERY_LIMIT\n");
-                return null;
+                break;
             }
             case "REQUEST_DENIED": {
                 System.out.println("\nREQUEST_DENIED\n");
-                return null;
+                break;
             }
             case "INVALID_REQUEST": {
                 System.out.println("\nINVALID_REQUEST\n");
-                return null;
+                break;
             }
             default: {
                 System.out.println("\nDOESN'T KNOW WHAT HAPPENED\n");
-                return null;
+                break;
             }
         }
+        return jsonObject.get("status").getAsString();
     }
 
     @Override

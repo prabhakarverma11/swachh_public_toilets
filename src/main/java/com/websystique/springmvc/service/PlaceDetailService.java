@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface PlaceDetailService {
 
-    PlaceDetail fetchPlaceDetailByPlace(Place place, String url) throws IOException;
+    String fetchPlaceDetailByPlace(Place place, String url) throws IOException;
 
     void save(PlaceDetail placeDetail);
 

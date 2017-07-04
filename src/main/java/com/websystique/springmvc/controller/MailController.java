@@ -39,7 +39,7 @@ public class MailController {
     PlaceULBMapService placeULBMapService;
 
     @RequestMapping(value = "/mailReport")
-    public String mailReport(ModelMap model, HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+    public String mailReport(ModelMap model) {
         String fileName = "RatingAndReviewsReport_" + System.currentTimeMillis() + ".csv";
         //TODO update it0
         String startDate = "";
@@ -47,7 +47,7 @@ public class MailController {
 
         File csvFile = null;
         try {
-            csvFile = getReportCSVFile(fileName, request, session, model);
+            csvFile = getReportCSVFile(fileName, model);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -73,8 +73,7 @@ public class MailController {
     }
 
 
-    private File getReportCSVFile(String fileName, HttpServletRequest request,
-                                  HttpSession session, ModelMap model) throws IOException {
+    private File getReportCSVFile(String fileName, ModelMap model) throws IOException {
         //TODO remove these lines
         List<Location> locations = locationService.getAllLocationsByPageAndSize(0, 500);
 

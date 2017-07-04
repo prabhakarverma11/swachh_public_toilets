@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.websystique.springmvc.model.*;
 import com.websystique.springmvc.service.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +21,8 @@ import java.util.List;
 @Controller
 @RequestMapping("/api")
 public class ApiController {
+
+    static final Logger logger = LoggerFactory.getLogger(ApiController.class);
 
     @Autowired
     LocationService locationService;
@@ -44,7 +48,17 @@ public class ApiController {
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/get-report-of-locations/{ratingFrom}/{ratingEnd}/{page}/{size}", method = RequestMethod.GET, produces = "application/json")
-    public void getReportOfLocationsByLocationTypeRatingRangeAndBetweenDateByPageAndSize(@RequestParam(required = false) String locationType, @PathVariable Double ratingFrom, @PathVariable Double ratingEnd, @RequestParam(required = false) String startDate, @RequestParam(required = false) String endDate, @PathVariable Integer page, @PathVariable Integer size, HttpServletRequest request, HttpServletResponse response) {
+    public void getReportByLocationTypeRatingRangeAndBetweenDatesByPageAndSize(@RequestParam(required = false) String locationType, @PathVariable Double ratingFrom, @PathVariable Double ratingEnd, @RequestParam(required = false) String startDate, @RequestParam(required = false) String endDate, @PathVariable Integer page, @PathVariable Integer size, HttpServletRequest request, HttpServletResponse response) {
+        logger.info(request.getServletPath() +
+                ", locationType: " + locationType +
+                ", ratingFrom: " + ratingFrom +
+                ", ratingEnd: " + ratingEnd +
+                ", startDate" + startDate +
+                ", endDate: " + endDate +
+                ", page: " + page +
+                ", size: " + size
+        );
+
         Long startTime = System.currentTimeMillis();
         response.setContentType("application/json");
         response.setCharacterEncoding("utf-8");
@@ -77,9 +91,25 @@ public class ApiController {
             writer.print(jsonObject);
             writer.flush();
             response.setStatus(200);
+
+            logger.info(request.getServletPath() +
+                    "placeDetails.size: " + placeDetails.size() +
+                    ", reports.size: " + reports.size() +
+                    ", noOfElements: " + noOfElements +
+                    ", timeTaken: " + (endTime - startTime) / 1000
+            );
         } catch (IOException e) {
             response.setStatus(500);
             e.printStackTrace();
+
+            Long endTime = System.currentTimeMillis();
+            logger.info(request.getServletPath() +
+                    "placeDetails.size: " + placeDetails.size() +
+                    ", reports.size: " + reports.size() +
+                    ", noOfElements: " + noOfElements +
+                    ", timeTaken: " + (endTime - startTime) / 1000 +
+                    ", error: " + e.getMessage()
+            );
         }
     }
 
@@ -88,6 +118,12 @@ public class ApiController {
     @ResponseBody
     @RequestMapping(value = "/get-reviews-of-location/{locationId}/{page}/{size}", method = RequestMethod.GET, produces = "application/json")
     public void getReviewsOfLocationByLocationIdPageAndSize(@PathVariable Integer locationId, @PathVariable Integer page, @PathVariable Integer size, HttpServletRequest request, HttpServletResponse response) {
+        logger.info(request.getServletPath() +
+                ", locationId: " + locationId +
+                ", page: " + page +
+                ", size: " + size
+        );
+
         Long startTime = System.currentTimeMillis();
         response.setContentType("application/json");
         response.setCharacterEncoding("utf-8");
@@ -124,19 +160,50 @@ public class ApiController {
                 writer.print(jsonObject);
                 writer.flush();
                 response.setStatus(200);
+
+                logger.info(request.getServletPath() +
+                        ", reviews.size: " + reviews.size() +
+                        ", noOfElements: " + noOfElements +
+                        ", oneStarRated: " + oneStarRated +
+                        ", oneStarRated" + oneStarRated +
+                        ", threeStarRated: " + threeStarRated +
+                        ", fourStarRated: " + fourStarRated +
+                        ", fiveStarRated: " + fiveStarRated +
+                        ", timeTaken: " + (endTime - startTime) / 1000
+                );
             } catch (IOException e) {
                 response.setStatus(500);
                 e.printStackTrace();
+
+                Long endTime = System.currentTimeMillis();
+                logger.info(request.getServletPath() +
+                        ", reviews.size: " + reviews.size() +
+                        ", noOfElements: " + noOfElements +
+                        ", oneStarRated: " + oneStarRated +
+                        ", oneStarRated" + oneStarRated +
+                        ", threeStarRated: " + threeStarRated +
+                        ", fourStarRated: " + fourStarRated +
+                        ", fiveStarRated: " + fiveStarRated +
+                        ", timeTaken: " + (endTime - startTime) / 1000 +
+                        ", error: " + e.getMessage()
+                );
             }
         } else {
             response.setStatus(404);
+            logger.info(request.getServletPath() +
+                    ", location id not found in database;"
+            );
         }
     }
 
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/get-dashboard", method = RequestMethod.GET, produces = "application/json")
-    public void getdashboard(@RequestParam(required = false) String wardName, HttpServletRequest request, HttpServletResponse response) {
+    public void getDashboard(@RequestParam(required = false) String wardName, HttpServletRequest request, HttpServletResponse response) {
+        logger.info(request.getServletPath() +
+                ", wardName: " + wardName
+        );
+
         Long startTime = System.currentTimeMillis();
         response.setContentType("application/json");
         response.setCharacterEncoding("utf-8");
@@ -167,9 +234,32 @@ public class ApiController {
             writer.print(jsonObject);
             writer.flush();
             response.setStatus(200);
+
+            logger.info(request.getServletPath() +
+                    ", totalToilets: " + totalToilets +
+                    ", fiveStarsRated: " + fiveStarsRated +
+                    ", threeOrLessStarsRated" + threeOrLessStarsRated +
+                    ", wardsList.size: " + wardsList.size() +
+                    ", staffsList.size: " + staffsList.size() +
+                    ", locationTypes.size: " + locationTypes.size() +
+                    ", timeTaken: " + (endTime - startTime) / 1000
+            );
+
         } catch (IOException e) {
             response.setStatus(500);
             e.printStackTrace();
+            Long endTime = System.currentTimeMillis();
+            logger.info(request.getServletPath() +
+                    ", totalToilets: " + totalToilets +
+                    ", fiveStarsRated: " + fiveStarsRated +
+                    ", threeOrLessStarsRated" + threeOrLessStarsRated +
+                    ", wardsList.size: " + wardsList.size() +
+                    ", staffsList.size: " + staffsList.size() +
+                    ", locationTypes.size: " + locationTypes.size() +
+                    ", timeTaken: " + (endTime - startTime) / 1000 +
+                    ", error: " + e.getMessage()
+            );
+
         }
     }
 
