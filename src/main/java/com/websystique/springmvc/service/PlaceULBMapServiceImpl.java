@@ -41,4 +41,9 @@ public class PlaceULBMapServiceImpl implements PlaceULBMapService {
     public List<String> getULBList() {
         return placeULBMapDao.getULBList();
     }
+
+    @Override
+    public List<Integer> getLocationIdsByULBNameAndLocationType(String ulbName, String locationType) {
+        return placeULBMapDao.getLocationIdsByULBNameAndLocationType(ulbName, locationType);
+    }
 }

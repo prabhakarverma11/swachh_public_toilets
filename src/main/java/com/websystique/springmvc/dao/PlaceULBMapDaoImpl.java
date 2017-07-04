@@ -2,6 +2,7 @@ package com.websystique.springmvc.dao;
 
 import com.websystique.springmvc.model.Place;
 import com.websystique.springmvc.model.PlaceULBMap;
+import org.hibernate.Criteria;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
@@ -41,5 +42,19 @@ public class PlaceULBMapDaoImpl extends AbstractDao<Integer, PlaceULBMap> implem
     public List<String> getULBList() {
         return createEntityCriteria().setProjection(Projections.distinct(Projections.projectionList()
                 .add(Projections.property("ULBName"), "ULBName"))).list();
+    }
+
+    @Override
+    public List<Integer> getLocationIdsByULBNameAndLocationType(String ulbName, String locationType) {
+        Criteria criteria = createEntityCriteria();
+        if (ulbName != null)
+            criteria.add(Restrictions.eq("ULBName", ulbName));
+        criteria.createCriteria("place", "place");
+        criteria.createCriteria("place.location", "location");
+
+        if (locationType != null)
+            criteria.add(Restrictions.eq("location.type", locationType));
+        return criteria.setProjection(Projections.distinct(Projections.projectionList()
+                .add(Projections.property("location.id")))).list();
     }
 }

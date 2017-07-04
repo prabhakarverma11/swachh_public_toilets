@@ -76,11 +76,12 @@ public class ApiController {
 
         //validataion TODO
 
-        List<PlaceDetail> placeDetails = placeDetailService.getAllPlaceDetailsByLocationTypeRatingRangePageAndSize(locationType, ratingFrom, ratingEnd, page, size);
+        List<Integer> locationIds = placeULBMapService.getLocationIdsByULBNameAndLocationType(ulbName, locationType);
+        List<PlaceDetail> placeDetails = placeDetailService.getAllPlaceDetailsByLocationIdsRatingRangePageAndSize(locationIds, ratingFrom, ratingEnd, page, size);
 
         List<Report> reports = reportService.getReportsListByPlaceDetailsBetweenDates(placeDetails, startDate, endDate);
 
-        Long noOfElements = placeDetailService.countPlaceDetailsByLocationTypeAndRatingRange(locationType, ratingFrom, ratingEnd);
+        Long noOfElements = placeDetailService.countPlaceDetailsByLocationIdsAndRatingRange(locationIds, ratingFrom, ratingEnd);
 
         try {
             PrintWriter writer = response.getWriter();
@@ -89,10 +90,11 @@ public class ApiController {
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("content", gson.toJson(reports));
             jsonObject.addProperty("locationType", locationType);
-            jsonObject.addProperty("ratingFrom", ratingFrom);
-            jsonObject.addProperty("ratingEnd", ratingEnd);
             jsonObject.addProperty("startDate", startDate);
             jsonObject.addProperty("endDate", endDate);
+            jsonObject.addProperty("ulbName", ulbName);
+            jsonObject.addProperty("ratingFrom", ratingFrom);
+            jsonObject.addProperty("ratingEnd", ratingEnd);
             jsonObject.addProperty("page", page);
             jsonObject.addProperty("size", size);
             jsonObject.addProperty("noOfElements", noOfElements);

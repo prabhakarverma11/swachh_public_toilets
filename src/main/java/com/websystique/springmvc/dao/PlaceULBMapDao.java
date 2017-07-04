@@ -17,5 +17,7 @@ public interface PlaceULBMapDao {
 
     List<String> getULBList();
 
+    List<Integer> getLocationIdsByULBNameAndLocationType(String ulbName, String locationType);
+
 }
 

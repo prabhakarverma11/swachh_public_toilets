@@ -15,9 +15,9 @@ public interface PlaceDetailDao {
 
     void update(PlaceDetail placeDetail);
 
-    List<PlaceDetail> getAllPlaceDetailsByLocationTypeRatingRangePageAndSize(String locationType, Double ratingFrom, Double ratingEnd, Integer page, Integer size);
+    List<PlaceDetail> getAllPlaceDetailsByLocationIdsRatingRangePageAndSize(List<Integer> locationIds, Double ratingFrom, Double ratingEnd, Integer page, Integer size);
 
-    Long countPlaceDetailsByLocationTypeAndRatingRange(String locationType, Double ratingFrom, Double ratingEnd);
+    Long countPlaceDetailsByLocationIdsAndRatingRange(List<Integer> locationIds, Double ratingFrom, Double ratingEnd);
 
     Long countPlaceDetails();
 

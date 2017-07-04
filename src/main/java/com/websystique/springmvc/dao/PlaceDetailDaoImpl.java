@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -34,27 +35,31 @@ public class PlaceDetailDaoImpl extends AbstractDao<Integer, PlaceDetail> implem
     }
 
     @Override
-    public List<PlaceDetail> getAllPlaceDetailsByLocationTypeRatingRangePageAndSize(String locationType, Double ratingFrom, Double ratingEnd, Integer page, Integer size) {
+    public List<PlaceDetail> getAllPlaceDetailsByLocationIdsRatingRangePageAndSize(List<Integer> locationIds, Double ratingFrom, Double ratingEnd, Integer page, Integer size) {
         Criteria criteria = getSession().createCriteria(PlaceDetail.class, "placeDetail")
                 .add(Restrictions.ge("rating", ratingFrom))
                 .add(Restrictions.le("rating", ratingEnd))
                 .createCriteria("place", "place")
-                .createCriteria("location", "location");
-        if (locationType != null)
-            criteria.add(Restrictions.eq("location.type", locationType));
+                .createCriteria("place.location", "location");
+        if (locationIds.size() > 0)
+            criteria.add(Restrictions.in("location.id", locationIds));
+        else
+            return new ArrayList<>();
         criteria.setFirstResult((page - 1) * size).setMaxResults(size);
         return criteria.list();
     }
 
     @Override
-    public Long countPlaceDetailsByLocationTypeAndRatingRange(String locationType, Double ratingFrom, Double ratingEnd) {
+    public Long countPlaceDetailsByLocationIdsAndRatingRange(List<Integer> locationIds, Double ratingFrom, Double ratingEnd) {
         Criteria criteria = getSession().createCriteria(PlaceDetail.class, "placeDetail")
                 .add(Restrictions.ge("rating", ratingFrom))
                 .add(Restrictions.le("rating", ratingEnd))
                 .createCriteria("place", "place")
-                .createCriteria("location", "location");
-        if (locationType != null)
-            criteria.add(Restrictions.eq("location.type", locationType));
+                .createCriteria("place.location", "location");
+        if (locationIds.size() > 0)
+            criteria.add(Restrictions.in("location.id", locationIds));
+        else
+            return (long) 0;
         return (Long) criteria.setProjection(Projections.rowCount()).uniqueResult();
     }
 

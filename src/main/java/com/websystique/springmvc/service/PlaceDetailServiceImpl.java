@@ -168,13 +168,13 @@ public class PlaceDetailServiceImpl implements PlaceDetailService {
     }
 
     @Override
-    public List<PlaceDetail> getAllPlaceDetailsByLocationTypeRatingRangePageAndSize(String locationType, Double ratingFrom, Double ratingEnd, Integer page, Integer size) {
-        return placeDetailDao.getAllPlaceDetailsByLocationTypeRatingRangePageAndSize(locationType, ratingFrom, ratingEnd, page, size);
+    public List<PlaceDetail> getAllPlaceDetailsByLocationIdsRatingRangePageAndSize(List<Integer> locationIds, Double ratingFrom, Double ratingEnd, Integer page, Integer size) {
+        return placeDetailDao.getAllPlaceDetailsByLocationIdsRatingRangePageAndSize(locationIds, ratingFrom, ratingEnd, page, size);
     }
 
     @Override
-    public Long countPlaceDetailsByLocationTypeAndRatingRange(String locationType, Double ratingFrom, Double ratingEnd) {
-        return placeDetailDao.countPlaceDetailsByLocationTypeAndRatingRange(locationType, ratingFrom, ratingEnd);
+    public Long countPlaceDetailsByLocationIdsAndRatingRange(List<Integer> locationIds, Double ratingFrom, Double ratingEnd) {
+        return placeDetailDao.countPlaceDetailsByLocationIdsAndRatingRange(locationIds, ratingFrom, ratingEnd);
     }
 
     @Override
