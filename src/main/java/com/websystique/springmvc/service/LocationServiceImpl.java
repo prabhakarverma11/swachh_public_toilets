@@ -35,4 +35,9 @@ public class LocationServiceImpl implements LocationService {
     public List<Location> getAllLocationsByTypePageAndSize(String locationType, Integer page, Integer size) {
         return locationDao.getAllLocationsByTypePageAndSize(locationType, page, size);
     }
+
+    @Override
+    public List<String> getLocationTypes() {
+        return locationDao.getLocationTypes();
+    }
 }

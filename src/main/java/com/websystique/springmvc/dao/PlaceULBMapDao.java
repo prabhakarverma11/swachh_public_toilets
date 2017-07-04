@@ -15,5 +15,7 @@ public interface PlaceULBMapDao {
 
     List<PlaceULBMap> getAllPlaceULBMapByPageAndSize(Integer page, Integer size);
 
+    List<String> getULBList();
+
 }
 

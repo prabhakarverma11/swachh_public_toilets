@@ -14,5 +14,7 @@ public interface LocationDao {
 
     List<Location> getAllLocationsByTypePageAndSize(String locationType, Integer page, Integer size);
 
+    List<String> getLocationTypes();
+
 }
 

@@ -90,7 +90,6 @@ public class AppController {
         String csvFile = "/home/prabhakar/Documents/work/mahi/SpringMVCHibernateWithSpringSecurityExample/src/main/resources/LocationDataWithDistrictName.csv";
         BufferedReader br;
         String line;
-        String cvsSplitBy = ",";
 
         try {
 
@@ -100,14 +99,14 @@ public class AppController {
             while ((line = br.readLine()) != null) {
 
                 // use comma as separator
-                String[] country = line.split(cvsSplitBy);
+                String[] country = line.split("\"");
 
 
-                Integer locationId = Integer.parseInt(country[1]);
+                Integer locationId = Integer.parseInt(country[0].split(",")[1]);
                 Location location = locationService.getLocationById(locationId);
                 Place place = placeService.getPlaceByLocation(location);
                 PlaceULBMap placeULBMap = placeULBMapService.getPlaceULBMapByPlace(place);
-                placeULBMap.setULBName(country.length == 8 ? country[7] : "-");
+                placeULBMap.setULBName(country[2].split(",").length == 4 ? country[2].split(",")[3] : "-");
                 placeULBMapService.update(placeULBMap);
                 System.out.println(Arrays.toString(country));
             }

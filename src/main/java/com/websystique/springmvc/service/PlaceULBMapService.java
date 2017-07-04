@@ -15,4 +15,6 @@ public interface PlaceULBMapService {
 
     List<PlaceULBMap> getAllPlaceULBMapByPageAndSize(Integer page, Integer size);
 
+    List<String> getULBList();
+
 }

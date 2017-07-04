@@ -214,9 +214,9 @@ public class ApiController {
         Long fiveStarsRated = placeDetailService.countPlaceDetailsByRatingRange(5.0, 5.0);
         Long threeOrLessStarsRated = placeDetailService.countPlaceDetailsByRatingRange(0.0, 3.0);
 
-        List<String> ulbsList = new ArrayList<>();
+        List<String> ulbsList = placeULBMapService.getULBList();
         List<String> staffsList = new ArrayList<>();
-        List<String> locationTypes = new ArrayList<>();
+        List<String> locationTypes = locationService.getLocationTypes();
         try {
             PrintWriter writer = response.getWriter();
             Gson gson = new Gson();
