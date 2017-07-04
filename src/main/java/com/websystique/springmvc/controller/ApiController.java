@@ -48,13 +48,24 @@ public class ApiController {
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/get-report-of-locations/{ratingFrom}/{ratingEnd}/{page}/{size}", method = RequestMethod.GET, produces = "application/json")
-    public void getReportByLocationTypeRatingRangeAndBetweenDatesByPageAndSize(@RequestParam(required = false) String locationType, @PathVariable Double ratingFrom, @PathVariable Double ratingEnd, @RequestParam(required = false) String startDate, @RequestParam(required = false) String endDate, @PathVariable Integer page, @PathVariable Integer size, HttpServletRequest request, HttpServletResponse response) {
+    public void getReportByLocationTypeRatingRangeAndBetweenDatesByPageAndSize(
+            @RequestParam(required = false) String locationType,
+            @RequestParam(required = false) String startDate,
+            @RequestParam(required = false) String endDate,
+            @RequestParam(required = false) String ulbName,
+            @PathVariable Double ratingFrom,
+            @PathVariable Double ratingEnd,
+            @PathVariable Integer page,
+            @PathVariable Integer size,
+            HttpServletRequest request,
+            HttpServletResponse response) {
         logger.info(request.getServletPath() +
                 ", locationType: " + locationType +
-                ", ratingFrom: " + ratingFrom +
-                ", ratingEnd: " + ratingEnd +
                 ", startDate" + startDate +
                 ", endDate: " + endDate +
+                ", ulbName: " + ulbName +
+                ", ratingFrom: " + ratingFrom +
+                ", ratingEnd: " + ratingEnd +
                 ", page: " + page +
                 ", size: " + size
         );
