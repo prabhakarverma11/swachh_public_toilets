@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -157,7 +158,7 @@ public class ApiController {
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/get-reviews-of-location/{locationId}/{page}/{size}", method = RequestMethod.GET, produces = "application/json")
-    public void getReviewsOfLocationByLocationIdPageAndSize(
+    public void getReviewsOfLocationByPageAndSize(
             @PathVariable Integer locationId,
             @PathVariable Integer page,
             @PathVariable Integer size,
@@ -230,6 +231,86 @@ public class ApiController {
                         ", threeStarRated: " + threeStarRated +
                         ", fourStarRated: " + fourStarRated +
                         ", fiveStarRated: " + fiveStarRated +
+                        ", timeTaken: " + (endTime - startTime) / 1000 +
+                        ", error: " + e.getMessage()
+                );
+            }
+        } else {
+            response.setStatus(404);
+            logger.info(request.getServletPath() +
+                    ", location id not found in database;"
+            );
+        }
+    }
+
+    /**
+     * Response is having reviews of a location with given criteria
+     *
+     * @param locationId- this is the id of location we are requesting reviews for,
+     * @param request-    request
+     * @param response-   response of application/json type
+     *                    {host}:{port}/api/get-rating-counts-of-location/{locationId}
+     */
+    @CrossOrigin
+    @ResponseBody
+    @RequestMapping(value = "/get-rating-counts-of-location/{locationId}", method = RequestMethod.GET, produces = "application/json")
+    public void getRatingCountsOfLocationByPageAndSize(
+            @PathVariable Integer locationId,
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) {
+        logger.info(request.getServletPath() +
+                ", locationId: " + locationId
+        );
+
+        Long startTime = System.currentTimeMillis();
+        response.setContentType("application/json");
+        response.setCharacterEncoding("utf-8");
+
+        Location location = locationService.getLocationById(locationId);
+        if (location != null) {
+            Place place = placeService.getPlaceByLocation(location);
+            try {
+                PrintWriter writer = response.getWriter();
+                Gson gson = new Gson();
+
+                JsonObject jsonObject = new JsonObject();
+
+                JsonObject content = new JsonObject();
+                for (Long i = 0L; i < 7L; i++) {
+                    Long millis = System.currentTimeMillis() - i * 24 * 60 * 60 * 1000;
+                    Date dateToFilter = new Date(millis);
+
+                    JsonObject dayWiseData = new JsonObject();
+                    dayWiseData.addProperty("1", reviewService.countReviewsByPlaceAndRatingRangeBetweenDates(place, 1, 1, dateToFilter, dateToFilter));
+                    dayWiseData.addProperty("2", reviewService.countReviewsByPlaceAndRatingRangeBetweenDates(place, 2, 1, dateToFilter, dateToFilter));
+                    dayWiseData.addProperty("3", reviewService.countReviewsByPlaceAndRatingRangeBetweenDates(place, 3, 1, dateToFilter, dateToFilter));
+                    dayWiseData.addProperty("4", reviewService.countReviewsByPlaceAndRatingRangeBetweenDates(place, 4, 1, dateToFilter, dateToFilter));
+                    dayWiseData.addProperty("5", reviewService.countReviewsByPlaceAndRatingRangeBetweenDates(place, 5, 1, dateToFilter, dateToFilter));
+
+                    content.addProperty(new SimpleDateFormat("dd-MM-yyyy").format(dateToFilter), gson.toJson(dayWiseData));
+                }
+
+                jsonObject.addProperty("content", gson.toJson(content));
+
+                jsonObject.addProperty("locationId", locationId);
+                Long endTime = System.currentTimeMillis();
+                jsonObject.addProperty("timeTaken", (endTime - startTime) / 1000);
+
+                writer.print(jsonObject);
+                writer.flush();
+                response.setStatus(200);
+
+                logger.info(request.getServletPath() +
+                        ", content: " + gson.toJson(content) +
+                        ", timeTaken: " + (endTime - startTime) / 1000
+                );
+            } catch (IOException e) {
+                response.setStatus(500);
+                e.printStackTrace();
+
+                Long endTime = System.currentTimeMillis();
+                logger.info(request.getServletPath() +
                         ", timeTaken: " + (endTime - startTime) / 1000 +
                         ", error: " + e.getMessage()
                 );
@@ -329,7 +410,7 @@ public class ApiController {
      * @param ulbName-  ULB name for filtering
      * @param request-  request
      * @param response- response of application/json type
-     *                  {host}:{port}/api/get-dashboard?ulbName={ulbName}
+     *                  {host}:{port}/api/admin/get-dashboard?ulbName={ulbName}
      */
     @CrossOrigin
     @ResponseBody

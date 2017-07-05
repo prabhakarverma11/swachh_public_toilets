@@ -29,7 +29,7 @@ public interface ReviewDao {
 
     void deleteAllRecordsByPlace(Place place);
 
-    Long countReviewsByPlaceAndRatingRangeBetweenDates(Place place, Double ratingFrom, Double ratingEnd, String startDate, String endDate) throws ParseException;
+    Long countReviewsByPlaceAndRatingRangeBetweenDates(Place place, Integer ratingFrom, Integer ratingEnd, Date startDate, Date endDate);
 
     List<Review> getAllReviewsByPlacePageAndSizeOrderByDate(Place place, Integer page, Integer size);
 

@@ -130,7 +130,7 @@ public class ReviewDaoImpl extends AbstractDao<Integer, Review> implements Revie
     }
 
     @Override
-    public Long countReviewsByPlaceAndRatingRangeBetweenDates(Place place, Double ratingFrom, Double ratingEnd, String startDate, String endDate) throws ParseException {
+    public Long countReviewsByPlaceAndRatingRangeBetweenDates(Place place, Integer ratingFrom, Integer ratingEnd, Date startDate, Date endDate) {
         Criteria criteria = createEntityCriteria();
 
         if (place != null)
@@ -138,11 +138,11 @@ public class ReviewDaoImpl extends AbstractDao<Integer, Review> implements Revie
 
         criteria.add(Restrictions.ge("rating", ratingFrom)).add(Restrictions.le("rating", ratingEnd));
 
-        if (startDate != null && !startDate.equals(""))
-            criteria.add(Restrictions.ge("timeStamp", new SimpleDateFormat("yyyy-MM-dd").parse(startDate)));
+        if (startDate != null)
+            criteria.add(Restrictions.ge("timeStamp", startDate));
 
-        if (endDate != null && !endDate.equals(""))
-            criteria.add(Restrictions.le("timeStamp", new SimpleDateFormat("yyyy-MM-dd").parse(endDate)));
+        if (endDate != null)
+            criteria.add(Restrictions.le("timeStamp", endDate));
 
         criteria.setProjection(Projections.rowCount());
         return (Long) criteria.uniqueResult();

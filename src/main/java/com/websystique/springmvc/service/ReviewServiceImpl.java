@@ -58,4 +58,10 @@ public class ReviewServiceImpl implements ReviewService {
     public Long countToiletsReviewedBetweenDatesByLocationIdsAndRating(List<Integer> locationIds, Date startDate, Date endDate, Integer rating) {
         return reviewDao.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, startDate, endDate, rating);
     }
+
+    @Override
+    public Long countReviewsByPlaceAndRatingRangeBetweenDates(Place place, Integer ratingFrom, Integer ratingEnd, Date startDate, Date endDate) {
+        return reviewDao.countReviewsByPlaceAndRatingRangeBetweenDates(place, ratingFrom, ratingEnd, startDate, endDate);
+    }
+
 }
