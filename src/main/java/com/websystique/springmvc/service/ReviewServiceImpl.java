@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
 
@@ -51,5 +52,10 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public Long countReviewsByPlaceAndRating(Place place, Integer rating) {
         return reviewDao.countReviewsByPlaceAndRating(place, rating);
+    }
+
+    @Override
+    public Long countToiletsReviewedBetweenDatesByLocationIdsAndRating(List<Integer> locationIds, Date startDate, Date endDate, Integer rating) {
+        return reviewDao.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, startDate, endDate, rating);
     }
 }

@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -45,20 +46,36 @@ public class ApiController {
     @Autowired
     PinCodeDetailService pinCodeDetailService;
 
+    /**
+     * Response is having report of locations with given criteria
+     *
+     * @param locationType - this is type of toilet location e.g. METRO, HOSPITAL
+     * @param startDate    - this is start date for rating and number of reviews
+     * @param endDate      -this is end date for rating and number of reviews
+     * @param ulbName      - this is to filter the location data by the name of ULB
+     * @param ratingFrom   -this is to filter the location having rating greater than this
+     * @param ratingEnd    -this is to filter the location having rating less than this
+     * @param page         -this is for the pagination, and this is required, by default send 1
+     * @param size         -this is for the pagination and this is also required, has no default value, send -INT_MAX if want to have all locations
+     * @param request      -this is request having all the parameters as well as the URL
+     * @param response     -the response is of application/json type
+     *                     {host}:{port}/api/get-report-of-locations/{ratingFrom}/{ratingEnd}/{page}/{size}?locationType={locationType}&ulbName={ulbName}&startDate={startDate}&endDate={endDate}
+     */
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/get-report-of-locations/{ratingFrom}/{ratingEnd}/{page}/{size}", method = RequestMethod.GET, produces = "application/json")
     public void getReportByLocationTypeRatingRangeAndBetweenDatesByPageAndSize(
             @RequestParam(required = false) String locationType,
+            @RequestParam(required = false) String ulbName,
             @RequestParam(required = false) String startDate,
             @RequestParam(required = false) String endDate,
-            @RequestParam(required = false) String ulbName,
             @PathVariable Double ratingFrom,
             @PathVariable Double ratingEnd,
             @PathVariable Integer page,
             @PathVariable Integer size,
             HttpServletRequest request,
-            HttpServletResponse response) {
+            HttpServletResponse response
+    ) {
         logger.info(request.getServletPath() +
                 ", locationType: " + locationType +
                 ", startDate" + startDate +
@@ -74,7 +91,7 @@ public class ApiController {
         response.setContentType("application/json");
         response.setCharacterEncoding("utf-8");
 
-        //validataion TODO
+        //validation of request params TODO
 
         List<Integer> locationIds = placeULBMapService.getLocationIdsByULBNameAndLocationType(ulbName, locationType);
         List<PlaceDetail> placeDetails = placeDetailService.getAllPlaceDetailsByLocationIdsRatingRangePageAndSize(locationIds, ratingFrom, ratingEnd, page, size);
@@ -127,10 +144,26 @@ public class ApiController {
     }
 
 
+    /**
+     * Response is having reviews of a location with given criteria
+     *
+     * @param locationId- this is the id of location we are requesting reviews for,
+     * @param page-       this is required parameter, send 1 by default, page number
+     * @param size-       this is also required parameter, size of the requested reviews list
+     * @param request-    request
+     * @param response-   response of application/json type
+     *                    {host}:{port}/api/get-reviews-of-location/{locationId}/{page}/{size}?ulbName={ulbName}
+     */
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/get-reviews-of-location/{locationId}/{page}/{size}", method = RequestMethod.GET, produces = "application/json")
-    public void getReviewsOfLocationByLocationIdPageAndSize(@PathVariable Integer locationId, @PathVariable Integer page, @PathVariable Integer size, HttpServletRequest request, HttpServletResponse response) {
+    public void getReviewsOfLocationByLocationIdPageAndSize(
+            @PathVariable Integer locationId,
+            @PathVariable Integer page,
+            @PathVariable Integer size,
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) {
         logger.info(request.getServletPath() +
                 ", locationId: " + locationId +
                 ", page: " + page +
@@ -209,10 +242,22 @@ public class ApiController {
         }
     }
 
+    /**
+     * response having all other data for public dashboard filtered by ULB
+     *
+     * @param ulbName-  ULB name for filtering
+     * @param request-  request
+     * @param response- response of application/json type
+     *                  {host}:{port}/api/get-dashboard?ulbName={ulbName}
+     */
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/get-dashboard", method = RequestMethod.GET, produces = "application/json")
-    public void getDashboard(@RequestParam(required = false) String ulbName, HttpServletRequest request, HttpServletResponse response) {
+    public void getDashboard(
+            @RequestParam(required = false) String ulbName,
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) {
         logger.info(request.getServletPath() +
                 ", ulbName: " + ulbName
         );
@@ -222,10 +267,11 @@ public class ApiController {
         response.setCharacterEncoding("utf-8");
 
         //validataion TODO
-        //TODO add ulbName
-        Long totalToilets = placeDetailService.countPlaceDetails();
-        Long fiveStarsRated = placeDetailService.countPlaceDetailsByRatingRange(5.0, 5.0);
-        Long threeOrLessStarsRated = placeDetailService.countPlaceDetailsByRatingRange(0.0, 3.0);
+
+        List<Integer> locationIds = placeULBMapService.getLocationIdsByULBNameAndLocationType(ulbName, null);
+        Long totalToilets = placeDetailService.countPlaceDetailsByLocationIdsAndRatingRange(locationIds, 0.0, 5.0);
+        Long fiveStarsRated = placeDetailService.countPlaceDetailsByLocationIdsAndRatingRange(locationIds, 5.0, 5.0);
+        Long threeOrLessStarsRated = placeDetailService.countPlaceDetailsByLocationIdsAndRatingRange(locationIds, 0.0, 3.0);
 
         List<String> ulbsList = placeULBMapService.getULBList();
         List<String> staffsList = new ArrayList<>();
@@ -276,5 +322,145 @@ public class ApiController {
         }
     }
 
+
+    /**
+     * response having all other data for admin dashboard filtered by ULB
+     *
+     * @param ulbName-  ULB name for filtering
+     * @param request-  request
+     * @param response- response of application/json type
+     *                  {host}:{port}/api/get-dashboard?ulbName={ulbName}
+     */
+    @CrossOrigin
+    @ResponseBody
+    @RequestMapping(value = "/admin/get-dashboard", method = RequestMethod.GET, produces = "application/json")
+    public void getAdminDashboard(
+            @RequestParam(required = false) String ulbName,
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) {
+        logger.info(request.getServletPath() +
+                ", ulbName: " + ulbName
+        );
+
+        Long startTime = System.currentTimeMillis();
+        response.setContentType("application/json");
+        response.setCharacterEncoding("utf-8");
+
+        //validataion TODO
+
+        List<Integer> locationIds = placeULBMapService.getLocationIdsByULBNameAndLocationType(ulbName, null);
+        Long totalToilets = placeDetailService.countPlaceDetailsByLocationIdsAndRatingRange(locationIds, 0.0, 5.0);
+        Long fiveStarsRated = placeDetailService.countPlaceDetailsByLocationIdsAndRatingRange(locationIds, 5.0, 5.0);
+        Long threeOrLessStarsRated = placeDetailService.countPlaceDetailsByLocationIdsAndRatingRange(locationIds, 0.0, 3.0);
+
+        List<String> ulbsList = placeULBMapService.getULBList();
+        List<String> staffsList = new ArrayList<>();
+        List<String> locationTypes = locationService.getLocationTypes();
+
+        try {
+            PrintWriter writer = response.getWriter();
+            Gson gson = new Gson();
+
+            Long millisInOneDay = 24 * 60 * 60 * 1000L;
+
+            JsonObject ratingDistribution = new JsonObject();
+            //five star rated toilets
+            JsonObject fiveStar = new JsonObject();
+            fiveStar.addProperty("tillDate", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(0L), new Date(), 5));
+            fiveStar.addProperty("yesterday", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(System.currentTimeMillis() - millisInOneDay), new Date(System.currentTimeMillis() - millisInOneDay), 5));
+            fiveStar.addProperty("lastWeek", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(System.currentTimeMillis() - 7 * millisInOneDay), new Date(), 5));
+            fiveStar.addProperty("lastTwoWeek", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(System.currentTimeMillis() - 14 * millisInOneDay), new Date(), 5));
+            fiveStar.addProperty("lastOneMonth", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(System.currentTimeMillis() - 30 * millisInOneDay), new Date(), 5));
+            ratingDistribution.addProperty("fiveStar", gson.toJson(fiveStar));
+
+            //four star rated toilets
+            JsonObject fourStar = new JsonObject();
+            fourStar.addProperty("tillDate", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(0L), new Date(), 4));
+            fourStar.addProperty("yesterday", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(System.currentTimeMillis() - millisInOneDay), new Date(System.currentTimeMillis() - millisInOneDay), 4));
+            fourStar.addProperty("lastWeek", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(System.currentTimeMillis() - 7 * millisInOneDay), new Date(), 4));
+            fourStar.addProperty("lastTwoWeek", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(System.currentTimeMillis() - 14 * millisInOneDay), new Date(), 4));
+            fourStar.addProperty("lastOneMonth", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(System.currentTimeMillis() - 30 * millisInOneDay), new Date(), 4));
+            ratingDistribution.addProperty("fourStar", gson.toJson(fourStar));
+
+            //three star rated toilets
+            JsonObject threeStar = new JsonObject();
+            threeStar.addProperty("tillDate", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(0L), new Date(), 3));
+            threeStar.addProperty("yesterday", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(System.currentTimeMillis() - millisInOneDay), new Date(System.currentTimeMillis() - millisInOneDay), 3));
+            threeStar.addProperty("lastWeek", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(System.currentTimeMillis() - 7 * millisInOneDay), new Date(), 3));
+            threeStar.addProperty("lastTwoWeek", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(System.currentTimeMillis() - 14 * millisInOneDay), new Date(), 3));
+            threeStar.addProperty("lastOneMonth", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(System.currentTimeMillis() - 30 * millisInOneDay), new Date(), 3));
+            ratingDistribution.addProperty("threeStar", gson.toJson(threeStar));
+
+            //two star rated toilets
+            JsonObject twoStar = new JsonObject();
+            twoStar.addProperty("tillDate", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(0L), new Date(), 2));
+            twoStar.addProperty("yesterday", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(System.currentTimeMillis() - millisInOneDay), new Date(System.currentTimeMillis() - millisInOneDay), 2));
+            twoStar.addProperty("lastWeek", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(System.currentTimeMillis() - 7 * millisInOneDay), new Date(), 2));
+            twoStar.addProperty("lastTwoWeek", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(System.currentTimeMillis() - 14 * millisInOneDay), new Date(), 2));
+            twoStar.addProperty("lastOneMonth", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(System.currentTimeMillis() - 30 * millisInOneDay), new Date(), 2));
+            ratingDistribution.addProperty("twoStar", gson.toJson(twoStar));
+
+            //one star rated toilets
+            JsonObject oneStar = new JsonObject();
+            oneStar.addProperty("tillDate", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(0L), new Date(), 1));
+            oneStar.addProperty("yesterday", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(System.currentTimeMillis() - millisInOneDay), new Date(System.currentTimeMillis() - millisInOneDay), 1));
+            oneStar.addProperty("lastWeek", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(System.currentTimeMillis() - 7 * millisInOneDay), new Date(), 1));
+            oneStar.addProperty("lastTwoWeek", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(System.currentTimeMillis() - 14 * millisInOneDay), new Date(), 1));
+            oneStar.addProperty("lastOneMonth", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(System.currentTimeMillis() - 30 * millisInOneDay), new Date(), 1));
+            ratingDistribution.addProperty("oneStar", gson.toJson(oneStar));
+
+            //noFeedBack rated toilets
+            JsonObject noFeedBack = new JsonObject();
+            noFeedBack.addProperty("tillDate", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(0L), new Date(), 0));
+            noFeedBack.addProperty("yesterday", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(System.currentTimeMillis() - millisInOneDay), new Date(System.currentTimeMillis() - millisInOneDay), 0));
+            noFeedBack.addProperty("lastWeek", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(System.currentTimeMillis() - 7 * millisInOneDay), new Date(), 0));
+            noFeedBack.addProperty("lastTwoWeek", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(System.currentTimeMillis() - 14 * millisInOneDay), new Date(), 0));
+            noFeedBack.addProperty("lastOneMonth", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(System.currentTimeMillis() - 30 * millisInOneDay), new Date(), 0));
+            ratingDistribution.addProperty("noFeedBack", gson.toJson(noFeedBack));
+
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("totalToilets", totalToilets);
+            jsonObject.addProperty("fiveStarsRated", fiveStarsRated);
+            jsonObject.addProperty("threeOrLessStarsRated", threeOrLessStarsRated);
+            jsonObject.addProperty("ulbsList", gson.toJson(ulbsList));
+            jsonObject.addProperty("staffsList", gson.toJson(staffsList));
+            jsonObject.addProperty("locationTypes", gson.toJson(locationTypes));
+            jsonObject.addProperty("ratingDistribution", gson.toJson(ratingDistribution));
+            Long endTime = System.currentTimeMillis();
+            jsonObject.addProperty("timeTaken", (endTime - startTime) / 1000);
+
+            writer.print(jsonObject);
+            writer.flush();
+            response.setStatus(200);
+
+            logger.info(request.getServletPath() +
+                    ", totalToilets: " + totalToilets +
+                    ", fiveStarsRated: " + fiveStarsRated +
+                    ", threeOrLessStarsRated" + threeOrLessStarsRated +
+                    ", ulbsList.size: " + ulbsList.size() +
+                    ", staffsList.size: " + staffsList.size() +
+                    ", locationTypes.size: " + locationTypes.size() +
+                    ", ratingDistribution: " + ratingDistribution +
+                    ", timeTaken: " + (endTime - startTime) / 1000
+            );
+
+        } catch (IOException e) {
+            response.setStatus(500);
+            e.printStackTrace();
+            Long endTime = System.currentTimeMillis();
+            logger.info(request.getServletPath() +
+                    ", totalToilets: " + totalToilets +
+                    ", fiveStarsRated: " + fiveStarsRated +
+                    ", threeOrLessStarsRated" + threeOrLessStarsRated +
+                    ", ulbsList.size: " + ulbsList.size() +
+                    ", staffsList.size: " + staffsList.size() +
+                    ", locationTypes.size: " + locationTypes.size() +
+                    ", timeTaken: " + (endTime - startTime) / 1000 +
+                    ", error: " + e.getMessage()
+            );
+
+        }
+    }
 
 }

@@ -4,6 +4,7 @@ import com.websystique.springmvc.model.Place;
 import com.websystique.springmvc.model.Review;
 
 import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
 public interface ReviewService {
@@ -21,5 +22,7 @@ public interface ReviewService {
     List<Review> getAllReviewsByPlacePageAndSizeOrderByDate(Place place, Integer page, Integer size);
 
     Long countReviewsByPlaceAndRating(Place place, Integer rating);
+
+    Long countToiletsReviewedBetweenDatesByLocationIdsAndRating(List<Integer> locationIds, Date startDate, Date endDate, Integer rating);
 
 }

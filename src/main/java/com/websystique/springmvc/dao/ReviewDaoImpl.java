@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 
@@ -159,6 +160,18 @@ public class ReviewDaoImpl extends AbstractDao<Integer, Review> implements Revie
     public Long countReviewsByPlaceAndRating(Place place, Integer rating) {
         return (Long) createEntityCriteria().add(Restrictions.eq("place", place))
                 .add(Restrictions.eq("rating", rating))
+                .setProjection(Projections.rowCount()).uniqueResult();
+    }
+
+    @Override
+    public Long countToiletsReviewedBetweenDatesByLocationIdsAndRating(List<Integer> locationIds, Date startDate, Date endDate, Integer rating) {
+        return (Long) createEntityCriteria()
+                .add(Restrictions.eq("rating", rating))
+                .add(Restrictions.ge("timeStamp", startDate))
+                .add(Restrictions.le("timeStamp", endDate))
+                .createCriteria("place", "place")
+                .createCriteria("place.location", "location")
+                .add(Restrictions.in("location.id", locationIds))
                 .setProjection(Projections.rowCount()).uniqueResult();
     }
 }

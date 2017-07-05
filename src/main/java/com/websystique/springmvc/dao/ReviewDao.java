@@ -5,6 +5,7 @@ import com.websystique.springmvc.model.Review;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
 @Transactional
@@ -33,6 +34,8 @@ public interface ReviewDao {
     List<Review> getAllReviewsByPlacePageAndSizeOrderByDate(Place place, Integer page, Integer size);
 
     Long countReviewsByPlaceAndRating(Place place, Integer rating);
+
+    Long countToiletsReviewedBetweenDatesByLocationIdsAndRating(List<Integer> locationIds, Date startDate, Date endDate, Integer rating);
 
 }
 

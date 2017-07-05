@@ -21,4 +21,5 @@ public interface PlaceDetailService {
     Long countPlaceDetails();
 
     Long countPlaceDetailsByRatingRange(Double ratingFrom, Double ratingTo);
+
 }
