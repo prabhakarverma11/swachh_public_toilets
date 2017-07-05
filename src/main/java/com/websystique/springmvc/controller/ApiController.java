@@ -1,5 +1,6 @@
 package com.websystique.springmvc.controller;
 
+import au.com.bytecode.opencsv.CSVWriter;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.websystique.springmvc.model.*;
@@ -12,8 +13,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
+import javax.servlet.http.HttpSession;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -542,6 +543,132 @@ public class ApiController {
             );
 
         }
+    }
+
+    /**
+     * Downloads report of locations with given criteria
+     *
+     * @param locationType - this is type of toilet location e.g. METRO, HOSPITAL
+     * @param startDate    - this is start date for rating and number of reviews
+     * @param endDate      -this is end date for rating and number of reviews
+     * @param ulbName      - this is to filter the location data by the name of ULB
+     * @param ratingFrom   -this is to filter the location having rating greater than this
+     * @param ratingEnd    -this is to filter the location having rating less than this
+     * @param page         -this is for the pagination, and this is required, by default send 1
+     * @param size         -this is for the pagination and this is also required, has no default value, send -INT_MAX if want to have all locations
+     * @param request      -this is request having all the parameters as well as the URL
+     * @param response     -the response is of application/json type
+     *                     {host}:{port}/api/download-report-of-locations/{ratingFrom}/{ratingEnd}/{page}/{size}?locationType={locationType}&ulbName={ulbName}&startDate={startDate}&endDate={endDate}
+     */
+    @CrossOrigin
+    @ResponseBody
+    @RequestMapping(value = "/download-report-of-locations/{ratingFrom}/{ratingEnd}/{page}/{size}", method = RequestMethod.GET, produces = "application/json")
+    public void downloadReportByLocationTypeRatingRangeAndBetweenDatesByPageAndSize(
+            @RequestParam(required = false) String locationType,
+            @RequestParam(required = false) String ulbName,
+            @RequestParam(required = false) String startDate,
+            @RequestParam(required = false) String endDate,
+            @PathVariable Double ratingFrom,
+            @PathVariable Double ratingEnd,
+            @PathVariable Integer page,
+            @PathVariable Integer size,
+            HttpServletRequest request,
+            HttpServletResponse response,
+            HttpSession session
+    ) {
+        logger.info(request.getServletPath() +
+                ", locationType: " + locationType +
+                ", startDate" + startDate +
+                ", endDate: " + endDate +
+                ", ulbName: " + ulbName +
+                ", ratingFrom: " + ratingFrom +
+                ", ratingEnd: " + ratingEnd +
+                ", page: " + page +
+                ", size: " + size
+        );
+
+        Long startTime = System.currentTimeMillis();
+
+        try {
+            String today = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+            String fileName = "RatingAndReviewsReport_" + today + ".csv";
+
+            response.setContentType("application/csv");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+            response.setCharacterEncoding("utf-8");
+
+
+            File csvFile = getReportCSVFile(fileName,
+                    locationType, ulbName,
+                    startDate, endDate,
+                    ratingFrom, ratingEnd,
+                    page, size,
+                    request, response,
+                    session);
+
+            OutputStream out = response.getOutputStream();
+            FileInputStream in = new FileInputStream(csvFile);
+            int readBytes = in.available();
+            byte[] content = new byte[readBytes];
+            in.read(content);
+            out.write(content);
+
+            in.close();
+            out.close();
+            Long endTime = System.currentTimeMillis();
+
+            logger.info(request.getServletPath() +
+                    ", timeTaken: " + (endTime - startTime) / 1000
+            );
+        } catch (IOException e) {
+            e.printStackTrace();
+            Long endTime = System.currentTimeMillis();
+            logger.info(request.getServletPath() +
+                    ", timeTaken: " + (endTime - startTime) / 1000 +
+                    ", error: " + e.getMessage()
+            );
+        }
+    }
+
+    private File getReportCSVFile(String fileName,
+                                  String locationType, String ulbName,
+                                  String startDate, String endDate,
+                                  Double ratingFrom, Double ratingEnd,
+                                  Integer page, Integer size,
+                                  HttpServletRequest request, HttpServletResponse response,
+                                  HttpSession session) throws IOException {
+
+
+        List<Integer> locationIds = placeULBMapService.getLocationIdsByULBNameAndLocationType(ulbName, locationType);
+        List<PlaceDetail> placeDetails = placeDetailService.getAllPlaceDetailsByLocationIdsRatingRangePageAndSize(locationIds, ratingFrom, ratingEnd, page, size);
+
+        List<Report> reports = reportService.getReportsListByPlaceDetailsBetweenDates(placeDetails, startDate, endDate);
+        Long noOfElements = placeDetailService.countPlaceDetailsByLocationIdsAndRatingRange(locationIds, ratingFrom, ratingEnd);
+
+        File csvFile = new File(fileName);
+        csvFile.setReadable(true, false);
+        csvFile.setWritable(true, false);
+        csvFile.createNewFile();
+
+        CSVWriter writer = new CSVWriter(new FileWriter(csvFile.getAbsolutePath()));
+
+        writer.writeNext(new String[]{"S. No.", "Name", "Address", "Type", "Avg. Rating", "Reviews"});
+
+        String line = "";
+        int count = 1;
+        for (Report report : reports) {
+            line = "";
+            line += (count++) + "|";
+            line += report.getLocation().getName() + "|";
+            line += report.getLocation().getAddress() + "|";
+            line += report.getLocation().getType() + "|";
+            line += report.getAverageRating() + "|";
+            line += report.getReviewsCount() + "|";
+
+            writer.writeNext(line.split("\\|"));
+        }
+        writer.close();
+        return csvFile;
     }
 
 }
