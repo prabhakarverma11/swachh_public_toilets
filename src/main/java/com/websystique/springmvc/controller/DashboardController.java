@@ -51,6 +51,15 @@ public class DashboardController {
         return "home";
     }
 
+    @RequestMapping(value = "/admin/dashboard", method = RequestMethod.GET)
+    public String adminDashboard(ModelMap model) {
+        return "admin_dashboard";
+    }
+
+    @RequestMapping(value = "/about", method = RequestMethod.GET)
+    public String about(ModelMap model) {
+        return "about";
+    }
 
 //        List<Location> locations = locationService.getAllLocationsByPageAndSize(0, 100);
 //        List<Report> reports = reportService.getReportsListByLocationsBetweenDates(locations, "", "");

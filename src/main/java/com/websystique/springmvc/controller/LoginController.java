@@ -61,7 +61,7 @@ public class LoginController {
         if (isCurrentAuthenticationAnonymous()) {
             return "login";
         } else {
-            return "redirect:/home";
+            return "redirect:/admin/dashboard";
         }
     }
 
