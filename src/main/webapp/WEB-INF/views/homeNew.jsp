@@ -11,7 +11,7 @@
         <!-- Wrapper for slides -->
         <div class="carousel-inner" role="listbox">
             <div class="item active">
-                <img src="../static/img/Google-Toilet-Locator-21-06-2017-b-07.jpg" alt="...">
+                <img src="img/Google-Toilet-Locator-21-06-2017-b-07.jpg" alt="...">
                 <!-- <div class="carousel-caption">
                   <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit</h3>
                   <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
@@ -20,7 +20,7 @@
                 </div> -->
             </div>
             <div class="item">
-                <img src="../static/img/SBM_20x10-01.jpg" alt="...">
+                <img src="img/SBM_20x10-01.jpg" alt="...">
                 <!-- <div class="carousel-caption">
                   <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit</h3>
                   <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
@@ -29,7 +29,7 @@
                 </div> -->
             </div>
             <div class="item">
-                <img src="../static/img/SBM_20x10-02.jpg" alt="...">
+                <img src="img/SBM_20x10-02.jpg" alt="...">
                 <!-- <div class="carousel-caption">
                   <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit</h3>
                   <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
@@ -77,31 +77,4 @@
         <span class="glyphicon glyphicon-menu-down"></span>
     </a>
 </div>
-<script type="text/javascript">
-    $(document).ready(function(){
-        // Add smooth scrolling to all links
-        $(".know-more a").on('click', function(event) {
-
-            // Make sure this.hash has a value before overriding default behavior
-            if (this.hash !== "") {
-                // Prevent default anchor click behavior
-                event.preventDefault();
-
-                // Store hash
-                var hash = this.hash;
-
-                // Using jQuery's animate() method to add smooth page scroll
-                // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
-                $('html, body').animate({
-                    scrollTop: $(hash).offset().top
-                }, 800, function(){
-
-                    // Add hash (#) to URL when done scrolling (default click behavior)
-                    //window.location.hash = hash;
-                });
-            } // End if
-        });
-    });
-
-</script>
 <%@include file="header-end.jsp" %>

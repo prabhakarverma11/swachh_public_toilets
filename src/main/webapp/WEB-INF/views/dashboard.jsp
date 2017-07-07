@@ -1,365 +1,375 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
-<%@ page isELIgnored="false" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@include file="header.jsp" %>
 
-<html>
-
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-    <title>Dashboard</title>
-
-    <link href="<c:url value='/static/css/bootstrap.css' />" rel="stylesheet"/>
-    <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"/>
-    <link href="<c:url value='/static/css/1.css' />" rel="stylesheet"/>
-    <link href="<c:url value='/static/css/2.css' />" rel="stylesheet"/>
-    <link href="<c:url value='/static/css/3.css' />" rel="stylesheet"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script async src="//code.jquery.com/ui/1.10.1/jquery-ui.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <style>
-        @media screen and (max-width: 992px) {
-            .container {
-                max-width: 990px;
-            }
-        }
-    </style>
-    <script src="/static/js/common.util.js"></script>
-    <script>
-
-        function fillModalData(locationName, locationAddress, locationId) {
-            $(".modal-title").html(locationName + ", " + toTitleCase(locationAddress));
-
-            $.ajax({
-                url: window.location.origin + "/fetch-rating-and-reviews/" + locationId,
-                dataType: 'json',
-                type: 'get',
-                success: function (response) {
-                    console.log("response", response);
-                    var reviews = JSON.parse(response.reviews);
-                    var modalBody = "<ul class='list-group'>";
-
-                    var blackStar = '<span class="stars-container stars-0">&#9733;</span>';
-                    var whiteStar = '<span class="stars-container stars-0">&#9734;</span>';
-
-                    reviews.forEach(function (review) {
-                        var stars = blackStar;
-                        switch (parseInt(review.rating)) {
-                            case 1: {
-                                stars += whiteStar + whiteStar + whiteStar + whiteStar;
-                                break;
-                            }
-                            case 2: {
-                                stars += blackStar;
-                                stars += whiteStar + whiteStar + whiteStar;
-                                break;
-                            }
-                            case 3: {
-                                stars += blackStar + blackStar;
-                                stars += whiteStar + whiteStar;
-                                break;
-                            }
-                            case 4: {
-                                stars += blackStar + blackStar + blackStar;
-                                stars += whiteStar;
-                                break;
-                            }
-                            case 5: {
-                                stars += blackStar + blackStar + blackStar + blackStar;
-                                break;
-                            }
-                            default: {
-                                break;
-                            }
-                        }
-
-                        modalBody += "<li class='list-group-item' style='font-size: medium;border: none;height: 9vw;'>" +
-                            "<div style='width: 25%;height: 100%;float: left;'>" +
-                            "<img src='" + review.profilePhotoURL + "' style='font-size: 4.5em;border-radius: 50%;background-color: rgba(203, 120, 207, 0.55);height: 7vw;w;w;width: 7vw;float: left;margin: 0;'/>" +
-                            "</div>" +
-                            "<div style='width: 75%;height: 100%;float: right;'>" +
-                            "<a href='" + review.authorURL + "' target='_blank'>" + review.authorName + "</a><br>" +
-                            stars + "<br>" +
-                            review.reviewText +
-                            "</div>" +
-                            "</li>";
-                    });
-                    modalBody += "</ul>";
-
-                    $(".modal-body").html(modalBody);
-                }
-            });
-        }
-
-        function formatDate(date) {
-            var d = new Date(date),
-                month = '' + (d.getMonth() + 1),
-                day = '' + d.getDate(),
-                year = d.getFullYear();
-
-            if (month.length < 2) month = '0' + month;
-            if (day.length < 2) day = '0' + day;
-
-            return [year, month, day].join('-');
-        }
-
-        function handleOnChangeSelectFilter(value, startDateString = "", endDateString = "") {
-
-            var currentTime = new Date().getTime();
-            var startDate = null;
-            var endDate = null;
-            $("#start_date").attr("readOnly", true);
-            $("#end_date").attr("readOnly", true);
-            switch (value) {
-                case "today": {
-                    startDate = new Date(currentTime);
-                    endDate = new Date(currentTime);
-                    break;
-                }
-                case "yesterday": {
-                    startDate = new Date(currentTime - 86400000);
-                    endDate = new Date(currentTime - 86400000);
-                    break;
-                }
-                case "lasttwodays": {
-                    startDate = new Date(currentTime - 86400000);
-                    endDate = new Date(currentTime);
-                    break;
-                }
-                case "lastthreedays": {
-                    startDate = new Date(currentTime - 86400000 * 2);
-                    endDate = new Date(currentTime);
-                    break;
-                }
-                case "lastweek": {
-                    startDate = new Date(currentTime - 86400000 * 6);
-                    endDate = new Date(currentTime);
-                    break;
-                }
-                case "lasttwoweeks": {
-                    startDate = new Date(currentTime - 86400000 * 13);
-                    endDate = new Date(currentTime);
-                    break;
-                }
-                case "lastmonth": {
-                    startDate = new Date(currentTime - 86400000 * 29);
-                    endDate = new Date(currentTime);
-                    break;
-                }
-                case "custom": {
-                    $("#start_date").removeAttr("readOnly");
-                    $("#end_date").removeAttr("readOnly");
-
-                    startDate = new Date(currentTime);
-                    endDate = new Date(currentTime);
-                    break;
-                }
-                default: {
-                    startDate = new Date(currentTime);
-                    endDate = new Date(currentTime);
-                    console.log("invalid selection");
-                    break;
-                }
-            }
-            if (value === "custom") {
-                $("#start_date").val(startDateString);
-                $("#end_date").val(endDateString);
-            } else {
-                $("#start_date").val(formatDate(startDate));
-                $("#end_date").val(formatDate(endDate));
-            }
-        }
-
-        function setFilter(dateRange, startDate, endDate) {
-            $("#select_date").val(dateRange);
-            handleOnChangeSelectFilter(dateRange, startDate, endDate);
-        }
-
-    </script>
-</head>
-
-<body style="height: auto;" onload="setFilter('${dateRange}','${startDate}','${endDate}');">
-<%@include file="../old-jsp/navigation_old.jsp" %>
-<div class="row" style="height: 25%;margin-top: 50px;width: 100%;margin-bottom: 0;">
-    <div class="row" style="margin: 0;">
-        <h2 class="text-center" style="margin: 0">Welcome to the Swachhata Dashboard</h2>
-    </div>
-    <div class="row" style="margin: 0;">
-        <h3 class="text-center">This platform shows you information on cities across the country as they are ranked on
-            their performances.</h3>
-    </div>
-</div>
-<div class="container">
+<div class="container" ng-controller="dashboardController" ng-init="init()">
     <div class="row">
-
-        <div class="cols4">
-            <div class="wrapBox">
-                <div class="wrapTitle swachhProject">
-                    <abc style="font-size: 4.5em;padding: 3vw 0vw 0vw 0vw;border-radius: 50%;background-color: white;height: 13vw;width: 13vw;float: left;margin: 3vw 0 0 7vw;color: #144887;">
-                        1001
-                    </abc>
-                    <%--/* vertical-align: text-bottom; */--%>
-                    <span>Toilets Reviewed Today</span>
+        <div class="col-xs-12 col-md-7">
+            <div id="map"></div>
+        </div>
+        <div class="col-xs-12 col-md-3 col-md-offset-1">
+            <h2 class="text-center" id="area-name">Delhi</h2>
+            <div class="panel panel-default color1">
+                <div class="panel-body">
+                    <div    class="number counter"
+                            value="totalToilets.myValue"
+                            to="totalToilets.myTarget"
+                            duration="totalToilets.myDuration"
+                            effect="totalToilets.myEffect"> {{ totalToilets.myValue | number:0 }}</div>
+                    <h2>Total Toilets</h2>
                 </div>
             </div>
-        </div>
-        <div class="cols4">
-            <div class="wrapBox wrapGreen">
-                <div class="wrapTitle csr">
-                    <abc style="font-size: 5em;padding: 3vw 0vw 0vw 0vw;border-radius: 50%;background-color: white;height: 13vw;width: 13vw;float: left;margin: 3vw 0 0 7vw;color: #144887;">
-                        500
-                    </abc>
-                    <span>Toilets with Rating 4-5</span>
+            <div class="panel panel-default color2">
+                <div class="panel-body">
+                    <div    class="number counter"
+                            value="fiveStarsRated.myValue"
+                            to="fiveStarsRated.myTarget"
+                            duration="fiveStarsRated.myDuration"
+                            effect="fiveStarsRated.myEffect"> {{ fiveStarsRated.myValue | number:0 }}</div>
+                    <h2>5 Stars Rated</h2>
                 </div>
             </div>
-        </div>
-        <div class="cols4">
-            <div class="wrapBox wrapPink">
-                <div class="wrapTitle csr">
-                    <abc style="font-size: 5em;padding: 3vw 0vw 0vw 0vw;border-radius: 50%;background-color: white;height: 13vw;width: 13vw;float: left;margin: 3vw 0 0 7vw;color: #144887;">
-                        40
-                    </abc>
-                    <span>Toilets with Rating <=3</span>
+            <div class="panel panel-default color3">
+                <div class="panel-body">
+                    <div    class="number counter"
+                            value="threeOrLessStarsRated.myValue"
+                            to="threeOrLessStarsRated.myTarget"
+                            duration="threeOrLessStarsRated.myDuration"
+                            effect="threeOrLessStarsRated.myEffect"> {{ threeOrLessStarsRated.myValue | number:0 }}</div>
+                    <h2>3 or less Stars Rated</h2>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<div class="container" style="margin: 10vw auto 0 auto;font-size: medium">
-    <div class="row" style="">
-        <form class="form-inline" action="/dashboard">
 
-            <div class="col-sm-12" style="padding: 0;">
-                <div class="col-md-3">
-                    <label for="select_date">Rating</label>
-                    <select class="form-control" id="select_date"
-                            onchange="handleOnChangeSelectFilter(event.target.value)" name="date_range">
-                        <option value="today">&gt;</option>
-                        <option value="yesterday">&lt;</option>
-                        <option value="lasttwodays">=</option>
-                    </select>
-                    <select class="form-control" onchange="handleOnChangeSelectFilter(event.target.value)"
-                            name="date_range">
-                        <option value="today">0</option>
-                        <option value="today">1</option>
-                        <option value="yesterday">2</option>
-                        <option value="lasttwodays">3</option>
-                        <option value="lastthreedays">4</option>
-                        <option value="lastweek">5</option>
-                    </select></div>
-                <div class="col-md-3">
-                    <label for="select_date">Select Range</label>
-                    <select class="form-control" onchange="handleOnChangeSelectFilter(event.target.value)"
-                            name="date_range">
-                        <option value="today">Today</option>
-                        <option value="yesterday">Yesterday</option>
-                        <option value="lasttwodays">Last 2 Days</option>
-                        <option value="lastthreedays">Last 3 Days</option>
-                        <option value="lastweek">Last Week</option>
-                        <option value="lasttwoweeks">Last 2 Weeks</option>
-                        <option value="lastmonth">Last Month</option>
-                        <option value="custom">Custom Range</option>
-                    </select>
-                </div>
-                <div class="col-sm-5" style="margin: 0">
-                    <label for="start_date">From</label>
-                    <input type="date" class="form-control" id="start_date" name="start_date" readonly="">
-                    <%--</div>--%>
-                    <%--<div class="col-sm-3" style="margin:0;">--%>
-                    <label for="end_date">To</label>
-                    <input type="date" class="form-control" id="end_date" name="end_date" readonly="">
-                </div>
-                <div class="col-sm-1" style="margin: 0">
-                    <button type="submit" class="btn btn-primary">Apply</button>
-                </div>
+    <div class="row">
+        <div class="col-xs-12 form-inline">
+            <button class="btn btn-color-red opensearch animated flipInX"><span class="glyphicon glyphicon-search"></span></button>
+            <div class="search-form animated flipOutX">
+                <div class="input-group">
+                      <span class="input-group-btn">
+                        <button class="btn btn-color-red" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                      </span>
+                    <input type="text" class="form-control" placeholder="Search for address">
+
+                </div><!-- /input-group -->
+                <button class="btn btn-color-blue" id="adv-search">Advanced Search</button>
             </div>
-
-
-        </form>
+        </div>
     </div>
-    <div class="table-responsive" style="">
-        <table class="table table-hover">
-            <thead>
-            <tr>
-                <th>S.No.</th>
-                <th>Toilet Name</th>
-                <th>Rating</th>
-                <th>Reviews</th>
-                <th>Type</th>
-            </tr>
-            </thead>
-            <tbody>
-            <c:set var="count" value="${0}"></c:set>
-            <c:forEach items="${reportsList}" var="report">
-                <c:set var="count" value="${count+1}"></c:set>
-                <tr>
-                    <td>${count}</td>
-                    <td>
-                        <a href='/location-detail-<c:out value="${report.location.id}"></c:out>'>
-                            <script>document.write(toTitleCase("${report.location.address}"))</script>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="table-responsive">
+                <table class="table table-bordered numeric-table table-striped table-hover" id="listing-table">
+                    <thead>
+                    <tr>
+                        <th>Sr. No.</th>
+                        <!-- <th>Name</th> -->
+                        <th>Address</th>
+                        <th>Type</th>
+                        <th>Ratings</th><!--
+                                <th>Last Rated on</th>
+                                <th>Assigned To</th> -->
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="location in locationData" ng-click="showToiletDetails(location)">
+                        <td>
+                            {{((metaData.page-1)*10) + $index+1}}
+                        </td>
+                        <!-- <td>
+                            {{location.location.name}}
+                        </td> -->
+                        <td>
+                            {{location.location.address}}
+                        </td>
+                        <td>
+                            {{location.location.type}}
+                        </td>
+                        <td>
+                            {{location.averageRating || 'NA'}}
+                            <button class="btn btn-default open-modal" ng-click="getReviews(location.location.id, 0, 5);$event.stopPropagation();">View</button>
+                        </td><!--
+                                <td>
+                                    20 Jun, 2017
+                                </td>
+                                <td>
+                                    Ram Sharma
+                                </td> -->
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <nav aria-label="" class="text-center">
+                <ul class="pagination pagination-lg pagination-base">
+                    <!-- <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+                    <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
+                    <li><a href="#">2 <span class="sr-only">2</span></a></li>
+                    <li><a href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li> -->
+
+                    <!-- first -->
+                    <li ng-class="{'disabled':currentPage == 1}" ng-click="getData(1)">
+                        <a href="javascript:void(0);" aria-label="First"><span aria-hidden="true">&laquo;</span></a>
+                    </li>
+
+                    <!-- prev -->
+                    <li ng-class="{'disabled':currentPage == 1}" ng-click="getData(currentPage-1)">
+                        <a href="javascript:void(0);" aria-label="Previous"><span aria-hidden="true">&lsaquo;</span></a>
+                    </li>
+
+                    <!-- numbers -->
+                    <li ng-repeat="i in pages" ng-class="{'active': i == currentPage}" ng-click="getData(i)">
+                        <a href="javascript:void(0);">
+                            {{ i}}<span class="sr-only">2</span>
                         </a>
-                    </td>
-                    <td>${report.placeDetail.rating}</td>
-                    <td style="min-width: 10vw;">
-                        <span class="badge">${report.reviewsCount}</span>
-                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                data-target="#myModal"
-                                onclick="fillModalData('${report.location.name}','${report.location.address}','${report.location.id}')">
-                            show
-                        </button>
-                    </td>
-                    <td>${report.location.type}</td>
-                </tr>
-            </c:forEach>
-            </tbody>
-        </table>
-    </div>
-    <%--<div class="row" style="">--%>
-    <%--<form class="form-inline">--%>
+                    </li>
 
-    <%--<div class="col-sm-12" style="padding: 0;">--%>
-    <%--<div class="col-md-3">--%>
-    <%--<label for="select_date">Items Per page</label>--%>
-    <%--<select class="form-control"--%>
-    <%--onchange="handleOnChangeSelectFilter(event.target.value)" name="date_range">--%>
-    <%--<option value="today">10</option>--%>
-    <%--<option value="today">20</option>--%>
-    <%--<option value="today">30</option>--%>
-    <%--<option value="today">40</option>--%>
-    <%--<option value="today">50</option>--%>
-    <%--<option value="today">100</option>--%>
-    <%--<option value="today">200</option>--%>
-    <%--</select>--%>
-    <%--</div>--%>
-    <%--</div>--%>
-
-
-    <%--</form>--%>
-    <%--</div>--%>
-</div>
-<!-- Modal -->
-<div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Modal Header</h4>
-            </div>
-            <div class="modal-body" style="max-height: 500px;overflow-y: auto;">
-                <p>Some text in the modal.</p>
-            </div>
-            <%--<div class="modal-footer">--%>
-            <%--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>--%>
-            <%--</div>--%>
+                    <!-- next -->
+                    <li ng-class="{'disabled':currentPage == totalPages}" ng-click="getData(currentPage+1)">
+                        <a href="javascript:void(0);" aria-label="Next"><span aria-hidden="true">&rsaquo;</span></a>
+                    </li>
+                    <!-- last -->
+                    <li ng-class="{'disabled':currentPage == totalPages}" ng-click="getData(totalPages)">
+                        <a href="javascript:void(0);" aria-label="Last"><span aria-hidden="true">&raquo;</span></a>
+                    </li>
+                </ul>
+            </nav>
         </div>
+    </div>
 
+
+
+    <div id="filters">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="close"><span class="glyphicon glyphicon-remove"></span></div>
+                <div class="filters">
+                    <h3>Advanced Search</h3>
+                    <form ng-submit="filterData(filterForm)" name="filterForm" novalidate>
+                        <div class="form-group">
+                            <label>Ratings</label>
+                            <div>
+                                <slider ng-model="filterModel.ratings" min="filterModel.min" step="1" max="filterModel.max" value="[0,5]" range="true"></slider>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Filter by Ward</label>
+                            <select class="form-control" name="ward" ng-model="filterModel.ward" ng-options="ulb for ulb in ulbList">
+                                <option value="">Select Ward</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Filter by Type</label>
+                            <select class="form-control" name="type" ng-model="filterModel.type" ng-options="type for type in locationTypes">
+                                <option value="">Select Type</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Filter by Period</label>
+                            <select class="form-control" name="period" ng-model="filterModel.period" ng-change="changePeriod(filterModel.period)">
+                                <option value="">Select Period</option>
+                                <option value="today">Today</option>
+                                <option value="yesterday">Yesterday</option>
+                                <option value="lastWeek">Past Week</option>
+                                <option value="lastMonth">Past Month</option>
+                                <option value="custom">Select Dates</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>From Date</label>
+                            <input type="text" name="fromDate" class="form-control datepicker" ng-model="filterModel.fromDate" ng-disabled="filterModel.period != 'custom'">
+                        </div>
+                        <div class="form-group">
+                            <label>To Date</label>
+                            <input type="text" name="toDate" class="form-control datepicker" ng-model="filterModel.toDate" ng-disabled="filterModel.period != 'custom'">
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12 col-md-6">
+                                <button class="btn btn-color-blue btn-block" type="submit">Search</button>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <button class="btn btn-color-red btn-block" type="button" ng-click="clearFilters()">Clear</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" id="reviews">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="gridSystemModalLabel">Reviews</h4>
+                </div>
+                <div class="modal-body toilet-details">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="list-group review-list" ng-repeat="review in reviews">
+                                <a href="#" class="list-group-item">
+                                    <h4 class="list-group-item-heading"><img ng-src="{{review.profilePhotoURL}}" class="img-circle" width="50"> {{review.authorName}}</h4>
+                                    <p class="list-group-item-text">{{review.reviewText}}</p>
+                                    <div class="ratings">
+                                        {{review.rating}} <span class="glyphicon glyphicon-star"></span>
+                                    </div>
+                                </a>
+                            </div>
+                            <div ng-if="!reviews.length" class="text-center">
+                                <h4>No Reviews</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" ng-if="reviews.length > 5">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">&lsaquo;</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">&rsaquo;</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <div class="details-popup" ng-hide="!showDetails">
+        <div class="close" ng-click="closeDetails()">
+            <span class="glyphicon glyphicon-remove"></span>
+        </div>
+        <div class="info-col">
+            <img ng-src="{{toiletDetail.location.imageURL}}" class="img-circle" width="100">
+            <h2>{{toiletDetail.location.name}}</h2>
+            <p>{{toiletDetail.location.address}}</p>
+            <p>{{toiletDetail.location.type}}</p>
+            <p class="ratings"> {{toiletDetail.averageRating}} <span class="glyphicon glyphicon-star"></span></p>
+            <!-- <p> Last Rated on 20 Jun, 2017</p> -->
+            <p>{{toiletDetail.reviewsCount}} reviews</p>
+            <!-- <p>Ram Sharma</p> -->
+        </div>
+        <div class="graph-col">
+
+            <div class="tabs-blue">
+                <!-- Nav tabs -->
+                <ul class="nav nav-pills nav-justified" role="tablist">
+                    <li role="presentation" class="active"><a href="#oRatings" aria-controls="oRatings" role="tab" data-toggle="tab">Overall Ratings</a></li>
+                    <li role="presentation"><a href="#detailReview" aria-controls="detailReview" role="tab" data-toggle="tab">Reviews</a></li>
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="oRatings">
+                        <div id="pie-chart">
+
+                        </div>
+                    </div>
+                    <div role="tabpanel toilet-details" class="tab-pane" id="detailReview">
+                        <div class="list-group review-list" ng-repeat="review in reviews">
+                            <a href="#" class="list-group-item">
+                                <h4 class="list-group-item-heading"><img ng-src="{{review.profilePhotoURL}}" class="img-circle" width="50"> {{review.authorName}}</h4>
+                                <p class="list-group-item-text">{{review.reviewText}}</p>
+                                <div class="ratings">
+                                    {{review.rating}} <span class="glyphicon glyphicon-star"></span>
+                                </div>
+                            </a>
+                        </div>
+                        <div ng-if="!reviews.length" class="text-center">
+                            <h4>No Reviews</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
-<%@include file="../old-jsp/footer_old.jsp" %>
-</body>
-</html>
+
+<%@include file="footer-new.jsp" %>
+<script type="text/javascript">
+
+    Highcharts.chart('pie-chart', {
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie'
+        },
+        title: {
+            text: 'Ratings'
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                    style: {
+                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                    }
+                }
+            }
+        },
+        series: [{
+            name: 'share',
+            colorByPoint: true,
+            data: [{
+                name: '5 Stars',
+                y: 56.33
+            }, {
+                name: '4 Stars',
+                y: 24.03,
+                sliced: true,
+                selected: true
+            }, {
+                name: '3 Stars',
+                y: 10.38
+            }, {
+                name: '2 Stars',
+                y: 4.77
+            }, {
+                name: '1 Stars',
+                y: 0.93
+            }]
+        }],
+        credits : {
+            enabled: false
+        }
+    });
+
+
+
+    $(document).ready(function() {
+        $('.opensearch').on('click', function() {
+            $('.search-form').addClass('animated flipInX');
+            $(this).removeClass('flipInX').addClass('animated flipOutX');
+        });
+
+        /*var rangeSlider = $(".rangeSlider").bootstrapSlider();*/
+
+        $("#adv-search").on('click', function() {
+            $("#filters").addClass('open');
+        });
+        $(".close").on('click', function() {
+            $("#filters").removeClass('open');
+        });
+
+        $('.datepicker').datepicker({format:'dd-mm-yyyy'});
+
+        /*$('#listing-table tr').each(function() {
+         $(this).on('click', function() {
+         window.location.href = 'toilet-details.html';
+         })
+         });*/
+
+        //$('.counter').counter();
+
+        $('.open-modal').on('click', function(e) {
+            e.stopPropagation()
+        });
+    });
+
+</script>
+<%@include file="header-end.jsp" %>
