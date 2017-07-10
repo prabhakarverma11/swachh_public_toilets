@@ -284,6 +284,7 @@
 
 
 <%@include file="footer-new.jsp" %>
+<script src="https://code.highcharts.com/mapdata/countries/in/custom/in-all-disputed.js"></script>
 <script type="text/javascript">
 
     Highcharts.chart('pie-chart', {
