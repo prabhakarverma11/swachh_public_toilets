@@ -165,13 +165,26 @@ public class ReviewDaoImpl extends AbstractDao<Integer, Review> implements Revie
 
     @Override
     public Long countToiletsReviewedBetweenDatesByLocationIdsAndRating(List<Integer> locationIds, Date startDate, Date endDate, Integer rating) {
-        return (Long) createEntityCriteria()
+        Criteria criteria = createEntityCriteria()
                 .add(Restrictions.eq("rating", rating))
                 .add(Restrictions.ge("timeStamp", startDate))
-                .add(Restrictions.le("timeStamp", endDate))
+                .add(Restrictions.le("timeStamp", endDate));
+        if (locationIds.size() > 0) {
+            criteria.createCriteria("place", "place")
+                    .createCriteria("place.location", "location")
+                    .add(Restrictions.in("location.id", locationIds));
+        }
+        return (Long) criteria.setProjection(Projections.rowCount()).uniqueResult();
+    }
+
+    @Override
+    public List<Integer> getLocationIdsByLocationIdsAndDate(List<Integer> locationIds, Date date) {
+        Criteria criteria = createEntityCriteria()
+                .add(Restrictions.eq("timeStamp", date))
                 .createCriteria("place", "place")
                 .createCriteria("place.location", "location")
                 .add(Restrictions.in("location.id", locationIds))
-                .setProjection(Projections.rowCount()).uniqueResult();
+                .setProjection(Projections.property("location.id"));
+        return criteria.list();
     }
 }

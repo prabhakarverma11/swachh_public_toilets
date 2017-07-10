@@ -3,7 +3,8 @@
     <div class="row">
         <div class="col-xs-12 col-md-6 col-md-offset-3 select-area">
             <div class="dropdown">
-                <button class="btn btn-default btn-lg btn-block dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                <button class="btn btn-default btn-lg btn-block dropdown-toggle" type="button" id="dropdownMenu1"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                     {{selectedUlb}}
                     <span class="caret"></span>
                 </button>
@@ -27,11 +28,12 @@
 
             <div class="panel panel-default color1">
                 <div class="panel-body">
-                    <div    class="number counter"
-                            value="totalToilets.myValue"
-                            to="totalToilets.myTarget"
-                            duration="totalToilets.myDuration"
-                            effect="totalToilets.myEffect"> {{ totalToilets.myValue | number:0 }}</div>
+                    <div class="number counter"
+                         value="totalToilets.myValue"
+                         to="totalToilets.myTarget"
+                         duration="totalToilets.myDuration"
+                         effect="totalToilets.myEffect"> {{ totalToilets.myValue | number:0 }}
+                    </div>
                     <h2>Total Toilets</h2>
                 </div>
             </div>
@@ -39,11 +41,12 @@
         <div class="col-xs-12 col-md-4">
             <div class="panel panel-default color2">
                 <div class="panel-body">
-                    <div    class="number counter"
-                            value="fiveStarsRated.myValue"
-                            to="fiveStarsRated.myTarget"
-                            duration="fiveStarsRated.myDuration"
-                            effect="fiveStarsRated.myEffect"> {{ fiveStarsRated.myValue | number:0 }}</div>
+                    <div class="number counter"
+                         value="fiveStarsRated.myValue"
+                         to="fiveStarsRated.myTarget"
+                         duration="fiveStarsRated.myDuration"
+                         effect="fiveStarsRated.myEffect"> {{ fiveStarsRated.myValue | number:0 }}
+                    </div>
                     <h2>5 Stars Rated</h2>
                 </div>
             </div>
@@ -51,17 +54,60 @@
         <div class="col-xs-12 col-md-4">
             <div class="panel panel-default color3">
                 <div class="panel-body">
-                    <div    class="number counter"
-                            value="threeOrLessStarsRated.myValue"
-                            to="threeOrLessStarsRated.myTarget"
-                            duration="threeOrLessStarsRated.myDuration"
-                            effect="threeOrLessStarsRated.myEffect"> {{ threeOrLessStarsRated.myValue | number:0 }}</div>
+                    <div class="number counter"
+                         value="threeOrLessStarsRated.myValue"
+                         to="threeOrLessStarsRated.myTarget"
+                         duration="threeOrLessStarsRated.myDuration"
+                         effect="threeOrLessStarsRated.myEffect"> {{ threeOrLessStarsRated.myValue | number:0 }}
+                    </div>
                     <h2>3 or less Stars Rated</h2>
                 </div>
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-xs-12 col-md-4">
 
+            <div class="panel panel-default color1">
+                <div class="panel-body">
+                    <div class="number counter"
+                         value="totalToiletsYesterday.myValue"
+                         to="totalToiletsYesterday.myTarget"
+                         duration="totalToiletsYesterday.myDuration"
+                         effect="totalToiletsYesterday.myEffect"> {{ totalToiletsYesterday.myValue | number:0 }}
+                    </div>
+                    <h2>Total Toilets Reviewed Yesterday</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-4">
+            <div class="panel panel-default color2">
+                <div class="panel-body">
+                    <div class="number counter"
+                         value="fiveStarsRatedYesterday.myValue"
+                         to="fiveStarsRatedYesterday.myTarget"
+                         duration="fiveStarsRatedYesterday.myDuration"
+                         effect="fiveStarsRatedYesterday.myEffect"> {{ fiveStarsRatedYesterday.myValue | number:0 }}
+                    </div>
+                    <h2>5 Stars Reviewed Yesterday</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-4">
+            <div class="panel panel-default color3">
+                <div class="panel-body">
+                    <div class="number counter"
+                         value="threeOrLessStarsRatedYesterday.myValue"
+                         to="threeOrLessStarsRatedYesterday.myTarget"
+                         duration="threeOrLessStarsRatedYesterday.myDuration"
+                         effect="threeOrLessStarsRatedYesterday.myEffect"> {{ threeOrLessStarsRatedYesterday.myValue |
+                        number:0 }}
+                    </div>
+                    <h2>3 or less Stars Reviewed Yesterday</h2>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Ratings Report-->
     <div class="row">
         <div class="col-xs-12">
@@ -213,7 +259,8 @@
     <!-- Search box-->
     <div class="row">
         <div class="col-xs-12 col-md-6 form-inline">
-            <button class="btn btn-color-red opensearch animated flipInX"><span class="glyphicon glyphicon-search"></span></button>
+            <button class="btn btn-color-red opensearch animated flipInX"><span
+                    class="glyphicon glyphicon-search"></span></button>
             <div class="search-form animated flipOutX">
                 <div class="input-group">
     <span class="input-group-btn">
@@ -263,7 +310,9 @@
                         </td>
                         <td>
                             {{location.averageRating || 'NA'}}
-                            <button class="btn btn-default open-modal" ng-click="getReviews(location.location.id, 0, 5);$event.stopPropagation();">View</button>
+                            <button class="btn btn-default open-modal"
+                                    ng-click="getReviews(location.location.id, 0, 5);$event.stopPropagation();">View
+                            </button>
                         </td><!--
     <td>
     20 Jun, 2017
@@ -330,24 +379,28 @@ Ram Sharma
                         <div class="form-group">
                             <label>Ratings</label>
                             <div>
-                                <slider ng-model="filterModel.ratings" min="filterModel.min" step="1" max="filterModel.max" value="[0,5]" range="true"></slider>
+                                <slider ng-model="filterModel.ratings" min="filterModel.min" step="1"
+                                        max="filterModel.max" value="[0,5]" range="true"></slider>
                             </div>
                         </div>
                         <div class="form-group">
                             <label>Filter by Ward</label>
-                            <select class="form-control" name="ward" ng-model="filterModel.ward" ng-options="ulb for ulb in ulbList">
+                            <select class="form-control" name="ward" ng-model="filterModel.ward"
+                                    ng-options="ulb for ulb in ulbList">
                                 <option value="">Select Ward</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label>Filter by Type</label>
-                            <select class="form-control" name="type" ng-model="filterModel.type" ng-options="type for type in locationTypes">
+                            <select class="form-control" name="type" ng-model="filterModel.type"
+                                    ng-options="type for type in locationTypes">
                                 <option value="">Select Type</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label>Filter by Period</label>
-                            <select class="form-control" name="period" ng-model="filterModel.period" ng-change="changePeriod(filterModel.period)">
+                            <select class="form-control" name="period" ng-model="filterModel.period"
+                                    ng-change="changePeriod(filterModel.period)">
                                 <option value="">Select Period</option>
                                 <option value="today">Today</option>
                                 <option value="yesterday">Yesterday</option>
@@ -358,18 +411,22 @@ Ram Sharma
                         </div>
                         <div class="form-group">
                             <label>From Date</label>
-                            <input type="text" name="fromDate" class="form-control datepicker" ng-model="filterModel.fromDate" ng-disabled="filterModel.period != 'custom'">
+                            <input type="text" name="fromDate" class="form-control datepicker"
+                                   ng-model="filterModel.fromDate" ng-disabled="filterModel.period != 'custom'">
                         </div>
                         <div class="form-group">
                             <label>To Date</label>
-                            <input type="text" name="toDate" class="form-control datepicker" ng-model="filterModel.toDate" ng-disabled="filterModel.period != 'custom'">
+                            <input type="text" name="toDate" class="form-control datepicker"
+                                   ng-model="filterModel.toDate" ng-disabled="filterModel.period != 'custom'">
                         </div>
                         <div class="form-group">
                             <div class="col-xs-12 col-md-6">
                                 <button class="btn btn-color-blue btn-block" type="submit">Search</button>
                             </div>
                             <div class="col-xs-12 col-md-6">
-                                <button class="btn btn-color-red btn-block" type="button" ng-click="clearFilters()">Clear</button>
+                                <button class="btn btn-color-red btn-block" type="button" ng-click="clearFilters()">
+                                    Clear
+                                </button>
                             </div>
                         </div>
                     </form>
@@ -382,7 +439,8 @@ Ram Sharma
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="gridSystemModalLabel">Reviews</h4>
                 </div>
                 <div class="modal-body toilet-details">
@@ -390,7 +448,9 @@ Ram Sharma
                         <div class="col-xs-12">
                             <div class="list-group review-list" ng-repeat="review in reviews">
                                 <a href="#" class="list-group-item">
-                                    <h4 class="list-group-item-heading"><img ng-src="{{review.profilePhotoURL}}" class="img-circle" width="50"> {{review.authorName}}</h4>
+                                    <h4 class="list-group-item-heading"><img ng-src="{{review.profilePhotoURL}}"
+                                                                             class="img-circle" width="50">
+                                        {{review.authorName}}</h4>
                                     <p class="list-group-item-text">{{review.reviewText}}</p>
                                     <div class="ratings">
                                         {{review.rating}} <span class="glyphicon glyphicon-star"></span>
@@ -429,9 +489,12 @@ Ram Sharma
             <div class="tabs-blue">
                 <!-- Nav tabs -->
                 <ul class="nav nav-pills nav-justified" role="tablist">
-                    <li role="presentation" class="active"><a href="#oRatings" aria-controls="oRatings" role="tab" data-toggle="tab">Overall Ratings</a></li>
-                    <li role="presentation"><a href="#lastSix" aria-controls="lastSix" role="tab" data-toggle="tab">Last 6 Days Performance</a></li>
-                    <li role="presentation"><a href="#detailReview" aria-controls="detailReview" role="tab" data-toggle="tab">Reviews</a></li>
+                    <li role="presentation" class="active"><a href="#oRatings" aria-controls="oRatings" role="tab"
+                                                              data-toggle="tab">Overall Ratings</a></li>
+                    <li role="presentation"><a href="#lastSix" aria-controls="lastSix" role="tab" data-toggle="tab">Last
+                        6 Days Performance</a></li>
+                    <li role="presentation"><a href="#detailReview" aria-controls="detailReview" role="tab"
+                                               data-toggle="tab">Reviews</a></li>
                 </ul>
 
                 <!-- Tab panes -->
@@ -449,7 +512,9 @@ Ram Sharma
                     <div role="tabpanel toilet-details" class="tab-pane" id="detailReview">
                         <div class="list-group review-list" ng-repeat="review in reviews">
                             <a href="#" class="list-group-item">
-                                <h4 class="list-group-item-heading"><img ng-src="{{review.profilePhotoURL}}" class="img-circle" width="50"> {{review.authorName}}</h4>
+                                <h4 class="list-group-item-heading"><img ng-src="{{review.profilePhotoURL}}"
+                                                                         class="img-circle" width="50">
+                                    {{review.authorName}}</h4>
                                 <p class="list-group-item-text">{{review.reviewText}}</p>
                                 <div class="ratings">
                                     {{review.rating}} <span class="glyphicon glyphicon-star"></span>
@@ -469,24 +534,24 @@ Ram Sharma
 
 <script type="text/javascript">
 
-    $(document).ready(function() {
-        $('.opensearch').on('click', function() {
+    $(document).ready(function () {
+        $('.opensearch').on('click', function () {
             $('.search-form').addClass('animated flipInX');
             $(this).removeClass('flipInX').addClass('animated flipOutX');
         });
 
 
-        $("#adv-search").on('click', function() {
+        $("#adv-search").on('click', function () {
             $("#filters").addClass('open');
         });
-        $(".close").on('click', function() {
+        $(".close").on('click', function () {
             $("#filters").removeClass('open');
         });
 
-        $('.datepicker').datepicker({format:'dd-mm-yyyy'});
+        $('.datepicker').datepicker({format: 'dd-mm-yyyy'});
 
 
-        $('.open-modal').on('click', function(e) {
+        $('.open-modal').on('click', function (e) {
             e.stopPropagation()
         });
     });

@@ -37,5 +37,7 @@ public interface ReviewDao {
 
     Long countToiletsReviewedBetweenDatesByLocationIdsAndRating(List<Integer> locationIds, Date startDate, Date endDate, Integer rating);
 
+    List<Integer> getLocationIdsByLocationIdsAndDate(List<Integer> locationIds, Date date);
+
 }
 
