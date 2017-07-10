@@ -1,56 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
 <%@ page isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<!-- saved from url=(0042)https://swachh.org.in/swachhapp/Login.aspx -->
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>
-        User Login
-    </title>
-    <meta http-equiv="X-UA-Compatible" content="IE=10; IE=9; IE=8; IE=EDGE">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <link id="lnkFavIcon" rel="shortcut icon" type="image/x-icon"
-          href="https://swachh.blob.core.windows.net/assets/app_assets/Images/favicon.ico">
-    <!--[if IE]>
-    <link rel="stylesheet" type="text/css" href="Styles/styles-ie.css"/>
-    <![endif]-->
-    <style type="text/css">
-        .pagecontainer {
-            display: none;
-        }
+<%@include file="header.jsp" %>
 
-        .noscriptmsg {
-            color: Red;
-        }
 
-        input.zero-radius {
-            border-radius: 0;
-        }
+    <div class="container" style="background:url('/static/Images/main-bg.jpg') no-repeat;">
+        <div style="margin-top:10%;background-color:rgba(0,0,0,0.5);border-radius:5px;width:50%;margin:10% auto;color: #fff;padding-top: 30px;">
 
-        div.form-group.margin {
-            margin: 0 10%;
-        }
 
-        form.form-horizontal.font {
-            font-size: medium;
-        }
-    </style>
-    <link href="<c:url value='/static/css/bootstrap.css' />" rel="stylesheet"></link>
-    <link href="<c:url value='/static/css/login.css' />" rel="stylesheet"/>
-</head>
-<body class="noJS fullBg">
-
-<div class="row" style="height: 15%; margin: 0">
-
-</div>
-
-<div class="row" style="height: 80%; margin: 0;overflow: auto">
-    <div class="container" style="height: 80%">
-
-        <div class="col-md-6" style="height: 100%; background-color: #1358ad">
+        <div class="row">
+        <%--<div class="col-md-6" style="height: 100%; background-color: #1358ad">
             <ul class="list-group" style="height: 100%;padding: 0;margin: 0;">
                 <li style="height: 30%">
 
@@ -65,29 +24,29 @@
                     </div>
                 </li>
             </ul>
-        </div>
+        </div>--%>
 
-        <div class="col-md-6" style="height: 100%; background-color: #ffffff">
-            <form method="post" action="/login" class="form-horizontal font">
+        <div class="col-xs-12 col-md-6 col-md-offset-3">
+            <div class="login-box">
+            <form method="post" action="/login" class="form-horizontal">
 
-                <div class="form-group margin" style="height: 20%;padding: 0;">
-                </div>
 
-                <div class="form-group margin" style="height: 15%;padding: 0;">
+
+                <div class="form-group">
                     <label for="ssoId" class="">Login ID </label>
 
                     <input name="ssoId" type="text" maxlength="100" id="ssoId" tabindex="1"
-                           class="form-control zero-radius"
+                           class="form-control"
                            required>
 
                     <span class="error" style="display:none;">Please enter login id</span>
                 </div>
 
-                <div class="form-group margin" style="height: 15%;padding: 0;">
+                <div class="form-group">
                     <label for="password">Password </label>
 
                     <input name="password" type="password" maxlength="35" id="password" tabindex="2"
-                           class="form-control zero-radius" required>
+                           class="form-control" required>
 
                     <%--style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAAPhJREFUOBHlU70KgzAQPlMhEvoQTg6OPoOjT+JWOnRqkUKHgqWP4OQbOPokTk6OTkVULNSLVc62oJmbIdzd95NcuGjX2/3YVI/Ts+t0WLE2ut5xsQ0O+90F6UxFjAI8qNcEGONia08e6MNONYwCS7EQAizLmtGUDEzTBNd1fxsYhjEBnHPQNG3KKTYV34F8ec/zwHEciOMYyrIE3/ehKAqIoggo9inGXKmFXwbyBkmSQJqmUNe15IRhCG3byphitm1/eUzDM4qR0TTNjEixGdAnSi3keS5vSk2UDKqqgizLqB4YzvassiKhGtZ/jDMtLOnHz7TE+yf8BaDZXA509yeBAAAAAElFTkSuQmCC&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%;" --%>
 
@@ -95,31 +54,31 @@
                           style="display:none;">Please enter password</span>
                 </div>
 
-                <div class="form-group margin" style="height: 15%;padding: 0;">
+                <div class="form-group" style="height: 15%;padding: 0;">
                     <span>&nbsp;</span>
 
-                    <input type="checkbox" class="form-control zero-radius" id="rememberme" name="remember-me">
+                    <input type="checkbox" class="zero-radius" id="rememberme" name="remember-me">
 
                     <label for="rememberme" class="">
                         Remember Me</label>
                 </div>
 
-                <div class="form-group margin" style="height: 0%;padding: 0;">
+                <div class="form-group" style="height: 0%;padding: 0;">
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"
                            class="form-control zero-radius"/>
                 </div>
 
-                <div class="form-group margin" style="height: 15%;padding: 0;">
-                    <input type="submit" name="btnLogin" value="Login" class="form-control btn btn-default zero-radius">
+                <div class="form-group" style="height: 15%;padding: 0;">
+                    <button type="submit" name="btnLogin" value="Login" class="btn btn-color-blue">Login</button>
                     <input id="Validation" name="Validation" type="hidden">
                 </div>
             </form>
+            </div>
         </div>
     </div>
-
+        </div>
 </div>
 
-<%@include file="../old-jsp/footer_old.jsp" %>
+<%@include file="footer-new.jsp" %>
 
-</body>
-</html>
+<%@include file="header-end.jsp" %>
