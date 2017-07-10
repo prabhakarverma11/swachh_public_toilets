@@ -37,12 +37,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/", "/list").access("hasRole('USER') or hasRole('ADMIN') or hasRole('DBA')")
+                .antMatchers("/list").access("hasRole('USER') or hasRole('ADMIN') or hasRole('DBA')")
                 .antMatchers("/newuser/**", "/delete-user-*").access("hasRole('ADMIN')")
                 .antMatchers("/edit-user-*").access("hasRole('ADMIN') or hasRole('DBA')")
                 .antMatchers("/users-list").access("hasRole('ADMIN')")
                 .antMatchers("/home").permitAll()
+                .antMatchers("/").permitAll()
                 .antMatchers("/login").permitAll()
+                .antMatchers("/admin/dashboard").permitAll()
                 .antMatchers("/admin/**").access("isAuthenticated()")
                 .antMatchers("/api/admin/**").access("isAuthenticated()")
                 .antMatchers("/fetch-place-ids").access("isAuthenticated()")

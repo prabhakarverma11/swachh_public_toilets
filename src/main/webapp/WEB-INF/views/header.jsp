@@ -17,7 +17,8 @@
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-nav" aria-expanded="false">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-nav"
+                    aria-expanded="false">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -32,6 +33,7 @@
                 <ul class="nav navbar-nav main-nav">
                     <li class="active"><a href="/">Home</a></li>
                     <li><a href="/dashboard">Dashboard</a></li>
+                    <li><a href="/admin/dashboard">ULB Dashboard</a></li>
                 </ul>
             </sec:authorize>
             <sec:authorize access="isAuthenticated()">
@@ -47,7 +49,9 @@
 
                 <sec:authorize access="isAuthenticated()">
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Welecome ULB <span class="glyphicon glyphicon-user"></span> <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">Welecome ULB <span class="glyphicon glyphicon-user"></span> <span
+                                class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="/logout">Logout</a></li>
                         </ul>
