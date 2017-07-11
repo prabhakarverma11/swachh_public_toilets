@@ -38,7 +38,7 @@
                 <li><a href="/admin/review-dashboard">Admin</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/login">Login <span class="glyphicon glyphicon-log-in"></span></a></li>
+                <%--<li><a href="/login">Login <span class="glyphicon glyphicon-log-in"></span></a></li>--%>
                 <!-- <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
                   <ul class="dropdown-menu">
