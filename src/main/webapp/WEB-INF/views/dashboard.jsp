@@ -1,5 +1,5 @@
 <%@include file="header.jsp" %>
-<div class="container" ng-controller="dashboardController" ng-init="init()">
+<div class="container" ng-controller="dashboardController" ng-init="init()" ng-cloak>
     <div class="row">
         <div class="col-xs-12 col-md-12 text-center">
             <h2 class="text-center" id="area-name">Delhi</h2>
@@ -574,58 +574,7 @@
 <script src="https://code.highcharts.com/mapdata/countries/in/custom/in-all-disputed.js"></script>
 <script type="text/javascript">
 
-    Highcharts.chart('pie-chart', {
-        chart: {
-            plotBackgroundColor: null,
-            plotBorderWidth: null,
-            plotShadow: false,
-            type: 'pie'
-        },
-        title: {
-            text: 'Ratings'
-        },
-        tooltip: {
-            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-        },
-        plotOptions: {
-            pie: {
-                allowPointSelect: true,
-                cursor: 'pointer',
-                dataLabels: {
-                    enabled: true,
-                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-                    style: {
-                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-                    }
-                }
-            }
-        },
-        series: [{
-            name: 'share',
-            colorByPoint: true,
-            data: [{
-                name: '5 Stars',
-                y: 56.33
-            }, {
-                name: '4 Stars',
-                y: 24.03,
-                sliced: true,
-                selected: true
-            }, {
-                name: '3 Stars',
-                y: 10.38
-            }, {
-                name: '2 Stars',
-                y: 4.77
-            }, {
-                name: '1 Stars',
-                y: 0.93
-            }]
-        }],
-        credits: {
-            enabled: false
-        }
-    });
+
 
 
     $(document).ready(function () {

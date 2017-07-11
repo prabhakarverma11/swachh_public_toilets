@@ -1,5 +1,5 @@
 <%@include file="header.jsp" %>
-<div class="container" ng-controller="dashboardController" ng-init="init('NDMC', true)">
+<div class="container" ng-controller="dashboardController" ng-init="init('NDMC', true)" ng-cloak>
     <div class="row">
         <div class="col-xs-12 col-md-6 col-md-offset-3 select-area">
             <div class="dropdown">
@@ -135,19 +135,19 @@
                             <img src="/static/img/smiley1.png" />
                         </th>
                         <td>
-                            <a href="ulb-dashboard-basic.html">500</a>
+                            <a href="ulb-dashboard-basic.html">{{fiveStar.tillDate}}</a>
                         </td>
                         <td>
-                            10
+                            <a href="ulb-dashboard-basic.html">{{fiveStar.yesterday}}</a>
                         </td>
                         <td>
-                            50
+                            <a href="ulb-dashboard-basic.html">{{fiveStar.lastWeek}}</a>
                         </td>
                         <td>
-                            200
+                            <a href="ulb-dashboard-basic.html">{{fiveStar.lastTwoWeek}}</a>
                         </td>
                         <td>
-                            400
+                            <a href="ulb-dashboard-basic.html">{{fiveStar.lastOneMonth}}</a>
                         </td>
                     </tr>
                     <tr>
@@ -155,19 +155,19 @@
                             <img src="/static/img/smiley2.png" />
                         </th>
                         <td>
-                            500
+                            <a href="ulb-dashboard-basic.html">{{fourStar.tillDate}}</a>
                         </td>
                         <td>
-                            10
+                            <a href="ulb-dashboard-basic.html">{{fourStar.yesterday}}</a>
                         </td>
                         <td>
-                            50
+                            <a href="ulb-dashboard-basic.html">{{fourStar.lastWeek}}</a>
                         </td>
                         <td>
-                            200
+                            <a href="ulb-dashboard-basic.html">{{fourStar.lastTwoWeek}}</a>
                         </td>
                         <td>
-                            400
+                            <a href="ulb-dashboard-basic.html">{{fourStar.lastOneMonth}}</a>
                         </td>
                     </tr>
                     <tr>
@@ -175,19 +175,19 @@
                             <img src="/static/img/smiley3.png" />
                         </th>
                         <td>
-                            500
+                            <a href="ulb-dashboard-basic.html">{{threeStar.tillDate}}</a>
                         </td>
                         <td>
-                            10
+                            <a href="ulb-dashboard-basic.html">{{threeStar.yesterday}}</a>
                         </td>
                         <td>
-                            50
+                            <a href="ulb-dashboard-basic.html">{{threeStar.lastWeek}}</a>
                         </td>
                         <td>
-                            200
+                            <a href="ulb-dashboard-basic.html">{{threeStar.lastTwoWeek}}</a>
                         </td>
                         <td>
-                            400
+                            <a href="ulb-dashboard-basic.html">{{threeStar.lastOneMonth}}</a>
                         </td>
                     </tr>
                     <tr>
@@ -195,19 +195,19 @@
                             <img src="/static/img/smiley4.png" />
                         </th>
                         <td>
-                            500
+                            <a href="ulb-dashboard-basic.html">{{twoStar.tillDate}}</a>
                         </td>
                         <td>
-                            10
+                            <a href="ulb-dashboard-basic.html">{{twoStar.yesterday}}</a>
                         </td>
                         <td>
-                            50
+                            <a href="ulb-dashboard-basic.html">{{twoStar.lastWeek}}</a>
                         </td>
                         <td>
-                            200
+                            <a href="ulb-dashboard-basic.html">{{twoStar.lastTwoWeek}}</a>
                         </td>
                         <td>
-                            400
+                            <a href="ulb-dashboard-basic.html">{{twoStar.lastOneMonth}}</a>
                         </td>
                     </tr>
                     <tr>
@@ -215,19 +215,19 @@
                             <img src="/static/img/smiley5.png" />
                         </th>
                         <td>
-                            500
+                            <a href="ulb-dashboard-basic.html">{{oneStar.tillDate}}</a>
                         </td>
                         <td>
-                            10
+                            <a href="ulb-dashboard-basic.html">{{oneStar.yesterday}}</a>
                         </td>
                         <td>
-                            50
+                            <a href="ulb-dashboard-basic.html">{{oneStar.lastWeek}}</a>
                         </td>
                         <td>
-                            200
+                            <a href="ulb-dashboard-basic.html">{{oneStar.lastTwoWeek}}</a>
                         </td>
                         <td>
-                            400
+                            <a href="ulb-dashboard-basic.html">{{oneStar.lastOneMonth}}</a>
                         </td>
                     </tr>
                     <tr>
@@ -235,19 +235,19 @@
                             No Feedback
                         </th>
                         <td>
-                            500
+                            <a href="ulb-dashboard-basic.html">{{noFeedBack.tillDate}}</a>
                         </td>
                         <td>
-                            10
+                            <a href="ulb-dashboard-basic.html">{{noFeedBack.yesterday}}</a>
                         </td>
                         <td>
-                            50
+                            <a href="ulb-dashboard-basic.html">{{noFeedBack.lastWeek}}</a>
                         </td>
                         <td>
-                            200
+                            <a href="ulb-dashboard-basic.html">{{noFeedBack.lastTwoWeek}}</a>
                         </td>
                         <td>
-                            400
+                            <a href="ulb-dashboard-basic.html">{{noFeedBack.lastOneMonth}}</a>
                         </td>
                     </tr>
                     </tbody>
@@ -274,7 +274,7 @@
             </div>
         </div>
         <div class="col-xs-12 col-md-6">
-            <button class="btn btn-color-red pull-right">Download Report</button>
+            <button class="btn btn-color-red pull-right" ng-click="filterData(1, true)">Download Report</button>
         </div>
     </div>
     <!-- /Search box-->

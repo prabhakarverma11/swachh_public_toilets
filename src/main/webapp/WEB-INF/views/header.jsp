@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="<c:url value='/static/css/styles.min.css' />">
     <script src="<c:url value='/static/js/main.min.js'/>" type="text/javascript"></script>
     <script src="<c:url value='/static/js/app.min.js'/>" type="text/javascript"></script>
+    <%--<script src="http://localhost:8081/build/js/app.min.js" type="text/javascript"></script>--%>
 </head>
 <body>
 <nav class="navbar navbar-default nav-dark" data-spy="affix" data-offset-top="60">
