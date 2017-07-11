@@ -45,7 +45,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/admin/dashboard").permitAll()
-//                .antMatchers("/api/admin/**").access("isAuthenticated()")
+                .antMatchers("/admin/review-dashboard").access("isAuthenticated()")
                 .antMatchers("/admin/**").access("isAuthenticated()")
                 .antMatchers("/fetch-place-ids").access("isAuthenticated()")
                 .antMatchers("/listing-locations").access("isAuthenticated()")

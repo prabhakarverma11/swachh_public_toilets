@@ -19,7 +19,7 @@
                         <th>Name</th>
                         <th>Phone</th>
                         <th>Email</th>
-                        <th>Action</th>
+                        <th style="width: 10%">Action</th>
                     </tr>
                     </thead>
                     <tbody>

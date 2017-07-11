@@ -8377,6 +8377,66 @@ footer .nav > li > a {
     padding-top: 30px
 }
 
+.details-popup {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #f6f6f6;
+    z-index: 100;
+    overflow: auto
+}
+
+.details-popup .info-col {
+    width: 100%;
+    padding: 10px;
+    background-color: #292929;
+    color: #fff
+}
+
+@media (min-width: 640px) {
+    .details-popup .info-col {
+        position: absolute;
+        width: 25%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        margin: auto 0;
+        padding: 30px
+    }
+}
+
+.details-popup .graph-col {
+    width: 100%;
+    padding: 10px
+}
+
+@media (min-width: 640px) {
+    .details-popup .graph-col {
+        max-width: 75%;
+        margin-left: 25%;
+        padding: 30px
+    }
+}
+
+.details-popup .graph-col .tabs-blue .nav > li > a {
+    color: #03c
+}
+
+.details-popup .graph-col .tabs-blue .nav-pills > li.active > a, .details-popup .graph-col .tabs-blue .nav-pills > li.active > a:focus, .details-popup .graph-col .tabs-blue .nav-pills > li.active > a:hover {
+    background-color: #03c;
+    color: #fff
+}
+
+.details-popup .close {
+    margin: 20px
+}
+
+
 body {
     font-family: 'Raleway', sans-serif !important;
 }

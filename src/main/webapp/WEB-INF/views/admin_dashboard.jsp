@@ -132,7 +132,7 @@
                     <tbody>
                     <tr>
                         <th>
-                            5 Stars
+                            <img src="/static/img/smiley1.png" />
                         </th>
                         <td>
                             <a href="ulb-dashboard-basic.html">500</a>
@@ -152,7 +152,7 @@
                     </tr>
                     <tr>
                         <th>
-                            4 Stars
+                            <img src="/static/img/smiley2.png" />
                         </th>
                         <td>
                             500
@@ -172,7 +172,7 @@
                     </tr>
                     <tr>
                         <th>
-                            3 Stars
+                            <img src="/static/img/smiley3.png" />
                         </th>
                         <td>
                             500
@@ -192,7 +192,7 @@
                     </tr>
                     <tr>
                         <th>
-                            2 Stars
+                            <img src="/static/img/smiley4.png" />
                         </th>
                         <td>
                             500
@@ -212,7 +212,7 @@
                     </tr>
                     <tr>
                         <th>
-                            1 Stars
+                            <img src="/static/img/smiley5.png" />
                         </th>
                         <td>
                             500
