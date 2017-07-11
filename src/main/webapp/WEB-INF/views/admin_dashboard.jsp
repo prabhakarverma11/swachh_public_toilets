@@ -34,7 +34,7 @@
                          duration="totalToilets.myDuration"
                          effect="totalToilets.myEffect"> {{ totalToilets.myValue | number:0 }}
                     </div>
-                    <h2>Total Toilets</h2>
+                    <h2>Total Toilets Reviewed</h2>
                 </div>
             </div>
         </div>
@@ -42,12 +42,12 @@
             <div class="panel panel-default color2">
                 <div class="panel-body">
                     <div class="number counter"
-                         value="fiveStarsRated.myValue"
-                         to="fiveStarsRated.myTarget"
-                         duration="fiveStarsRated.myDuration"
-                         effect="fiveStarsRated.myEffect"> {{ fiveStarsRated.myValue | number:0 }}
+                         value="fourToFiveStarsRated.myValue"
+                         to="fourToFiveStarsRated.myTarget"
+                         duration="fourToFiveStarsRated.myDuration"
+                         effect="fourToFiveStarsRated.myEffect"> {{ fourToFiveStarsRated.myValue | number:0 }}
                     </div>
-                    <h2>5 Stars Rated</h2>
+                    <h2>Most Rated (4-5 <i class="glyphicon glyphicon-star" aria-hidden="true"></i>)</h2>
                 </div>
             </div>
         </div>
@@ -60,7 +60,7 @@
                          duration="threeOrLessStarsRated.myDuration"
                          effect="threeOrLessStarsRated.myEffect"> {{ threeOrLessStarsRated.myValue | number:0 }}
                     </div>
-                    <h2>3 or less Stars Rated</h2>
+                    <h2>Least Rated (0-3 <i class="glyphicon glyphicon-star" aria-hidden="true"></i>)</h2>
                 </div>
             </div>
         </div>
@@ -76,7 +76,7 @@
                          duration="totalToiletsYesterday.myDuration"
                          effect="totalToiletsYesterday.myEffect"> {{ totalToiletsYesterday.myValue | number:0 }}
                     </div>
-                    <h2>Total Toilets Reviewed Yesterday</h2>
+                    <h2>Toilets Reviewed Yesterday</h2>
                 </div>
             </div>
         </div>
@@ -84,12 +84,13 @@
             <div class="panel panel-default color2">
                 <div class="panel-body">
                     <div class="number counter"
-                         value="fiveStarsRatedYesterday.myValue"
-                         to="fiveStarsRatedYesterday.myTarget"
-                         duration="fiveStarsRatedYesterday.myDuration"
-                         effect="fiveStarsRatedYesterday.myEffect"> {{ fiveStarsRatedYesterday.myValue | number:0 }}
+                         value="fourToFiveStarsRatedYesterday.myValue"
+                         to="fourToFiveStarsRatedYesterday.myTarget"
+                         duration="fourToFiveStarsRatedYesterday.myDuration"
+                         effect="fourToFiveStarsRatedYesterday.myEffect"> {{ fourToFiveStarsRatedYesterday.myValue |
+                        number:0 }}
                     </div>
-                    <h2>5 Stars Reviewed Yesterday</h2>
+                    <h2>Most Rated (4-5 <i class="glyphicon glyphicon-star" aria-hidden="true"></i>) Yesterday</h2>
                 </div>
             </div>
         </div>
@@ -103,7 +104,7 @@
                          effect="threeOrLessStarsRatedYesterday.myEffect"> {{ threeOrLessStarsRatedYesterday.myValue |
                         number:0 }}
                     </div>
-                    <h2>3 or less Stars Reviewed Yesterday</h2>
+                    <h2>Least Rated (0-3 <i class="glyphicon glyphicon-star" aria-hidden="true"></i>) Yesterday</h2>
                 </div>
             </div>
         </div>

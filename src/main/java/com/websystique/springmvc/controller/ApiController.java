@@ -215,6 +215,73 @@ public class ApiController {
         }
     }
 
+    /**
+     * Response is having report of locations with given criteria
+     *
+     * @param request  -this is request having all the parameters as well as the URL
+     * @param response -the response is of application/json type
+     *                 {host}:{port}/api/get-report-of-locations/{ratingFrom}/{ratingEnd}/{page}/{size}?locationType={locationType}&ulbName={ulbName}&startDate={startDate}&endDate={endDate}
+     */
+    @CrossOrigin
+    @ResponseBody
+    @RequestMapping(value = "/save-ulb-name", method = RequestMethod.POST, produces = "application/json")
+    public void saveULBName(
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) {
+        logger.info(request.getServletPath());
+
+        Long startTime = System.currentTimeMillis();
+        response.setContentType("application/json");
+        response.setCharacterEncoding("utf-8");
+
+        //validation of request params TODO
+        Integer locationId = Integer.parseInt(request.getParameter("locationId"));
+        String ulbName = request.getParameter("ulbName");
+        String ulbNameArr[] = ulbName.split(":");
+
+        String category = request.getParameter("category");
+        String name = request.getParameter("name");
+        String phone = request.getParameter("phone");
+        String email = request.getParameter("email");
+
+        AdminVerification adminVerification = new AdminVerification();
+        adminVerification.setLocation(locationService.getLocationById(locationId));
+        adminVerification.setName(name);
+        adminVerification.setCategory(category);
+        adminVerification.setEmail(email);
+        adminVerification.setULBName(ulbNameArr.length >= 2 ? ulbNameArr[1] : "");
+        adminVerification.setPhone(phone);
+        adminVerificationService.save(adminVerification);
+
+        try {
+            PrintWriter writer = response.getWriter();
+            Gson gson = new Gson();
+
+            JsonObject jsonObject = new JsonObject();
+
+            Long endTime = System.currentTimeMillis();
+            jsonObject.addProperty("timeTaken", (endTime - startTime) / 1000);
+
+            writer.print(jsonObject);
+            writer.flush();
+            response.setStatus(200);
+
+            logger.info(request.getServletPath() +
+                    ", timeTaken: " + (endTime - startTime) / 1000
+            );
+        } catch (IOException e) {
+            response.setStatus(500);
+            e.printStackTrace();
+
+            Long endTime = System.currentTimeMillis();
+            logger.info(request.getServletPath() +
+                    ", timeTaken: " + (endTime - startTime) / 1000 +
+                    ", error: " + e.getMessage()
+            );
+        }
+    }
+
 
     /**
      * Response is having reviews of a location with given criteria
@@ -422,7 +489,7 @@ public class ApiController {
 
         List<Integer> locationIds = placeULBMapService.getLocationIdsByULBNameAndLocationType(ulbName, null);
         Long totalToilets = placeDetailService.countPlaceDetailsByLocationIdsAndRatingRange(locationIds, 0.0, 5.0);
-        Long fiveStarsRated = placeDetailService.countPlaceDetailsByLocationIdsAndRatingRange(locationIds, 5.0, 5.0);
+        Long fourToFiveStarsRated = placeDetailService.countPlaceDetailsByLocationIdsAndRatingRange(locationIds, 4.0, 5.0);
         Long threeOrLessStarsRated = placeDetailService.countPlaceDetailsByLocationIdsAndRatingRange(locationIds, 0.0, 3.0);
 
         Long millisInDay = 60 * 60 * 24 * 1000L;
@@ -431,7 +498,7 @@ public class ApiController {
         locationIds = reviewService.getLocationIdsByLocationIdsAndDate(locationIds, yesterday);
 
         Long totalToiletsYesterday = placeDetailService.countPlaceDetailsByLocationIdsAndRatingRange(locationIds, 0.0, 5.0);
-        Long fiveStarsRatedYesterday = placeDetailService.countPlaceDetailsByLocationIdsAndRatingRange(locationIds, 5.0, 5.0);
+        Long fourToFiveStarsRatedYesterday = placeDetailService.countPlaceDetailsByLocationIdsAndRatingRange(locationIds, 4.0, 5.0);
         Long threeOrLessStarsRatedYesterday = placeDetailService.countPlaceDetailsByLocationIdsAndRatingRange(locationIds, 0.0, 3.0);
 
         List<String> ulbsList = placeULBMapService.getULBList();
@@ -443,13 +510,13 @@ public class ApiController {
 
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("totalToilets", totalToilets);
-            jsonObject.addProperty("fiveStarsRated", fiveStarsRated);
+            jsonObject.addProperty("fourToFiveStarsRated", fourToFiveStarsRated);
             jsonObject.addProperty("threeOrLessStarsRated", threeOrLessStarsRated);
 
             JsonObject yesterdayData = new JsonObject();
             yesterdayData.addProperty("totalToilets", totalToiletsYesterday);
-            yesterdayData.addProperty("fiveStarsRated", fiveStarsRatedYesterday);
-            yesterdayData.addProperty("threeOrLessStarsRated", threeOrLessStarsRatedYesterday);
+            yesterdayData.addProperty("fourToFiveStarsRatedYesterday", fourToFiveStarsRatedYesterday);
+            yesterdayData.addProperty("threeOrLessStarsRatedYesterday", threeOrLessStarsRatedYesterday);
             jsonObject.addProperty("yesterday", gson.toJson(yesterdayData));
 
             jsonObject.addProperty("ulbsList", gson.toJson(ulbsList));
@@ -464,7 +531,7 @@ public class ApiController {
 
             logger.info(request.getServletPath() +
                     ", totalToilets: " + totalToilets +
-                    ", fiveStarsRated: " + fiveStarsRated +
+                    ", fourToFiveStarsRated: " + fourToFiveStarsRated +
                     ", threeOrLessStarsRated" + threeOrLessStarsRated +
                     ", ulbsList.size: " + ulbsList.size() +
                     ", staffsList.size: " + staffsList.size() +
@@ -478,7 +545,7 @@ public class ApiController {
             Long endTime = System.currentTimeMillis();
             logger.info(request.getServletPath() +
                     ", totalToilets: " + totalToilets +
-                    ", fiveStarsRated: " + fiveStarsRated +
+                    ", fourToFiveStarsRated: " + fourToFiveStarsRated +
                     ", threeOrLessStarsRated" + threeOrLessStarsRated +
                     ", ulbsList.size: " + ulbsList.size() +
                     ", staffsList.size: " + staffsList.size() +
@@ -519,7 +586,7 @@ public class ApiController {
 
         List<Integer> locationIds = placeULBMapService.getLocationIdsByULBNameAndLocationType(ulbName, null);
         Long totalToilets = placeDetailService.countPlaceDetailsByLocationIdsAndRatingRange(locationIds, 0.0, 5.0);
-        Long fiveStarsRated = placeDetailService.countPlaceDetailsByLocationIdsAndRatingRange(locationIds, 5.0, 5.0);
+        Long fourToFiveStarsRated = placeDetailService.countPlaceDetailsByLocationIdsAndRatingRange(locationIds, 4.0, 5.0);
         Long threeOrLessStarsRated = placeDetailService.countPlaceDetailsByLocationIdsAndRatingRange(locationIds, 0.0, 3.0);
 
         Long millisInDay = 60 * 60 * 24 * 1000L;
@@ -592,19 +659,19 @@ public class ApiController {
 
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("totalToilets", totalToilets);
-            jsonObject.addProperty("fiveStarsRated", fiveStarsRated);
+            jsonObject.addProperty("fourToFiveStarsRated", fourToFiveStarsRated);
             jsonObject.addProperty("threeOrLessStarsRated", threeOrLessStarsRated);
 
             locationIds = reviewService.getLocationIdsByLocationIdsAndDate(locationIds, yesterday);
 
             Long totalToiletsYesterday = placeDetailService.countPlaceDetailsByLocationIdsAndRatingRange(locationIds, 0.0, 5.0);
-            Long fiveStarsRatedYesterday = placeDetailService.countPlaceDetailsByLocationIdsAndRatingRange(locationIds, 5.0, 5.0);
+            Long fourToFiveStarsRatedYesterday = placeDetailService.countPlaceDetailsByLocationIdsAndRatingRange(locationIds, 4.0, 5.0);
             Long threeOrLessStarsRatedYesterday = placeDetailService.countPlaceDetailsByLocationIdsAndRatingRange(locationIds, 0.0, 3.0);
 
             JsonObject yesterdayData = new JsonObject();
             yesterdayData.addProperty("totalToilets", totalToiletsYesterday);
-            yesterdayData.addProperty("fiveStarsRated", fiveStarsRatedYesterday);
-            yesterdayData.addProperty("threeOrLessStarsRated", threeOrLessStarsRatedYesterday);
+            yesterdayData.addProperty("fourToFiveStarsRatedYesterday", fourToFiveStarsRatedYesterday);
+            yesterdayData.addProperty("threeOrLessStarsRatedYesterday", threeOrLessStarsRatedYesterday);
             jsonObject.addProperty("yesterday", gson.toJson(yesterdayData));
 
             jsonObject.addProperty("ulbsList", gson.toJson(ulbsList));
@@ -620,7 +687,7 @@ public class ApiController {
 
             logger.info(request.getServletPath() +
                     ", totalToilets: " + totalToilets +
-                    ", fiveStarsRated: " + fiveStarsRated +
+                    ", fourToFiveStarsRated: " + fourToFiveStarsRated +
                     ", threeOrLessStarsRated" + threeOrLessStarsRated +
                     ", ulbsList.size: " + ulbsList.size() +
                     ", staffsList.size: " + staffsList.size() +
@@ -635,7 +702,7 @@ public class ApiController {
             Long endTime = System.currentTimeMillis();
             logger.info(request.getServletPath() +
                     ", totalToilets: " + totalToilets +
-                    ", fiveStarsRated: " + fiveStarsRated +
+                    ", fourToFiveStarsRated: " + fourToFiveStarsRated +
                     ", threeOrLessStarsRated" + threeOrLessStarsRated +
                     ", ulbsList.size: " + ulbsList.size() +
                     ", staffsList.size: " + staffsList.size() +

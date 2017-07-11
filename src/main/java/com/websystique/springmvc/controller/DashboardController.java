@@ -40,6 +40,15 @@ public class DashboardController {
     @Autowired
     ReviewService reviewService;
 
+    @RequestMapping(value = "/admin/verify-location-types", method = RequestMethod.GET)
+    public String adminVerifyLocationTypes(ModelMap model) {
+        return "verifylocationtypes";
+    }
+
+//    @RequestMapping(value = "/admin/verify-location-types", method = RequestMethod.GET)
+//    public String adminVerifyLocationTypes(ModelMap model) {
+//        return "verifylocationtypes";
+//    }
 
     @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
     public String dashBoard(ModelMap model) {

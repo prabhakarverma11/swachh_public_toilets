@@ -21,6 +21,8 @@ public class Report implements Serializable {
 
     private PlaceDetail placeDetail;
 
+    private PlaceULBMap placeULBMap;
+
     private Long reviewsCount;
 
     private Double averageRating;
@@ -48,6 +50,14 @@ public class Report implements Serializable {
 
     public void setPlaceDetail(PlaceDetail placeDetail) {
         this.placeDetail = placeDetail;
+    }
+
+    public PlaceULBMap getPlaceULBMap() {
+        return placeULBMap;
+    }
+
+    public void setPlaceULBMap(PlaceULBMap placeULBMap) {
+        this.placeULBMap = placeULBMap;
     }
 
     public Long getReviewsCount() {

@@ -29,6 +29,9 @@ public class ReportServiceImpl implements ReportService {
     @Autowired
     ReviewDao reviewDao;
 
+    @Autowired
+    PlaceULBMapService placeULBMapService;
+
     @Override
     public List<Report> getReportsListByLocationsBetweenDates(List<Location> locations, String startDate, String endDate) {
         List<Report> reportsList = new ArrayList<Report>();
@@ -69,6 +72,7 @@ public class ReportServiceImpl implements ReportService {
             report.setPlaceDetail(placeDetail);
             report.setPlace(placeDetail.getPlace());
             report.setLocation(placeDetail.getPlace().getLocation());
+            report.setPlaceULBMap(placeULBMapService.getPlaceULBMapByPlace(placeDetail.getPlace()));
 
             Double averageRating = null;
             Long reviewsCount = null;
