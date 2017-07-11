@@ -575,8 +575,6 @@
 <script type="text/javascript">
 
 
-
-
     $(document).ready(function () {
         $('.opensearch').on('click', function () {
             $('.search-form').addClass('animated flipInX');

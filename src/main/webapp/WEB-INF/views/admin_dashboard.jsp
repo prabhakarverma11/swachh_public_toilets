@@ -273,9 +273,9 @@
                 <button class="btn btn-color-blue" id="adv-search">Advanced Search</button>
             </div>
         </div>
-        <div class="col-xs-12 col-md-6">
-            <button class="btn btn-color-red pull-right" ng-click="filterData(1, true)">Download Report</button>
-        </div>
+        <%--<div class="col-xs-12 col-md-6">--%>
+            <%--<button class="btn btn-color-red pull-right" ng-click="filterData(1, true)">Download Report</button>--%>
+        <%--</div>--%>
     </div>
     <!-- /Search box-->
 
