@@ -476,10 +476,15 @@ Ram Sharma
             <span class="glyphicon glyphicon-remove"></span>
         </div>
         <div class="info-col">
-            <img ng-src="{{toiletDetail.location.imageURL}}" class="img-circle" width="100">
+            <img ng-src="{{toiletDetail.location.imageURL}}" class="img-circle" width="100" style="width: 70%">
             <h2>{{toiletDetail.location.name}}</h2>
             <p>{{toiletDetail.location.address}}</p>
-            <p>{{toiletDetail.location.type}}</p>
+            <p>{{toiletDetail.location.type}} <a data-toggle="modal" data-target="#editLocationType"
+                                                 style="cursor: pointer">Change Type</a></p>
+
+            <p>{{toiletDetail.placeULBMap.ULBName}} <a data-toggle="modal" data-target="#editULB"
+                                                       style="cursor: pointer">Change ULB</a></p>
+
             <p class="ratings"> {{toiletDetail.averageRating}} <span class="glyphicon glyphicon-star"></span></p>
             <!-- <p> Last Rated on 20 Jun, 2017</p> -->
             <p>{{toiletDetail.reviewsCount}} reviews</p>
@@ -530,8 +535,228 @@ Ram Sharma
             </div>
         </div>
     </div>
+    <div class="modal fade" role="dialog" tabindex="-1" id="editLocationType">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Edit Location Type</h4>
+                </div>
+                <div class="modal-body toilet-details">
+                    <div class="">
+                        <form class="form-horizontal" onsubmit="saveLocationType();">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"
+                                   class="form-control zero-radius"/>
+                            <input type="hidden" name="locationId" id="locationId"
+                                   value="{{toiletDetail.location.id}}">
+
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="locationType">Correct Type:</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control" id="locationType" name="locationType"
+                                            ng-model="filterModel.type"
+                                            ng-options="type for type in locationTypes" required>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="category">You are:</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control" id="category" name="category" required>
+                                        <option value="ULB">ULB</option>
+                                        <option value="Citizen">Citizen</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="name">Name:</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="name" placeholder="Enter name"
+                                           name="name" required>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="phone">Phone:</label>
+                                <div class="col-sm-10">
+                                    <input type="number" class="form-control" id="phone"
+                                           placeholder="Enter phone number" name="phone" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="email">Email:</label>
+                                <div class="col-sm-10">
+                                    <input type="email" class="form-control" id="email" placeholder="Enter email"
+                                           name="email">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+
+                                <div class="col-sm-offset-2 col-sm-4">
+                                    <button type="submit" class="form-control btn btn-success">
+                                        Save
+                                    </button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div class="modal fade" role="dialog" tabindex="-1" id="editULB">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Edit ULB</h4>
+                </div>
+                <div class="modal-body toilet-details">
+                    <div class="">
+                        <form class="form-horizontal" onsubmit="saveULBType();">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"
+                                   class="form-control zero-radius"/>
+                            <input type="hidden" name="locationId" id="locationId2"
+                                   value="{{toiletDetail.location.id}}">
+
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="locationType">Correct ULB:</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control" name="ulbName" ng-model="filterModel.ward"
+                                            ng-options="ulb for ulb in ulbList" id="ulbName">
+                                        <option value="">Select ULB</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="category">You are:</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control" id="category2" name="category" required>
+                                        <option value="ULB">ULB</option>
+                                        <option value="Citizen">Citizen</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="name">Name:</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="name2" placeholder="Enter name"
+                                           name="name" required>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="phone">Phone:</label>
+                                <div class="col-sm-10">
+                                    <input type="number" class="form-control" id="phone2"
+                                           placeholder="Enter phone number" name="phone" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="email">Email:</label>
+                                <div class="col-sm-10">
+                                    <input type="email" class="form-control" id="email2" placeholder="Enter email"
+                                           name="email">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+
+                                <div class="col-sm-offset-2 col-sm-4">
+                                    <button type="submit" class="form-control btn btn-success">
+                                        Save
+                                    </button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 </div>
 <%@include file="footer-new.jsp" %>
+<script>
+    $("select#category").on("change", function () {
+        $("input#name").val("");
+        $("input#phone").val("");
+        $("input#email").val("");
+        if ($(this).val() === "ULB") {
+            $("input#name").removeAttr("readOnly");
+            $("input#phone").removeAttr("readOnly");
+            $("input#email").removeAttr("readOnly");
+        } else {
+            $("input#name").attr("readOnly", true);
+            $("input#phone").attr("readOnly", true);
+            $("input#email").attr("readOnly", true);
+        }
+    });
+    $("select#category2").on("change", function () {
+        $("input#name2").val("");
+        $("input#phone2").val("");
+        $("input#email2").val("");
+        if ($(this).val() === "ULB") {
+            $("input#name2").removeAttr("readOnly");
+            $("input#phone2").removeAttr("readOnly");
+            $("input#email2").removeAttr("readOnly");
+        } else {
+            $("input#name2").attr("readOnly", true);
+            $("input#phone2").attr("readOnly", true);
+            $("input#email2").attr("readOnly", true);
+        }
+    });
+
+    function saveLocationType() {
+        var data = {};
+        data["${_csrf.parameterName}"] = "${_csrf.token}";
+        data["locationId"] = $("#locationId").val();
+        data["locationType"] = $("#locationType").val();
+        data["category"] = $("#category").val();
+        data["name"] = $("#name").val();
+        data["phone"] = $("#phone").val();
+        data["email"] = $("#email").val();
+        $.ajax({
+            url: "/api/save-location-type/",
+            dataType: 'json',
+            type: 'POST',
+            data: data,
+            success: function (response) {
+                console.log("response", response);
+                $('#editLocationType').modal('toggle');
+                alert("Thanks for you help, the admin panel will review it.")
+            }
+        });
+    }
+    function saveULBType() {
+        var data = {};
+        data["${_csrf.parameterName}"] = "${_csrf.token}";
+        data["locationId"] = $("#locationId2").val();
+        data["ulbName"] = $("#ulbName").val();
+        data["category"] = $("#category2").val();
+        data["name"] = $("#name2").val();
+        data["phone"] = $("#phone2").val();
+        data["email"] = $("#email2").val();
+        $.ajax({
+            url: "/api/save-ulb-name/",
+            dataType: 'json',
+            type: 'POST',
+            data: data,
+            success: function (response) {
+                console.log("response", response);
+                $('#editULB').modal('toggle');
+                alert("Thanks for you help, the admin panel will review it.")
+            }
+        });
+    }
+</script>
 
 <script type="text/javascript">
 

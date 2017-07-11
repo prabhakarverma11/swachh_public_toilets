@@ -1,5 +1,6 @@
 package com.websystique.springmvc.model;
 
+import org.apache.commons.lang3.text.WordUtils;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
@@ -99,6 +100,7 @@ public class AdminVerification implements Serializable {
     }
 
     public void setLocation(Location location) {
+        location.setAddress(WordUtils.capitalize(location.getAddress()));
         this.location = location;
     }
 }

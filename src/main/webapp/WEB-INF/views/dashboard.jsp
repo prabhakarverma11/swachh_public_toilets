@@ -295,7 +295,7 @@
             <span class="glyphicon glyphicon-remove"></span>
         </div>
         <div class="info-col">
-            <img ng-src="{{toiletDetail.location.imageURL}}" class="img-circle" width="100">
+            <img ng-src="{{toiletDetail.location.imageURL}}" class="img-circle" width="100" style="width: 70%;">
             <h2>{{toiletDetail.location.name}}</h2>
             <p>{{toiletDetail.location.address}}</p>
             <p>{{toiletDetail.location.type}} <a data-toggle="modal" data-target="#editLocationType"
