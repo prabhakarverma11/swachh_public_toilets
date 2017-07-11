@@ -1,5 +1,6 @@
 package com.websystique.springmvc.model;
 
+import org.apache.commons.lang3.text.WordUtils;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
@@ -14,25 +15,24 @@ public class AdminVerification implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotEmpty
-    @Column(name = "NAME", nullable = false)
+    @Column(name = "NAME", nullable = true)
     private String name;
 
-    @NotEmpty
-    @Column(name = "EMAIL", nullable = false)
+    @Column(name = "EMAIL", nullable = true)
     private String email;
 
-    @NotEmpty
-    @Column(name = "PHONE", nullable = false)
+    @Column(name = "PHONE", nullable = true)
     private String phone;
 
     @NotEmpty
     @Column(name = "CATEGORY", nullable = false)
     private String category;
 
-    @NotEmpty
-    @Column(name = "LOCATION_TYPE", nullable = false)
+    @Column(name = "LOCATION_TYPE", nullable = true)
     private String locationType;
+
+    @Column(name = "ULB_NAME", nullable = true)
+    private String ULBName;
 
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
@@ -87,11 +87,20 @@ public class AdminVerification implements Serializable {
         this.locationType = locationType;
     }
 
+    public String getULBName() {
+        return ULBName;
+    }
+
+    public void setULBName(String ulbName) {
+        this.ULBName = ulbName;
+    }
+
     public Location getLocation() {
         return location;
     }
 
     public void setLocation(Location location) {
+        location.setAddress(WordUtils.capitalize(location.getAddress()));
         this.location = location;
     }
 }
