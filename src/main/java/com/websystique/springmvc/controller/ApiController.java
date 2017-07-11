@@ -48,6 +48,9 @@ public class ApiController {
     @Autowired
     PinCodeDetailService pinCodeDetailService;
 
+    @Autowired
+    AdminVerificationService adminVerificationService;
+
     /**
      * Response is having report of locations with given criteria
      *
@@ -166,11 +169,24 @@ public class ApiController {
         response.setCharacterEncoding("utf-8");
 
         //validation of request params TODO
+        Integer locationId = Integer.parseInt(request.getParameter("locationId"));
         String locationType = request.getParameter("locationType");
+        String locationTypeArr[] = locationType.split(":");
+
         String category = request.getParameter("category");
         String name = request.getParameter("name");
         String phone = request.getParameter("phone");
         String email = request.getParameter("email");
+
+        AdminVerification adminVerification = new AdminVerification();
+        adminVerification.setLocation(locationService.getLocationById(locationId));
+        adminVerification.setName(name);
+        adminVerification.setCategory(category);
+        adminVerification.setEmail(email);
+        adminVerification.setLocationType(locationTypeArr.length >= 2 ? locationTypeArr[1] : "");
+        adminVerification.setPhone(phone);
+        adminVerificationService.save(adminVerification);
+
         try {
             PrintWriter writer = response.getWriter();
             Gson gson = new Gson();

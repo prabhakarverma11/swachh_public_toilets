@@ -298,7 +298,7 @@
             <h2>{{toiletDetail.location.name}}</h2>
             <p>{{toiletDetail.location.address}}</p>
             <p>{{toiletDetail.location.type}} <a data-toggle="modal" data-target="#editLocationType"
-                                                class="glyphicon glyphicon-pencil" style="cursor: hand"></a></p>
+                                                 class="glyphicon glyphicon-pencil" style="cursor: hand"></a></p>
             <p class="ratings"> {{toiletDetail.averageRating}} <span class="glyphicon glyphicon-star"></span></p>
             <!-- <p> Last Rated on 20 Jun, 2017</p> -->
             <p>{{toiletDetail.reviewsCount}} reviews</p>
@@ -351,21 +351,49 @@
                     <h4 class="modal-title">Edit Location Type</h4>
                 </div>
                 <div class="modal-body toilet-details">
+                    <script>
+                        function saveLocationType() {
+                            var data = {};
+                            data["${_csrf.parameterName}"] = "${_csrf.token}";
+                            data["locationId"] = $("#locationId").val();
+                            data["locationType"] = $("#locationType").val();
+                            data["category"] = $("#category").val();
+                            data["name"] = $("#name").val();
+                            data["phone"] = $("#phone").val();
+                            data["email"] = $("#email").val();
+                            $.ajax({
+                                url: "/api/save-location-type/",
+                                dataType: 'json',
+                                type: 'POST',
+                                data: data,
+                                success: function (response) {
+                                    console.log("response", response);
+                                    $('#editLocationType').modal('toggle');
+                                    alert("Thanks for you help, the admin panel will review it.")
+                                }
+                            });
+                        }
+                    </script>
                     <div class="">
-                        <form class="form-horizontal" action="/api/save-location-type" method="post">
+                        <form class="form-horizontal" onsubmit="saveLocationType();">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"
+                                   class="form-control zero-radius"/>
+                            <input type="hidden" name="locationId" id="locationId"
+                                   value="{{toiletDetail.location.id}}">
+
                             <div class="form-group">
-                                <label class="control-label col-sm-2" for="type">Correct Type:</label>
+                                <label class="control-label col-sm-2" for="locationType">Correct Type:</label>
                                 <div class="col-sm-10">
-                                    <select class="form-control" id="type" name="locationType"
+                                    <select class="form-control" id="locationType" name="locationType"
                                             ng-model="filterModel.type"
-                                            ng-options="type for type in locationTypes">
+                                            ng-options="type for type in locationTypes" required>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-sm-2" for="category">You are:</label>
                                 <div class="col-sm-10">
-                                    <select class="form-control" id="category" name="category">
+                                    <select class="form-control" id="category" name="category" required>
                                         <option value="ULB">ULB</option>
                                         <option value="Citizen">Citizen</option>
                                     </select>
@@ -375,7 +403,7 @@
                                 <label class="control-label col-sm-2" for="name">Name:</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="name" placeholder="Enter name"
-                                           name="name">
+                                           name="name" required>
                                 </div>
                             </div>
 
@@ -384,14 +412,14 @@
                                 <label class="control-label col-sm-2" for="phone">Phone:</label>
                                 <div class="col-sm-10">
                                     <input type="number" class="form-control" id="phone"
-                                           placeholder="Enter phone number" name="phone">
+                                           placeholder="Enter phone number" name="phone" required>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-sm-2" for="email">Email:</label>
                                 <div class="col-sm-10">
                                     <input type="email" class="form-control" id="email" placeholder="Enter email"
-                                           name="email">
+                                           name="email" required>
                                 </div>
                             </div>
 
