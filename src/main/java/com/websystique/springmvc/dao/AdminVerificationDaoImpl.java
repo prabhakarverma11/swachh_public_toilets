@@ -26,4 +26,9 @@ class AdminVerificationDaoImpl extends AbstractDao<String, AdminVerification>
         Criteria criteria = createEntityCriteria().setFirstResult((page - 1) * size).setMaxResults(size);
         return criteria.list();
     }
+
+    @Override
+    public AdminVerification getAdminVerificationById(Integer id) {
+        return (AdminVerification) getSession().get(AdminVerification.class, id);
+    }
 }

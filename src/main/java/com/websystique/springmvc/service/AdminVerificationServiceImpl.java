@@ -25,4 +25,14 @@ public class AdminVerificationServiceImpl implements AdminVerificationService {
     public List<AdminVerification> getAllAdminVerificationByPageAndSize(Integer page, Integer size) {
         return adminVerificationDao.getAllAdminVerificationByPageAndSize(page, size);
     }
+
+    @Override
+    public AdminVerification getAdminVerificationById(Integer id) {
+        return adminVerificationDao.getAdminVerificationById(id);
+    }
+
+    @Override
+    public void delete(AdminVerification adminVerification) {
+        adminVerificationDao.delete(adminVerification);
+    }
 }

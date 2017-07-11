@@ -10,5 +10,9 @@ public interface AdminVerificationDao {
 
     List<AdminVerification> getAllAdminVerificationByPageAndSize(Integer page, Integer size);
 
+    AdminVerification getAdminVerificationById(Integer id);
+
+    void delete(AdminVerification adminVerification);
+
 }
 

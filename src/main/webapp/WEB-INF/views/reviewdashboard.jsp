@@ -33,8 +33,10 @@
                             <td>${adminVerification.phone}</td>
                             <td>${adminVerification.email}</td>
                             <td>
-                                <button class="btn-success"><i class="glyphicon glyphicon-ok"></i></button>
-                                <button class="btn-danger"><i class="glyphicon glyphicon-remove"></i></button>
+                                <button class="btn-success" onclick="update(event);"><i
+                                        class="glyphicon glyphicon-ok" id="${adminVerification.id}"></i></button>
+                                <button class="btn-danger" onclick="reject(event);"><i
+                                        class="glyphicon glyphicon-remove" id="${adminVerification.id}"></i></button>
                             </td>
                         </tr>
                     </c:forEach>
@@ -46,3 +48,29 @@
 </div>
 <%@include file="footer-new.jsp" %>
 <%@include file="header-end.jsp" %>
+<script>
+    function update(event) {
+        var data = {id: event.target.id};
+        data["${_csrf.parameterName}"] = "${_csrf.token}";
+        $.ajax({
+            url: "/api/admin/accept",
+            type: 'POST',
+            data: data,
+            success: function (response) {
+                alert("accepted");
+            }
+        });
+    }
+    function reject(event) {
+        var data = {id: event.target.id};
+        data["${_csrf.parameterName}"] = "${_csrf.token}";
+        $.ajax({
+            url: "/api/admin/reject",
+            type: 'POST',
+            data: data,
+            success: function (response) {
+                alert("rejected");
+            }
+        });
+    }
+</script>

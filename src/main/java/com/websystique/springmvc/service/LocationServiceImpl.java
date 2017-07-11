@@ -40,4 +40,9 @@ public class LocationServiceImpl implements LocationService {
     public List<String> getLocationTypes() {
         return locationDao.getLocationTypes();
     }
+
+    @Override
+    public void update(Location location) {
+        locationDao.update(location);
+    }
 }

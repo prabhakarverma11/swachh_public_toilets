@@ -16,5 +16,7 @@ public interface LocationDao {
 
     List<String> getLocationTypes();
 
+    void update(Location location);
+
 }
 

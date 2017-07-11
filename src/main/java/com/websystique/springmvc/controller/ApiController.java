@@ -223,6 +223,56 @@ public class ApiController {
      *                 {host}:{port}/api/get-report-of-locations/{ratingFrom}/{ratingEnd}/{page}/{size}?locationType={locationType}&ulbName={ulbName}&startDate={startDate}&endDate={endDate}
      */
     @CrossOrigin
+    @RequestMapping(value = "/admin/accept", method = RequestMethod.POST)
+    public String accept(
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) {
+        Integer id = Integer.parseInt(request.getParameter("id"));
+        AdminVerification adminVerification = adminVerificationService.getAdminVerificationById(id);
+
+        if (adminVerification.getLocationType() != null && !adminVerification.getLocationType().equals("")) {
+            Location location = adminVerification.getLocation();
+            location.setType(adminVerification.getLocationType());
+            locationService.update(location);
+            adminVerificationService.delete(adminVerification);
+        } else if (adminVerification.getULBName() != null && !adminVerification.getULBName().equals("")) {
+            PlaceULBMap placeULBMap = placeULBMapService.getPlaceULBMapByPlace(placeService.getPlaceByLocation(adminVerification.getLocation()));
+            placeULBMap.setULBName(adminVerification.getULBName());
+            placeULBMapService.update(placeULBMap);
+            adminVerificationService.delete(adminVerification);
+        }
+        return "redirect:/admin/review-dashboard";
+    }
+
+
+    /**
+     * Response is having report of locations with given criteria
+     *
+     * @param request  -this is request having all the parameters as well as the URL
+     * @param response -the response is of application/json type
+     *                 {host}:{port}/api/get-report-of-locations/{ratingFrom}/{ratingEnd}/{page}/{size}?locationType={locationType}&ulbName={ulbName}&startDate={startDate}&endDate={endDate}
+     */
+    @CrossOrigin
+    @RequestMapping(value = "/admin/reject", method = RequestMethod.POST)
+    public String reject(
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) {
+        Integer id = Integer.parseInt(request.getParameter("id"));
+        AdminVerification adminVerification = adminVerificationService.getAdminVerificationById(id);
+        adminVerificationService.delete(adminVerification);
+        return "redirect:/admin/review-dashboard";
+    }
+
+    /**
+     * Response is having report of locations with given criteria
+     *
+     * @param request  -this is request having all the parameters as well as the URL
+     * @param response -the response is of application/json type
+     *                 {host}:{port}/api/get-report-of-locations/{ratingFrom}/{ratingEnd}/{page}/{size}?locationType={locationType}&ulbName={ulbName}&startDate={startDate}&endDate={endDate}
+     */
+    @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/save-ulb-name", method = RequestMethod.POST, produces = "application/json")
     public void saveULBName(
