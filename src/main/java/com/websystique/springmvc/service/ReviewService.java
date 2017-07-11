@@ -27,4 +27,6 @@ public interface ReviewService {
 
     Long countReviewsByPlaceAndRatingRangeBetweenDates(Place place, Integer ratingFrom, Integer ratingEnd, Date startDate, Date endDate);
 
+    List<Integer> getLocationIdsByLocationIdsAndDate(List<Integer> locationIds, Date date);
+
 }

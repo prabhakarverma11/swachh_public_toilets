@@ -1,5 +1,7 @@
 package com.websystique.springmvc.model;
 
+import org.apache.commons.lang3.text.WordUtils;
+
 import java.io.Serializable;
 
 /**
@@ -28,6 +30,7 @@ public class Report implements Serializable {
     }
 
     public void setLocation(Location location) {
+        location.setAddress(WordUtils.capitalize(location.getAddress()));
         this.location = location;
     }
 

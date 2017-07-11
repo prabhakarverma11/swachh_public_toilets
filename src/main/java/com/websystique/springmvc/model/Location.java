@@ -1,5 +1,6 @@
 package com.websystique.springmvc.model;
 
+import org.apache.commons.lang3.text.WordUtils;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
@@ -59,7 +60,7 @@ public class Location implements Serializable {
     }
 
     public String getAddress() {
-        return address;
+       return WordUtils.capitalize(address);
     }
 
     public void setAddress(String address) {
