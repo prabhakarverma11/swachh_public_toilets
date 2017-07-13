@@ -1,4 +1,58 @@
-<%@include file="header.jsp" %>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
+<%@ page isELIgnored="false" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
+<!DOCTYPE html>
+<html ng-app="spt">
+<head>
+    <title>GTL</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,500,600,700" rel="stylesheet">
+    <link rel="stylesheet" href="<c:url value='/static/css/styles.min.css' />">
+    <script src="<c:url value='/static/js/main.min.js'/>" type="text/javascript"></script>
+    <script src="<c:url value='/static/js/app.min.js'/>" type="text/javascript"></script>
+    <%--<script src="http://localhost:8081/build/js/app.min.js" type="text/javascript"></script>--%>
+</head>
+<body>
+<nav class="navbar navbar-default nav-dark" data-spy="affix" data-offset-top="60">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-nav"
+                    aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"><img src="/static/img/swacch-logo.png" class="img-responsive"></a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="main-nav">
+            <ul class="nav navbar-nav main-nav">
+                <li><a href="/">Home</a></li>
+                <li><a href="/dashboard">Dashboard</a></li>
+                <li class="active"><a href="/admin/dashboard">ULB Dashboard</a></li>
+                <li><a href="/admin/review-dashboard">Admin</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <%--<li><a href="/login">Login <span class="glyphicon glyphicon-log-in"></span></a></li>--%>
+                <!-- <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#">Separated link</a></li>
+                  </ul>
+                </li> -->
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
 <div class="container" ng-controller="dashboardController" ng-init="init('NDMC', true)" ng-cloak>
     <div class="row">
         <div class="col-xs-12 col-md-6 col-md-offset-3 select-area">
@@ -9,8 +63,8 @@
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                    <li class="dropdown-header">Select Ward</li>
-                    <li ng-click="getNumbers()"><a href="#">All Wards</a></li>
+                    <li class="dropdown-header">Select ULB</li>
+                    <li ng-click="getNumbers()"><a href="#">All ULBs</a></li>
                     <li ng-repeat="ulb in ulbList" ng-click="getNumbers(ulb)"><a href="#">{{ulb}}</a></li>
                     <!-- <li><a href="#">EDMC- East Delhi Municipal Corporation</a></li>
                     <li><a href="#">SDMC- South Delhi Municipal Corporation</a></li>
@@ -132,7 +186,7 @@
                     <tbody>
                     <tr>
                         <th>
-                            <img src="/static/img/smiley1.png" />
+                            <img src="/static/img/smiley1.png"/>
                         </th>
                         <td>
                             <a href="javascript:void(0)" ng-click="setFilters(5, '')">{{fiveStar.tillDate}}</a>
@@ -152,7 +206,7 @@
                     </tr>
                     <tr>
                         <th>
-                            <img src="/static/img/smiley2.png" />
+                            <img src="/static/img/smiley2.png"/>
                         </th>
                         <td>
                             <a href="javascript:void(0)" ng-click="setFilters(4, '')">{{fourStar.tillDate}}</a>
@@ -172,9 +226,10 @@
                     </tr>
                     <tr>
                         <th>
-                            <img src="/static/img/smiley3.png" />
+                            <img src="/static/img/smiley3.png"/>
                         </th>
                         <td>
+
                             <a href="javascript:void(0)" ng-click="setFilters(3, '')">{{threeStar.tillDate}}</a>
                         </td>
                         <td>
@@ -188,11 +243,12 @@
                         </td>
                         <td>
                             <a href="javascript:void(0)" ng-click="setFilters(3, 'lastMonth')">{{threeStar.lastOneMonth}}</a>
+
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            <img src="/static/img/smiley4.png" />
+                            <img src="/static/img/smiley4.png"/>
                         </th>
                         <td>
                             <a href="javascript:void(0)" ng-click="setFilters(2, '')">{{twoStar.tillDate}}</a>
@@ -208,11 +264,12 @@
                         </td>
                         <td>
                             <a href="javascript:void(0)" ng-click="setFilters(2, 'lastMonth')">{{twoStar.lastOneMonth}}</a>
+
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            <img src="/static/img/smiley5.png" />
+                            <img src="/static/img/smiley5.png"/>
                         </th>
                         <td>
                             <a href="javascript:void(0)" ng-click="setFilters(1, '')">{{oneStar.tillDate}}</a>
@@ -274,7 +331,7 @@
             </div>
         </div>
         <%--<div class="col-xs-12 col-md-6">--%>
-            <%--<button class="btn btn-color-red pull-right" ng-click="filterData(1, true)">Download Report</button>--%>
+        <%--<button class="btn btn-color-red pull-right" ng-click="filterData(1, true)">Download Report</button>--%>
         <%--</div>--%>
     </div>
     <!-- /Search box-->
@@ -385,10 +442,10 @@ Ram Sharma
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>Filter by Ward</label>
+                            <label>Filter by ULB</label>
                             <select class="form-control" name="ward" ng-model="filterModel.ward"
                                     ng-options="ulb for ulb in ulbList">
-                                <option value="">Select Ward</option>
+                                <option value="">Select ULB</option>
                             </select>
                         </div>
                         <div class="form-group">
