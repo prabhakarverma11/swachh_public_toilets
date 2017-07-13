@@ -480,6 +480,15 @@ public class ApiController {
                 }
 
                 jsonObject.addProperty("content", gson.toJson(content));
+                JsonObject overall = new JsonObject();
+                overall.addProperty("0", reviewService.countReviewsByPlaceAndRating(place, 0));
+                overall.addProperty("1", reviewService.countReviewsByPlaceAndRating(place, 1));
+                overall.addProperty("2", reviewService.countReviewsByPlaceAndRating(place, 2));
+                overall.addProperty("3", reviewService.countReviewsByPlaceAndRating(place, 3));
+                overall.addProperty("4", reviewService.countReviewsByPlaceAndRating(place, 4));
+                overall.addProperty("5", reviewService.countReviewsByPlaceAndRating(place, 5));
+                jsonObject.addProperty("overall", gson.toJson(overall));
+
 
                 jsonObject.addProperty("locationId", locationId);
                 Long endTime = System.currentTimeMillis();
