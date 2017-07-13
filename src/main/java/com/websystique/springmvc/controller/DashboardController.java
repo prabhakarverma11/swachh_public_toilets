@@ -2,10 +2,7 @@ package com.websystique.springmvc.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.websystique.springmvc.model.Location;
-import com.websystique.springmvc.model.Place;
-import com.websystique.springmvc.model.PlaceDetail;
-import com.websystique.springmvc.model.Review;
+import com.websystique.springmvc.model.*;
 import com.websystique.springmvc.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,6 +37,15 @@ public class DashboardController {
     @Autowired
     ReviewService reviewService;
 
+    @Autowired
+    AdminVerificationService adminVerificationService;
+
+    @RequestMapping(value = "/admin/review-dashboard", method = RequestMethod.GET)
+    public String adminReviewDashBoard(ModelMap model) {
+        List<AdminVerification> adminVerifications = adminVerificationService.getAllAdminVerificationByPageAndSize(0, Integer.MAX_VALUE);
+        model.addAttribute("adminVerifications", adminVerifications);
+        return "reviewdashboard";
+    }
 
     @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
     public String dashBoard(ModelMap model) {

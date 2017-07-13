@@ -71,13 +71,13 @@ public class GoogleApiController {
     @RequestMapping(value = "/fetch-place-details", method = RequestMethod.GET)
     public String fetchPlaceDetails(ModelMap model) {
         //TODO change it
-        List<Place> allPlaces = placeService.getAllPlacesByPageAndSize(3, 2472);
+        List<Place> allPlaces = placeService.getAllPlacesByPageAndSize(5, 1000);
         model.addAttribute("placesList", allPlaces);
 
         for (Place place : allPlaces) {
             String url = "https://maps.googleapis.com/maps/api/place/details/json?" +
                     "placeid=" + place.getPlaceId() +
-                    "&key=" + API_KEY[7];
+                    "&key=" + API_KEY[5];
 
             try {
                 String response = placeDetailService.fetchPlaceDetailByPlace(place, url);

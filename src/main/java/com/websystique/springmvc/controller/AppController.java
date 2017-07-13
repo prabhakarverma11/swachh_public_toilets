@@ -87,7 +87,7 @@ public class AppController {
 
     @RequestMapping(value = "/map-place-ulb", method = RequestMethod.GET)
     public String mapPlaceToULB(ModelMap model) {
-        String csvFile = "/home/prabhakar/Documents/work/mahi/SpringMVCHibernateWithSpringSecurityExample/src/main/resources/LocationDataWithDistrictName.csv";
+        String csvFile = "K:\\Kunal\\gtl-resources\\gtl-web\\swachh_public_toilets\\src\\main\\resources\\LocationDataWithDistrictName.csv";
         BufferedReader br;
         String line;
 

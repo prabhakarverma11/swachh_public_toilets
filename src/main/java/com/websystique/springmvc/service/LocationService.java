@@ -17,4 +17,6 @@ public interface LocationService {
 
     List<String> getLocationTypes();
 
+    void update(Location location);
+
 }
