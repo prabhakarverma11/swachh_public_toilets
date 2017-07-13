@@ -189,19 +189,19 @@
                             <img src="/static/img/smiley1.png"/>
                         </th>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{fiveStar.tillDate}}</a>
+                            <a href="">{{fiveStar.tillDate}}</a>
                         </td>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{fiveStar.yesterday}}</a>
+                            <a href="">{{fiveStar.yesterday}}</a>
                         </td>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{fiveStar.lastWeek}}</a>
+                            <a href="">{{fiveStar.lastWeek}}</a>
                         </td>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{fiveStar.lastTwoWeek}}</a>
+                            <a href="">{{fiveStar.lastTwoWeek}}</a>
                         </td>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{fiveStar.lastOneMonth}}</a>
+                            <a href="">{{fiveStar.lastOneMonth}}</a>
                         </td>
                     </tr>
                     <tr>
@@ -209,19 +209,19 @@
                             <img src="/static/img/smiley2.png"/>
                         </th>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{fourStar.tillDate}}</a>
+                            <a href="">{{fourStar.tillDate}}</a>
                         </td>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{fourStar.yesterday}}</a>
+                            <a href="">{{fourStar.yesterday}}</a>
                         </td>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{fourStar.lastWeek}}</a>
+                            <a href="">{{fourStar.lastWeek}}</a>
                         </td>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{fourStar.lastTwoWeek}}</a>
+                            <a href="">{{fourStar.lastTwoWeek}}</a>
                         </td>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{fourStar.lastOneMonth}}</a>
+                            <a href="">{{fourStar.lastOneMonth}}</a>
                         </td>
                     </tr>
                     <tr>
@@ -229,19 +229,19 @@
                             <img src="/static/img/smiley3.png"/>
                         </th>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{threeStar.tillDate}}</a>
+                            <a href="">{{threeStar.tillDate}}</a>
                         </td>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{threeStar.yesterday}}</a>
+                            <a href="">{{threeStar.yesterday}}</a>
                         </td>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{threeStar.lastWeek}}</a>
+                            <a href="">{{threeStar.lastWeek}}</a>
                         </td>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{threeStar.lastTwoWeek}}</a>
+                            <a href="">{{threeStar.lastTwoWeek}}</a>
                         </td>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{threeStar.lastOneMonth}}</a>
+                            <a href="">{{threeStar.lastOneMonth}}</a>
                         </td>
                     </tr>
                     <tr>
@@ -249,19 +249,19 @@
                             <img src="/static/img/smiley4.png"/>
                         </th>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{twoStar.tillDate}}</a>
+                            <a href="">{{twoStar.tillDate}}</a>
                         </td>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{twoStar.yesterday}}</a>
+                            <a href="">{{twoStar.yesterday}}</a>
                         </td>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{twoStar.lastWeek}}</a>
+                            <a href="">{{twoStar.lastWeek}}</a>
                         </td>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{twoStar.lastTwoWeek}}</a>
+                            <a href="">{{twoStar.lastTwoWeek}}</a>
                         </td>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{twoStar.lastOneMonth}}</a>
+                            <a href="">{{twoStar.lastOneMonth}}</a>
                         </td>
                     </tr>
                     <tr>
@@ -269,19 +269,19 @@
                             <img src="/static/img/smiley5.png"/>
                         </th>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{oneStar.tillDate}}</a>
+                            <a href="">{{oneStar.tillDate}}</a>
                         </td>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{oneStar.yesterday}}</a>
+                            <a href="">{{oneStar.yesterday}}</a>
                         </td>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{oneStar.lastWeek}}</a>
+                            <a href="">{{oneStar.lastWeek}}</a>
                         </td>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{oneStar.lastTwoWeek}}</a>
+                            <a href="">{{oneStar.lastTwoWeek}}</a>
                         </td>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{oneStar.lastOneMonth}}</a>
+                            <a href="">{{oneStar.lastOneMonth}}</a>
                         </td>
                     </tr>
                     <tr>
@@ -289,19 +289,19 @@
                             No Feedback
                         </th>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{noFeedBack.tillDate}}</a>
+                            <a href="">{{noFeedBack.tillDate}}</a>
                         </td>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{noFeedBack.yesterday}}</a>
+                            <a href="">{{noFeedBack.yesterday}}</a>
                         </td>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{noFeedBack.lastWeek}}</a>
+                            <a href="">{{noFeedBack.lastWeek}}</a>
                         </td>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{noFeedBack.lastTwoWeek}}</a>
+                            <a href="">{{noFeedBack.lastTwoWeek}}</a>
                         </td>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{noFeedBack.lastOneMonth}}</a>
+                            <a href="">{{noFeedBack.lastOneMonth}}</a>
                         </td>
                     </tr>
                     </tbody>
