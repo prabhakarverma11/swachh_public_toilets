@@ -42,10 +42,10 @@
             <div class="panel panel-default color2">
                 <div class="panel-body">
                     <div class="number counter"
-                         value="fiveStarsRated.myValue"
-                         to="fiveStarsRated.myTarget"
-                         duration="fiveStarsRated.myDuration"
-                         effect="fiveStarsRated.myEffect"> {{ fiveStarsRated.myValue | number:0 }}
+                         value="fourToFiveStarsRated.myValue"
+                         to="fourToFiveStarsRated.myTarget"
+                         duration="fourToFiveStarsRated.myDuration"
+                         effect="fourToFiveStarsRated.myEffect"> {{ fourToFiveStarsRated.myValue | number:0 }}
                     </div>
                     <h2>5 Stars Rated</h2>
                 </div>
@@ -84,10 +84,10 @@
             <div class="panel panel-default color2">
                 <div class="panel-body">
                     <div class="number counter"
-                         value="fiveStarsRated.myValue"
-                         to="fiveStarsRated.myTarget"
-                         duration="fiveStarsRated.myDuration"
-                         effect="fiveStarsRated.myEffect"> {{ fiveStarsRated.myValue | number:0 }}
+                         value="fourToFiveStarsRated.myValue"
+                         to="fourToFiveStarsRated.myTarget"
+                         duration="fourToFiveStarsRated.myDuration"
+                         effect="fourToFiveStarsRated.myEffect"> {{ fourToFiveStarsRated.myValue | number:0 }}
                     </div>
                     <h2>5 Stars Reviewed Yesterday</h2>
                 </div>

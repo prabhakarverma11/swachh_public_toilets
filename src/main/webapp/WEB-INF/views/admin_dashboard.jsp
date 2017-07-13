@@ -63,8 +63,8 @@
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                    <li class="dropdown-header">Select Ward</li>
-                    <li ng-click="getNumbers()"><a href="#">All Wards</a></li>
+                    <li class="dropdown-header">Select ULB</li>
+                    <li ng-click="getNumbers()"><a href="#">All ULBs</a></li>
                     <li ng-repeat="ulb in ulbList" ng-click="getNumbers(ulb)"><a href="#">{{ulb}}</a></li>
                     <!-- <li><a href="#">EDMC- East Delhi Municipal Corporation</a></li>
                     <li><a href="#">SDMC- South Delhi Municipal Corporation</a></li>
@@ -186,7 +186,7 @@
                     <tbody>
                     <tr>
                         <th>
-                            <img src="/static/img/smiley1.png" />
+                            <img src="/static/img/smiley1.png"/>
                         </th>
                         <td>
                             <a href="ulb-dashboard-basic.html">{{fiveStar.tillDate}}</a>
@@ -206,7 +206,7 @@
                     </tr>
                     <tr>
                         <th>
-                            <img src="/static/img/smiley2.png" />
+                            <img src="/static/img/smiley2.png"/>
                         </th>
                         <td>
                             <a href="ulb-dashboard-basic.html">{{fourStar.tillDate}}</a>
@@ -226,7 +226,7 @@
                     </tr>
                     <tr>
                         <th>
-                            <img src="/static/img/smiley3.png" />
+                            <img src="/static/img/smiley3.png"/>
                         </th>
                         <td>
                             <a href="ulb-dashboard-basic.html">{{threeStar.tillDate}}</a>
@@ -246,7 +246,7 @@
                     </tr>
                     <tr>
                         <th>
-                            <img src="/static/img/smiley4.png" />
+                            <img src="/static/img/smiley4.png"/>
                         </th>
                         <td>
                             <a href="ulb-dashboard-basic.html">{{twoStar.tillDate}}</a>
@@ -266,7 +266,7 @@
                     </tr>
                     <tr>
                         <th>
-                            <img src="/static/img/smiley5.png" />
+                            <img src="/static/img/smiley5.png"/>
                         </th>
                         <td>
                             <a href="ulb-dashboard-basic.html">{{oneStar.tillDate}}</a>
@@ -328,7 +328,7 @@
             </div>
         </div>
         <%--<div class="col-xs-12 col-md-6">--%>
-            <%--<button class="btn btn-color-red pull-right" ng-click="filterData(1, true)">Download Report</button>--%>
+        <%--<button class="btn btn-color-red pull-right" ng-click="filterData(1, true)">Download Report</button>--%>
         <%--</div>--%>
     </div>
     <!-- /Search box-->
@@ -439,10 +439,10 @@ Ram Sharma
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>Filter by Ward</label>
+                            <label>Filter by ULB</label>
                             <select class="form-control" name="ward" ng-model="filterModel.ward"
                                     ng-options="ulb for ulb in ulbList">
-                                <option value="">Select Ward</option>
+                                <option value="">Select ULB</option>
                             </select>
                         </div>
                         <div class="form-group">

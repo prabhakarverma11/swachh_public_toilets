@@ -258,10 +258,10 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>Filter by Ward</label>
+                            <label>Filter by ULB</label>
                             <select class="form-control" name="ward" ng-model="filterModel.ward"
                                     ng-options="ulb for ulb in ulbList">
-                                <option value="">Select Ward</option>
+                                <option value="">Select ULB</option>
                             </select>
                         </div>
                         <div class="form-group">
