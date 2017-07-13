@@ -135,19 +135,19 @@
                             <img src="/static/img/smiley1.png" />
                         </th>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{fiveStar.tillDate}}</a>
+                            <a href="javascript:void(0)" ng-click="setFilters(5, '')">{{fiveStar.tillDate}}</a>
                         </td>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{fiveStar.yesterday}}</a>
+                            <a href="javascript:void(0)" ng-click="setFilters(5, 'yesterday')">{{fiveStar.yesterday}}</a>
                         </td>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{fiveStar.lastWeek}}</a>
+                            <a href="javascript:void(0)" ng-click="setFilters(5, 'lastWeek')">{{fiveStar.lastWeek}}</a>
                         </td>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{fiveStar.lastTwoWeek}}</a>
+                            <a href="javascript:void(0)" ng-click="setFilters(5, 'last2Weeks')">{{fiveStar.lastTwoWeek}}</a>
                         </td>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{fiveStar.lastOneMonth}}</a>
+                            <a href="javascript:void(0)" ng-click="setFilters(5, 'lastMonth')">{{fiveStar.lastOneMonth}}</a>
                         </td>
                     </tr>
                     <tr>
@@ -155,19 +155,19 @@
                             <img src="/static/img/smiley2.png" />
                         </th>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{fourStar.tillDate}}</a>
+                            <a href="javascript:void(0)" ng-click="setFilters(4, '')">{{fourStar.tillDate}}</a>
                         </td>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{fourStar.yesterday}}</a>
+                            <a href="javascript:void(0)" ng-click="setFilters(4, 'yesterday')">{{fourStar.yesterday}}</a>
                         </td>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{fourStar.lastWeek}}</a>
+                            <a href="javascript:void(0)" ng-click="setFilters(4, 'lastWeek')">{{fourStar.lastWeek}}</a>
                         </td>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{fourStar.lastTwoWeek}}</a>
+                            <a href="javascript:void(0)" ng-click="setFilters(4, 'last2Weeks')">{{fourStar.lastTwoWeek}}</a>
                         </td>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{fourStar.lastOneMonth}}</a>
+                            <a href="javascript:void(0)" ng-click="setFilters(4, 'lastMonth')">{{fourStar.lastOneMonth}}</a>
                         </td>
                     </tr>
                     <tr>
@@ -175,19 +175,19 @@
                             <img src="/static/img/smiley3.png" />
                         </th>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{threeStar.tillDate}}</a>
+                            <a href="javascript:void(0)" ng-click="setFilters(3, '')">{{threeStar.tillDate}}</a>
                         </td>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{threeStar.yesterday}}</a>
+                            <a href="javascript:void(0)" ng-click="setFilters(3, 'yesterday')">{{threeStar.yesterday}}</a>
                         </td>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{threeStar.lastWeek}}</a>
+                            <a href="javascript:void(0)" ng-click="setFilters(3, 'lastWeek')">{{threeStar.lastWeek}}</a>
                         </td>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{threeStar.lastTwoWeek}}</a>
+                            <a href="javascript:void(0)" ng-click="setFilters(3, 'last2Weeks')">{{threeStar.lastTwoWeek}}</a>
                         </td>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{threeStar.lastOneMonth}}</a>
+                            <a href="javascript:void(0)" ng-click="setFilters(3, 'lastMonth')">{{threeStar.lastOneMonth}}</a>
                         </td>
                     </tr>
                     <tr>
@@ -195,19 +195,19 @@
                             <img src="/static/img/smiley4.png" />
                         </th>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{twoStar.tillDate}}</a>
+                            <a href="javascript:void(0)" ng-click="setFilters(2, '')">{{twoStar.tillDate}}</a>
                         </td>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{twoStar.yesterday}}</a>
+                            <a href="javascript:void(0)" ng-click="setFilters(2, 'yesterday')">{{twoStar.yesterday}}</a>
                         </td>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{twoStar.lastWeek}}</a>
+                            <a href="javascript:void(0)" ng-click="setFilters(2, 'lastWeek')">{{twoStar.lastWeek}}</a>
                         </td>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{twoStar.lastTwoWeek}}</a>
+                            <a href="javascript:void(0)" ng-click="setFilters(2, 'last2Week')">{{twoStar.lastTwoWeek}}</a>
                         </td>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{twoStar.lastOneMonth}}</a>
+                            <a href="javascript:void(0)" ng-click="setFilters(2, 'lastMonth')">{{twoStar.lastOneMonth}}</a>
                         </td>
                     </tr>
                     <tr>
@@ -215,19 +215,19 @@
                             <img src="/static/img/smiley5.png" />
                         </th>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{oneStar.tillDate}}</a>
+                            <a href="javascript:void(0)" ng-click="setFilters(1, '')">{{oneStar.tillDate}}</a>
                         </td>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{oneStar.yesterday}}</a>
+                            <a href="javascript:void(0)" ng-click="setFilters(1, 'yesterday')">{{oneStar.yesterday}}</a>
                         </td>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{oneStar.lastWeek}}</a>
+                            <a href="javascript:void(0)" ng-click="setFilters(1, 'lastWeek')">{{oneStar.lastWeek}}</a>
                         </td>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{oneStar.lastTwoWeek}}</a>
+                            <a href="javascript:void(0)" ng-click="setFilters(1, 'last2Weeks')">{{oneStar.lastTwoWeek}}</a>
                         </td>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{oneStar.lastOneMonth}}</a>
+                            <a href="javascript:void(0)" ng-click="setFilters(1, 'lastMonth')">{{oneStar.lastOneMonth}}</a>
                         </td>
                     </tr>
                     <tr>
@@ -235,19 +235,19 @@
                             No Feedback
                         </th>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{noFeedBack.tillDate}}</a>
+                            <a href="javascript:void(0)" ng-click="setFilters(0, '')">{{noFeedBack.tillDate}}</a>
                         </td>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{noFeedBack.yesterday}}</a>
+                            <a href="javascript:void(0)" ng-click="setFilters(0, 'yesterday')">{{noFeedBack.yesterday}}</a>
                         </td>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{noFeedBack.lastWeek}}</a>
+                            <a href="javascript:void(0)" ng-click="setFilters(0, 'lastWeek')">{{noFeedBack.lastWeek}}</a>
                         </td>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{noFeedBack.lastTwoWeek}}</a>
+                            <a href="javascript:void(0)" ng-click="setFilters(0, 'last2Week')">{{noFeedBack.lastTwoWeek}}</a>
                         </td>
                         <td>
-                            <a href="ulb-dashboard-basic.html">{{noFeedBack.lastOneMonth}}</a>
+                            <a href="javascript:void(0)" ng-click="setFilters(0, 'lastMonth')">{{noFeedBack.lastOneMonth}}</a>
                         </td>
                     </tr>
                     </tbody>
