@@ -1,0 +1,580 @@
+body {
+    font: 62.5%/1.6 'open_sansregular', Arial, Helvetica, sans-serif;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body:nth-of-type(1) img[src*="Blank.gif"] {
+    display: none;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary {
+    display: block
+}
+
+audio, canvas, video {
+    display: inline-block
+}
+
+audio:not([controls]) {
+    display: none;
+    height: 0
+}
+
+html, body {
+    height: 100%;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    height: 100%
+}
+
+figure {
+    margin: 0;
+}
+
+legend {
+    white-space: normal;
+}
+
+q {
+    quotes: "\201C" "\201D" "\2018" "\2019"
+}
+
+small {
+    font-size: 80%
+}
+
+sub, sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline
+}
+
+sup {
+    top: -0.5em
+}
+
+sub {
+    bottom: -0.25em
+}
+
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+    empty-cells: show;
+    border: none;
+}
+
+table table {
+    margin: 0
+}
+
+th, td {
+    border: none;
+    padding: 8px 10px
+}
+
+/* ******** 2. Form fields ******** */
+form {
+    padding: 0;
+    margin: 0;
+}
+
+button, input, select, textarea {
+    font-size: 100%;
+    margin: 0;
+    vertical-align: baseline;
+    background-color: transparent;
+    border: none;
+}
+
+input, select, textarea {
+    border: 1px solid #e5e5e5;
+    font-size: 100%;
+    line-height: 20px;
+    height: 35px;
+}
+
+select {
+    padding-left: 5px;
+}
+
+option {
+    padding-left: 7px;
+}
+
+textarea {
+    height: 100px;
+}
+
+input[type="file"] {
+    padding: 0;
+}
+
+button, html input[type="button"], input[type="reset"], input[type="submit"] {
+    cursor: pointer
+}
+
+[hidden], template {
+    display: none
+}
+
+textarea {
+    overflow: auto;
+    vertical-align: top;
+    resize: vertical;
+}
+
+input[type="checkbox"], input[type="radio"] {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0 5px 0 0;
+    vertical-align: middle;
+    width: 20px;
+    height: 20px;
+}
+
+input[type="submit"], input[type="button"], input[type="reset"], button, .button {
+    line-height: 20px;
+    padding: 4px 20px;
+    display: inline-block;
+    text-decoration: none;
+    -webkit-transition: 350ms ease;
+    transition: 350ms ease;
+}
+
+fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0
+}
+
+/*---- Pagination End ----*/
+/*---- Search Panel start ----*/
+.searchDiv label, .searchdivField { /*float:left;*/
+    font-family: "Source Sans Pro", sans-serif;
+    font-size: 14px;
+    color: #fff;
+    font-weight: normal;
+    width: 145px;
+    text-align: right;
+    margin-top: 4px;
+    line-height: 20px;
+    display: inline-block;
+    vertical-align: top;
+    padding-right: 5px;
+    display: none;
+}
+
+.inlineBox {
+    display: inline-block;
+    width: 200px;
+}
+
+.inlineBox span {
+    display: block;
+    width: 100%;
+}
+
+.searchdivField {
+    font-weight: normal;
+}
+
+.searchDiv > .row {
+    display: inline-block;
+    margin: 5px 0px;
+    vertical-align: top;
+    display: inline-block;
+}
+
+.row input[type='checkbox'] {
+    float: left;
+    margin: 5px;
+}
+
+.row input[type='checkbox'] + label {
+    padding-left: 5px;
+    text-align: left;
+    width: 160px;
+}
+
+.searchInput {
+    border: none;
+    padding: 3px 10px;
+    font-family: "Source Sans Pro", sans-serif;
+    font-size: 14px;
+    color: #252c4c;
+    width: 242px;
+    margin: 3px 5px 5px 6px;
+    background: #fff;
+    height: 35px;
+    border: 1px solid #cdcdcd;
+}
+
+select.searchInput {
+    width: 160px !important;
+}
+
+.datepicker.searchInput {
+    padding: 6px 3px;
+    vertical-align: middle;
+    margin: 3px 5px 5px 6px;
+}
+
+.dropdownSearch {
+    border: medium none;
+    border-radius: 4px 4px 4px 4px;
+    font-family: "Source Sans Pro", sans-serif;
+    font-size: 12px;
+    margin: 0 0 10px 4px;
+    padding: 4px 3px;
+    width: 157px;
+}
+
+.search {
+    cursor: pointer;
+    background: #585858;
+    border: none;
+    font-size: 13px;
+    color: #fff;
+    padding: 5px 12px;
+    float: left;
+    margin: 3px 8px 0 0;
+    text-transform: uppercase;
+    height: 35px;
+}
+
+.search:hover {
+    background-color: #333;
+}
+
+.searchDiv li.row.nobdr:last-child {
+    padding-left: 0;
+}
+
+/*---- Search Panel End ----*/
+/*----Login Page Start---*/
+*, *:before, *:after {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+/* all */
+::-webkit-input-placeholder {
+    color: #555;
+    opacity: 1;
+}
+
+::-moz-placeholder {
+    color: #555;
+    opacity: 1;
+}
+
+/* firefox 19+ */
+:-ms-input-placeholder {
+    color: #555;
+    opacity: 1;
+}
+
+/* ie */
+input:-moz-placeholder {
+    color: #555;
+    opacity: 1;
+}
+
+.loginTitle {
+    background: #fff;
+    display: block;
+    padding: 8px;
+    display: none;
+}
+
+.fullBg {
+    background: url(../Images/main-bg.jpg) repeat;
+    background-size: cover;
+    background-position: center middle;
+    position: relative;
+    min-height: 100%
+}
+
+.loginBox {
+    max-width: 1122px;
+    height: 485px;
+    margin: auto;
+    color: #414141;
+    vertical-align: middle;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -50px;
+    bottom: 0;
+    boc-shadow: 0 3px 7px -4px #000000;
+}
+
+.logoBlck {
+    width: 527px;
+    height: 100%;
+    text-align: center;
+    float: left;
+    list-style: none;
+    padding: 0;
+    background: #1358ad;
+    margin-top: 0;
+}
+
+.logoText {
+    display: block;
+    font-weight: bold;
+    font-size: 20px;
+    padding: 194px 0px 50px 0px;
+    height: 100%;
+}
+
+.formBlck {
+    width: 595px;
+    height: 100%;
+    background: #ffffff url(../Images/top-border.png) no-repeat 0 0;
+    background-size: 101% 13px;
+    float: right;
+    font-size: 16px;
+}
+
+.formBlck ul {
+    padding: 1px 16% 13px;
+}
+
+.formBlck li {
+    margin-bottom: 15px;
+    padding: 0;
+    list-style: none;
+}
+
+.loginLabel {
+    padding: 0 0 5px 0;
+    width: 144px;
+    text-align: left;
+    display: block;
+}
+
+.formBlck .loginLabel {
+    width: 280px;
+}
+
+#divFP {
+    padding: 0 !important;
+}
+
+.loginInput {
+    border: 1px #9b9b9b solid;
+    background: #fff;
+    padding: 6px 12px;
+    width: 100%;
+    display: inline-block;
+    color: #454545;
+}
+
+.loginBtn {
+    width: 100%;
+    font-size: 20px;
+    padding: 10px 4px !important;
+    background: #fbbf30;
+    border: none;
+    color: #000000;
+    -webkit-transition: 350ms ease;
+    transition: 350ms ease;
+    height: 42px;
+}
+
+.loginBtn:hover {
+    background: #333;
+    color: #fff;
+    -webkit-transition: 350ms ease;
+    transition: 350ms ease;
+}
+
+.fullBg .footer {
+    background: #ffffff;
+    bottom: 0;
+    height: 60px;
+    font-size: 14px;
+    color: #454545;
+    text-align: center;
+    line-height: 24px;
+    padding: 19px 0px;
+    width: 100%;
+    position: absolute;
+    left: 0;
+}
+
+/*.fullBg #wrapper{ padding-top:150px;}*/
+.fullBg #wrapper {
+    position: relative;
+    min-height: 100%;
+}
+
+.fullBg form {
+    height: 100%;
+    vertical-align: middle;
+    width: 100%;
+}
+
+.footer {
+    background: #707070;
+    position: relative;
+    bottom: 0;
+    font-size: 14px;
+    color: #fff;
+    text-align: center;
+    line-height: 24px;
+    padding: 25px 0px;
+    width: 100%;
+}
+
+.formBlck .inputChck {
+    width: auto !important;
+}
+
+/*.fullBg #wrapper{position:relative;}*/
+.inlineBlock {
+    float: left;
+    width: 50%;
+}
+
+.footer > .container {
+    min-height: 0px;
+    height: auto;
+    background: none;
+    padding: 0;
+}
+
+.error {
+    color: #F00;
+    display: block;
+    font-size: 14px;
+    margin: 1px 0px 0px 2px;
+}
+
+.error_inline {
+    color: #F00;
+    display: inline;
+    font-size: 12px;
+    margin: 1px 0px 0px 2px;
+}
+
+.rememberBlck {
+    font-size: 16px;
+}
+
+.rememberBlck a {
+    color: #2a6ebb;
+    text-decoration: none;
+    margin-left: 40px;
+}
+
+.keepLogin {
+    border: medium none;
+    float: left;
+    padding: 18px 0 0;
+    text-align: left;
+}
+
+.keepLogin span {
+    color: #656666;
+    font-size: 12px;
+    padding: 0 0 0 4px;
+}
+
+.keepLogin .checkbox {
+    float: left;
+    margin: 4px 0 0;
+}
+
+.forgotPass {
+    text-align: right;
+    font-size: 14px;
+    padding: 18px 0 0;
+}
+
+.singInRow .loginLabel {
+    display: none;
+}
+
+.singInRow a {
+    color: #414141;
+    font-size: 13px;
+    text-decoration: none;
+}
+
+.singInRow a:hover {
+    color: #054576;
+    text-decoration: underline;
+}
+
+.login {
+    background-color: #4a5c73;
+    border: medium none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    float: left;
+    font-size: 15px;
+    font-weight: bold;
+    margin: 15px 10px 10px 0;
+    outline: medium none;
+    padding: 6px 19px;
+    position: relative;
+}
+
+.login:hover {
+    background-color: #83bff2;
+}
+
+.loginCopyright {
+    color: #727272;
+    font-size: 12px;
+    padding: 5px 0 0;
+}
+
+.updateProgress {
+    min-height: 100%;
+    width: 100%;
+    position: fixed;
+    z-index: 111111111111;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.updateProgress img {
+    top: 47%;
+    left: 45%;
+    width: 100px;
+    height: 100px;
+    display: block !important;
+    position: absolute;
+    z-index: 11111111111111;
+}
+
+.v-middle {
+    display: table;
+    height: 100%;
+}
+
+.v-middle ul {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.formBlck .v-middle {
+    display: table;
+    height: 100%;
+    width: 100%;
+}
+
+
+

@@ -43,7 +43,10 @@ public class UtilMethods {
             in.close();
         }
         Gson gson = new Gson();
-        System.out.println("Fetched url: "+url);
-        return (JsonObject) gson.fromJson(response.toString(), JsonObject.class);
+        System.out.println("Fetched url: " + url);
+        if (response != null)
+            return (JsonObject) gson.fromJson(response.toString(), JsonObject.class);
+        else
+            return null;
     }
 }

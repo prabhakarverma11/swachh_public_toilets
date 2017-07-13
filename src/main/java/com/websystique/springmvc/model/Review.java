@@ -19,12 +19,12 @@ public class Review implements Serializable {
     @Column(name = "AUTHOR_NAME", nullable = false)
     private String authorName;
 
-    @NotEmpty
-    @Column(name = "AUTHOR_URL", nullable = false)
+    //    @NotEmpty
+    @Column(name = "AUTHOR_URL", nullable = true)
     private String authorURL;
 
-    @NotEmpty
-    @Column(name = "PROFILE_PHOTO_URL", nullable = false)
+    //    @NotEmpty
+    @Column(name = "PROFILE_PHOTO_URL", nullable = true)
     private String profilePhotoURL;
 
     @NotNull
@@ -35,12 +35,12 @@ public class Review implements Serializable {
     @Column(name = "TIME_OF_REVIEW", nullable = true)
     private Date timeStamp;
 
-//    @NotEmpty
+    //    @NotEmpty
     @Column(name = "TEXT", nullable = true)
     private String reviewText;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "PLACE_ID", nullable = false)
     private Place place;
 

@@ -14,4 +14,6 @@ public interface PlaceService {
     Place getPlaceByLocation(Location location);
 
     List<Place> getAllPlaces();
+
+    List<Place> getAllPlacesByPageAndSize(Integer page, Integer size);
 }

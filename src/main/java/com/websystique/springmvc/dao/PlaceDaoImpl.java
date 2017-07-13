@@ -16,10 +16,9 @@ import java.util.List;
 @Repository("placeIdsDao")
 public class PlaceDaoImpl extends AbstractDao<Integer, Place> implements PlaceDao {
 
+    static final Logger logger = LoggerFactory.getLogger(PlaceDaoImpl.class);
     @Autowired
     private SessionFactory sessionFactory;
-
-    static final Logger logger = LoggerFactory.getLogger(PlaceDaoImpl.class);
 
     @Override
     public void save(Place place) {
@@ -40,6 +39,15 @@ public class PlaceDaoImpl extends AbstractDao<Integer, Place> implements PlaceDa
     public List<Place> getAllPlaces() {
         Criteria criteria = createEntityCriteria();
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid duplicates.
+        List<Place> places = (List<Place>) criteria.list();
+        return places;
+    }
+
+    @Override
+    public List<Place> getAllPlacesByPageAndSize(Integer page, Integer size) {
+        Criteria criteria = createEntityCriteria();
+        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid duplicates.
+        criteria.setFirstResult((page - 1) * size).setMaxResults(size);
         List<Place> places = (List<Place>) criteria.list();
         return places;
     }
