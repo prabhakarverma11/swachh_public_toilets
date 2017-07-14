@@ -61,7 +61,20 @@
     </div>
     <div class="row">
         <div class="col-xs-12 col-md-6">
-            <div id="map"></div>
+            <div id="map" ng-show="!gmap"></div>
+            <div id="map1" ng-show="gmap">
+                <div map-lazy-load="https://maps.google.com/maps/api/js"
+                     map-lazy-load-params="{{googleMapsUrl}}" style="height: 100%;">
+                    <map center="[{{latcenter}}, {{longcenter}}]" zoom="11" style="height: 100%;">
+                        <custom-control id="home" position="TOP_RIGHT" index="1" ng-click="gmap = !gmap">
+                            <div style="background-color: white;padding:10px;margin-top:10px; cursor:pointer;">
+                                <span class="glyphicon glyphicon-chevron-left"></span><b>Back</b>
+                            </div>
+                        </custom-control>
+                        <marker position="[{{location.location.latitude}}, {{location.location.longitude}}]" ng-repeat="location in locationData"></marker>
+                    </map>
+                </div>
+            </div>
         </div>
         <div class="col-xs-12 col-md-3">
             <h3 class="text-center">Overall</h3>
