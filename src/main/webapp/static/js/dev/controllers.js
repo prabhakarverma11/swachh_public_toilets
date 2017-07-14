@@ -22,7 +22,6 @@ app.controller('dashboardController', ['$scope', 'DashboardService', '$filter', 
         if (pageNumber < 1 || pageNumber > $scope.totalPages) {
             return;
         }
-        ;
 
         $scope.currentPage = pageNumber;
         DashboardService.getData(pageNumber, $scope.filters).then(function (result) {
@@ -45,7 +44,7 @@ app.controller('dashboardController', ['$scope', 'DashboardService', '$filter', 
                 myTarget: parseInt($scope.dashboardNumbers.totalToilets) || 1000,
                 myDuration: 2000,
                 myEffect: 'linear'
-            }
+            };
             console.log(parseInt($scope.dashboardNumbers.totalToilets));
 
             $scope.fourToFiveStarsRated = {
@@ -53,14 +52,14 @@ app.controller('dashboardController', ['$scope', 'DashboardService', '$filter', 
                 myTarget: parseInt($scope.dashboardNumbers.fourToFiveStarsRated) || 1000,
                 myDuration: 2000,
                 myEffect: 'linear'
-            }
+            };
 
             $scope.threeOrLessStarsRated = {
                 myValue: 0,
                 myTarget: parseInt($scope.dashboardNumbers.threeOrLessStarsRated) || 1000,
                 myDuration: 2000,
                 myEffect: 'linear'
-            }
+            };
 
             $scope.ulbList = JSON.parse($scope.dashboardNumbers.ulbsList);
             $scope.selectedUlbIndex = $scope.ulbList.indexOf(ulbName);
@@ -69,8 +68,8 @@ app.controller('dashboardController', ['$scope', 'DashboardService', '$filter', 
             $scope.locationTypes = JSON.parse($scope.dashboardNumbers.locationTypes);
             $scope.filters = {
                 ulbName: ulbName ? ulbName : null
-            }
-            $scope.filterModel.ward = ulbName ? ulbName : ''
+            };
+            $scope.filterModel.ward = ulbName ? ulbName : '';
             $scope.getData(1);
         });
         //}
@@ -79,7 +78,7 @@ app.controller('dashboardController', ['$scope', 'DashboardService', '$filter', 
 
     $scope.ratingData = function (ulbName) {
 
-    }
+    };
 
     $scope.getPages = function (current, totalPages) {
         var pageArray = [];
@@ -131,7 +130,7 @@ app.controller('dashboardController', ['$scope', 'DashboardService', '$filter', 
 
 
     $scope.changePeriod = function (value) {
-        if (value != 'custom') {
+        if (value !== 'custom') {
             $scope.filterModel.fromDate = $filter('date')($scope.dateRange[value][0], 'dd-MM-yyyy');
             $scope.filterModel.toDate = $filter('date')($scope.dateRange[value][1], 'dd-MM-yyyy');
         }
@@ -143,13 +142,13 @@ app.controller('dashboardController', ['$scope', 'DashboardService', '$filter', 
 
         $scope.filters = {
             page: 1,
-            minRating: $scope.filterModel.ratings != '' ? $scope.filterModel.ratings[0] : 0,
-            maxRating: $scope.filterModel.ratings != '' ? $scope.filterModel.ratings[1] : 5,
-            locationName: $scope.filterModel.type != '' ? $scope.filterModel.type : null,
-            ulbName: $scope.filterModel.ward != '' ? $scope.filterModel.ward : null,
-            sDate: $scope.filterModel.fromDate != '' ? $scope.filterModel.fromDate : null,
-            eDate: $scope.filterModel.toDate != '' ? $scope.filterModel.toDate : null
-        }
+            minRating: $scope.filterModel.ratings !== '' ? $scope.filterModel.ratings[0] : 0,
+            maxRating: $scope.filterModel.ratings !== '' ? $scope.filterModel.ratings[1] : 5,
+            locationName: $scope.filterModel.type !== '' ? $scope.filterModel.type : null,
+            ulbName: $scope.filterModel.ward !== '' ? $scope.filterModel.ward : null,
+            sDate: $scope.filterModel.fromDate !== '' ? $scope.filterModel.fromDate : null,
+            eDate: $scope.filterModel.toDate !== '' ? $scope.filterModel.toDate : null
+        };
         console.log($scope.filters);
         $scope.getData(1);
     };
@@ -194,12 +193,12 @@ app.controller('dashboardController', ['$scope', 'DashboardService', '$filter', 
                     var val = {
                         name: '',
                         data: []
-                    }
+                    };
                     var keyParsed = JSON.parse(key);
 
                     for (var i = 1; i < 7; i++) {
                         val.data.push(keyParsed[i]);
-                        if (i == 5 && name < 6) {
+                        if (i === 5 && name < 6) {
                             val.name = name + ' Stars';
                             name++;
 
@@ -215,7 +214,7 @@ app.controller('dashboardController', ['$scope', 'DashboardService', '$filter', 
     };
     $scope.closeDetails = function () {
         $scope.showDetails = false;
-    }
+    };
     //console.log($scope.dateRange);
     $scope.init = function (ulbName, isAdmin) {
         $scope.isAdmin = true;

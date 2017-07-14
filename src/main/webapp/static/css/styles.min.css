@@ -8136,7 +8136,7 @@ footer {
 
 footer .footer-text {
     margin-top: 20px;
-    font-size: 10px
+    font-size: 14px
 }
 
 footer .nav > li:hover a {
@@ -8435,7 +8435,6 @@ footer .nav > li > a {
 .details-popup .close {
     margin: 20px
 }
-
 
 body {
     font-family: 'Raleway', sans-serif !important;
