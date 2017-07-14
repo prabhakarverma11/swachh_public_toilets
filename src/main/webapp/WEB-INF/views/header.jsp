@@ -12,10 +12,11 @@
     <link rel="stylesheet" href="<c:url value='/static/css/styles.min.css' />">
     <script src="<c:url value='/static/js/main.min.js'/>" type="text/javascript"></script>
     <script src="<c:url value='/static/js/app.min.js'/>" type="text/javascript"></script>
-    <%--<script src="http://localhost:8081/build/js/app.min.js" type="text/javascript"></script>--%>
+    <%--<script src="http://localhost:8081/build/js/main.min.js" type="text/javascript"></script>
+    <script src="http://localhost:8081/build/js/app.min.js" type="text/javascript"></script>--%>
 </head>
 <body>
-<nav class="navbar navbar-default nav-dark" data-spy="affix" data-offset-top="60">
+<nav class="navbar navbar-default nav-dark affix-top" data-spy="affix" data-offset-top="60">
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
