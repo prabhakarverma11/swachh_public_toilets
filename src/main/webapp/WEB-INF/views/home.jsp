@@ -238,6 +238,7 @@
         $('.Cancel').click(function () {
             // alert('hello');
             $(".video").css("display", "none");
+            $('video').get(0).pause();
         });
     });
 

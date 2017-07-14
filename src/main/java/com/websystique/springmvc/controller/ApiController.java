@@ -544,7 +544,7 @@ public class ApiController {
         response.setContentType("application/json");
         response.setCharacterEncoding("utf-8");
 
-        //validataion TODO
+        //validation TODO
 
         List<Integer> locationIds = placeULBMapService.getLocationIdsByULBNameAndLocationType(ulbName, null);
         Long totalToilets = placeDetailService.countPlaceDetailsByLocationIdsAndRatingRange(locationIds, 0.0, 5.0);
@@ -641,7 +641,7 @@ public class ApiController {
         response.setContentType("application/json");
         response.setCharacterEncoding("utf-8");
 
-        //validataion TODO
+        //validation TODO
 
         List<Integer> locationIds = placeULBMapService.getLocationIdsByULBNameAndLocationType(ulbName, null);
         Long totalToilets = placeDetailService.countPlaceDetailsByLocationIdsAndRatingRange(locationIds, 0.0, 5.0);
