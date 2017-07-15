@@ -36,7 +36,7 @@ public class MailServiceImpl {
         Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(
-                        "prabhakarverma11@gmail.com", "EE@@9415778448@@");// Specify the Username and the PassWord
+                        "htdatabackup@gmail.com", "Prab012152@");// Specify the Username and the PassWord
             }
         });
 

@@ -69,4 +69,9 @@ public class ReviewServiceImpl implements ReviewService {
         return reviewDao.getLocationIdsByLocationIdsAndDate(locationIds, date);
     }
 
+    @Override
+    public List<Object[]> getLocationIdsByLocationIdsAndBetweenDates(List<Integer> locationIds, Date startDate, Date endDate) {
+        return reviewDao.getLocationIdsByLocationIdsAndBetweenDates(locationIds, startDate, endDate);
+    }
+
 }

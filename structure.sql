@@ -1,62 +1,31 @@
-/*All User's gets stored in APP_USER table*/
-create table APP_USER (
-   id BIGINT NOT NULL AUTO_INCREMENT,
-   sso_id VARCHAR(30) NOT NULL,
-   password VARCHAR(100) NOT NULL,
-   first_name VARCHAR(30) NOT NULL,
-   last_name  VARCHAR(30) NOT NULL,
-   email VARCHAR(30) NOT NULL,
-   PRIMARY KEY (id),
-   UNIQUE (sso_id)
-);
+DROP DATABASE IF EXISTS `spt`;
+CREATE DATABASE `spt`;
+use `spt`;
 
-/*All Locations get stored in APP_LOCATION table*/
-create table APP_LOCATION (
-  id BIGINT NOT NULL AUTO_INCREMENT,
-  name VARCHAR(30) NOT NULL,
-  address VARCHAR(200) NOT NULL,
-  country VARCHAR(10) NOT NULL,
-  latitude DOUBLE NOT NULL,
-  longitude DOUBLE NOT NULL,
-  image_URL VARCHAR(200) NOT NULL,
-  type VARCHAR(30) NOT NULL,
-  PRIMARY KEY (id)
-);
+--
+-- Table structure for table `APP_LOCATION`
+--
 
-create table APP_LOCATION_ULB_MAP (
-  id BIGINT NOT NULL AUTO_INCREMENT,
-  postal_code BIGINT NOT NULL,
-  ulb_name VARCHAR(10) NOT NULL,
-  location_id INT NOT NULL,
-  PRIMARY KEY (id)
-);
+DROP TABLE IF EXISTS `APP_LOCATION`;
 
-create table APP_PLACE_PHOTOS_MAP (
-  id BIGINT NOT NULL AUTO_INCREMENT,
-  place_id BIGINT NOT NULL,
-  photo_url VARCHAR(500),
-  PRIMARY KEY (id)
-);
+CREATE TABLE `APP_LOCATION` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(30) NOT NULL,
+  `address` varchar(200) NOT NULL,
+  `country` varchar(10) NOT NULL,
+  `latitude` double NOT NULL,
+  `longitude` double NOT NULL,
+  `image_URL` varchar(200) NOT NULL,
+  `type` varchar(30) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13591 DEFAULT CHARSET=latin1;
 
-create table APP_PIN_CODE (
-  id BIGINT NOT NULL AUTO_INCREMENT,
-  location VARCHAR(150) NOT NULL,
-  pin_code INT NOT NULL,
-  state VARCHAR(150) NOT NULL,
-  district VARCHAR(150) NOT NULL,
-  PRIMARY KEY (id)
-);
+--
+-- Table structure for table `APP_PLACE`
+--
 
+DROP TABLE IF EXISTS `APP_PLACE`;
 
-/* USER_PROFILE table contains all possible roles */
-create table USER_PROFILE(
-   id BIGINT NOT NULL AUTO_INCREMENT,
-   type VARCHAR(30) NOT NULL,
-   PRIMARY KEY (id),
-   UNIQUE (type)
-);
-
-/* APP_PLACE table contains all possible placeIds */
 CREATE TABLE `APP_PLACE` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `place_id` varchar(100) NOT NULL,
@@ -64,72 +33,181 @@ CREATE TABLE `APP_PLACE` (
   PRIMARY KEY (`id`),
   KEY `fk_APP_PLACE_IDS_1_idx` (`location_id`),
   CONSTRAINT `fk_APP_PLACE_IDS_1` FOREIGN KEY (`location_id`) REFERENCES `APP_LOCATION` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5238 DEFAULT CHARSET=latin1;
 
-/* APP_PLACE_ID table contains all possible placeIds */
-create table APP_PLACE_DETAIL(
-  id BIGINT NOT NULL AUTO_INCREMENT,
-  address VARCHAR(200) NOT NULL,
-  name VARCHAR(100) NOT NULL,
-  reference VARCHAR(250) NOT NULL,
-  url VARCHAR(150) NOT NULL,
-  rating DOUBLE,
-  place_id BIGINT NOT NULL,
-  PRIMARY KEY (id),
-  KEY `fk_APP_PLACE_IDS_1_idx` (`place_id`),
-  CONSTRAINT FK_APP_PLACE_DETAIL FOREIGN KEY (place_id) REFERENCES APP_PLACE (place_id)
-);
+--
+-- Table structure for table `APP_ADMIN_VERIFICATION`
+--
 
-/* APP_PLACE_ID table contains all possible placeIds */
-create table APP_REVIEW(
-  id BIGINT NOT NULL AUTO_INCREMENT,
-  author_name VARCHAR(50) NOT NULL,
-  author_url VARCHAR(150) NOT NULL,
-  profile_photo_url VARCHAR(150) NOT NULL,
-  rating INT NOT NULL,
-  time_of_review TIMESTAMP,
-  text VARCHAR(250),
-  place_id BIGINT NOT NULL,
-  PRIMARY KEY (id),
-  KEY `fk_APP_PLACE_IDS_1_idx` (`place_id`),
-  CONSTRAINT FK_APP_PLACE_DETAIL FOREIGN KEY (place_id) REFERENCES APP_PLACE (place_id)
-);
+DROP TABLE IF EXISTS `APP_ADMIN_VERIFICATION`;
 
-/* JOIN TABLE for MANY-TO-MANY relationship*/
-CREATE TABLE APP_USER_USER_PROFILE (
-    user_id BIGINT NOT NULL,
-    user_profile_id BIGINT NOT NULL,
-    PRIMARY KEY (user_id, user_profile_id),
-    CONSTRAINT FK_APP_USER FOREIGN KEY (user_id) REFERENCES APP_USER (id),
-    CONSTRAINT FK_USER_PROFILE FOREIGN KEY (user_profile_id) REFERENCES USER_PROFILE (id)
-);
+CREATE TABLE `APP_ADMIN_VERIFICATION` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) DEFAULT NULL,
+  `email` varchar(150) DEFAULT NULL,
+  `phone` varchar(45) DEFAULT NULL,
+  `category` varchar(45) NOT NULL,
+  `location_type` varchar(45) DEFAULT NULL,
+  `location_id` bigint(20) NOT NULL,
+  `ulb_name` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_APP_ADMIN_VERIFICATION_1_idx` (`location_id`),
+  CONSTRAINT `fk_APP_ADMIN_VERIFICATION_1` FOREIGN KEY (`location_id`) REFERENCES `APP_LOCATION` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
-/* Populate USER_PROFILE Table */
-INSERT INTO USER_PROFILE(type)
-VALUES ('USER');
+--
+-- Table structure for table `APP_PIN_CODE_DETAIL`
+--
 
-INSERT INTO USER_PROFILE(type)
-VALUES ('ADMIN');
+DROP TABLE IF EXISTS `APP_PIN_CODE_DETAIL`;
 
-INSERT INTO USER_PROFILE(type)
-VALUES ('DBA');
+CREATE TABLE `APP_PIN_CODE_DETAIL` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `location` varchar(100) NOT NULL,
+  `pin_code` int(11) NOT NULL,
+  `state` varchar(100) NOT NULL,
+  `district` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=920 DEFAULT CHARSET=latin1;
 
+--
+-- Table structure for table `APP_PLACE_DETAIL`
+--
 
-/* Populate one Admin User which will further create other users for the application using GUI */
-INSERT INTO APP_USER(sso_id, password, first_name, last_name, email)
-VALUES ('sam','$2a$10$4eqIF5s/ewJwHK1p8lqlFOEm2QIA0S8g6./Lok.pQxqcxaBZYChRm', 'Sam','Smith','samy@xyz.com');
+DROP TABLE IF EXISTS `APP_PLACE_DETAIL`;
 
+CREATE TABLE `APP_PLACE_DETAIL` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `address` varchar(200) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `reference` varchar(350) NOT NULL,
+  `url` varchar(350) NOT NULL,
+  `rating` int(11) NOT NULL,
+  `place_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `place_id_UNIQUE` (`place_id`),
+  CONSTRAINT `fk_APP_PLACE_DETAIL_1` FOREIGN KEY (`place_id`) REFERENCES `APP_PLACE` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=5007 DEFAULT CHARSET=latin1;
 
-/* Populate JOIN Table */
-INSERT INTO APP_USER_USER_PROFILE (user_id, user_profile_id)
-  SELECT user.id, profile.id FROM APP_USER user, USER_PROFILE profile
-  where user.sso_id='sam' and profile.type='ADMIN';
+--
+-- Table structure for table `APP_PLACE_PHOTO_MAP`
+--
 
-/* Create persistent_logins Table used to store rememberme related stuff*/
-CREATE TABLE PERSISTENT_LOGINS (
-    username VARCHAR(64) NOT NULL,
-    series VARCHAR(64) NOT NULL,
-    token VARCHAR(64) NOT NULL,
-    last_used TIMESTAMP NOT NULL,
-    PRIMARY KEY (series)
-);
+DROP TABLE IF EXISTS `APP_PLACE_PHOTO_MAP`;
+
+CREATE TABLE `APP_PLACE_PHOTO_MAP` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `place_id` bigint(20) NOT NULL,
+  `photo_url` varchar(450) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_APP_PLACE_PHOTOS_MAP_1_idx` (`place_id`),
+  CONSTRAINT `fk_APP_PLACE_PHOTOS_MAP_1` FOREIGN KEY (`place_id`) REFERENCES `APP_PLACE` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=219 DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `APP_PLACE_ULB_MAP`
+--
+
+DROP TABLE IF EXISTS `APP_PLACE_ULB_MAP`;
+
+CREATE TABLE `APP_PLACE_ULB_MAP` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `ulb_name` varchar(45) DEFAULT NULL,
+  `place_id` bigint(20) NOT NULL,
+  `postal_code` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_APP_PLACE_ULB_MAP_1_idx` (`place_id`),
+  CONSTRAINT `fk_APP_PLACE_ULB_MAP_1` FOREIGN KEY (`place_id`) REFERENCES `APP_PLACE` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=5073 DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `APP_REVIEW`
+--
+
+DROP TABLE IF EXISTS `APP_REVIEW`;
+
+CREATE TABLE `APP_REVIEW` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `author_name` varchar(50) NOT NULL,
+  `author_url` varchar(250) DEFAULT NULL,
+  `profile_photo_url` varchar(250) DEFAULT NULL,
+  `rating` int(11) DEFAULT NULL,
+  `time_of_review` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `text` varchar(4050) DEFAULT NULL,
+  `place_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_APP_REVIEW_1_idx` (`place_id`),
+  CONSTRAINT `fk_APP_REVIEW_1` FOREIGN KEY (`place_id`) REFERENCES `APP_PLACE` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=2178 DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `APP_ULB`
+--
+
+DROP TABLE IF EXISTS `APP_ULB`;
+
+CREATE TABLE `APP_ULB` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `display_name` varchar(250) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `APP_USER`
+--
+
+DROP TABLE IF EXISTS `APP_USER`;
+
+CREATE TABLE `APP_USER` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `sso_id` varchar(30) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `first_name` varchar(30) NOT NULL,
+  `last_name` varchar(30) NOT NULL,
+  `email` varchar(30) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `sso_id` (`sso_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `USER_PROFILE`
+--
+
+DROP TABLE IF EXISTS `USER_PROFILE`;
+
+CREATE TABLE `USER_PROFILE` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `type` varchar(30) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `type` (`type`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `APP_USER_USER_PROFILE`
+--
+
+DROP TABLE IF EXISTS `APP_USER_USER_PROFILE`;
+
+CREATE TABLE `APP_USER_USER_PROFILE` (
+  `user_id` bigint(20) NOT NULL,
+  `user_profile_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`user_id`,`user_profile_id`),
+  KEY `FK_USER_PROFILE` (`user_profile_id`),
+  CONSTRAINT `FK_APP_USER` FOREIGN KEY (`user_id`) REFERENCES `APP_USER` (`id`),
+  CONSTRAINT `FK_USER_PROFILE` FOREIGN KEY (`user_profile_id`) REFERENCES `USER_PROFILE` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `PERSISTENT_LOGINS`
+--
+
+DROP TABLE IF EXISTS `PERSISTENT_LOGINS`;
+
+CREATE TABLE `PERSISTENT_LOGINS` (
+  `username` varchar(64) NOT NULL,
+  `series` varchar(64) NOT NULL,
+  `token` varchar(64) NOT NULL,
+  `last_used` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`series`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;

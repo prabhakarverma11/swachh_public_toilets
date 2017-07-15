@@ -56,7 +56,7 @@
 <div class="container" ng-controller="dashboardController" ng-init="init()" ng-cloak>
     <div class="row">
         <div class="col-xs-12 col-md-12 text-center">
-            <h2 class="text-center" id="area-name">Delhi</h2>
+            <h2 class="text-center" id="area-name">{{selectedUlb == 'All Wards' ? 'Delhi' : selectedUlb}}</h2>
         </div>
     </div>
     <div class="row">

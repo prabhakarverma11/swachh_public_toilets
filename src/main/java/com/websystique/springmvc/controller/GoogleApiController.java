@@ -9,10 +9,12 @@ import com.websystique.springmvc.service.PlaceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -29,7 +31,8 @@ public class GoogleApiController {
             "AIzaSyCXC3L1bLCp_sFUDxtqtrRP43uIHOfldss",
             "AIzaSyBkLfT8KwQu1N1Oncaky_O7WzcH0rdOSuI",
             "AIzaSyD6YNI_T7cKw26Oq5A_CBhQY0JhFyVFl7A",
-            "AIzaSyDVhfr53ZyIV4ms0UUz9026Ip3bxtODdR4"
+            "AIzaSyDVhfr53ZyIV4ms0UUz9026Ip3bxtODdR4",
+            "AIzaSyCwt5r7yoibkA_0ywy8Cdg6gQDPf5kTeGo"
     };
 
     @Autowired
@@ -41,10 +44,10 @@ public class GoogleApiController {
     @Autowired
     LocationService locationService;
 
-    @RequestMapping(value = "/fetch-place-ids", method = RequestMethod.GET)
-    public String fetchPlaceIds(ModelMap model) {
+    @RequestMapping(value = "/fetch-place-ids/{radius}/{page}/{size}", method = RequestMethod.GET)
+    public String fetchPlaceIds(@PathVariable Integer radius, @PathVariable Integer page, @PathVariable Integer size, ModelMap model) {
         //TODO change it
-        List<Location> allLocations = locationService.getAllLocationsByPageAndSize(26, 200);
+        List<Location> allLocations = locationService.getAllLocationsByPageAndSize(page, size);
         Gson gson = new Gson();
 //        model.addAttribute("locationsListJson", gson.toJson(allLocations));
         model.addAttribute("locationsList", allLocations);
@@ -53,9 +56,9 @@ public class GoogleApiController {
             String url = "https://maps.googleapis.com/maps/api/place/radarsearch/json?" +
                     "location=" +
                     location.getLatitude() + "," + location.getLongitude() +
-                    "&radius=" + "10" +
+                    "&radius=" + radius +
                     "&type=" + "Public+Bathroom" +
-                    "&key=" + API_KEY[7];
+                    "&key=" + API_KEY[location.getId() % 10];
 
             try {
                 Place place = placeService.fetchPlaceIdByLocation(location, url);
@@ -68,26 +71,27 @@ public class GoogleApiController {
         return "locationslist";
     }
 
-    @RequestMapping(value = "/fetch-place-details", method = RequestMethod.GET)
-    public String fetchPlaceDetails(ModelMap model) {
+    @RequestMapping(value = "/fetch-place-details/{page}/{size}", method = RequestMethod.GET)
+    public String fetchPlaceDetails(@PathVariable Integer page, @PathVariable Integer size, ModelMap model) {
         //TODO change it
-        List<Place> allPlaces = placeService.getAllPlacesByPageAndSize(5, 1000);
+        List<Place> allPlaces = placeService.getAllPlacesByPageAndSize(page, size);
         model.addAttribute("placesList", allPlaces);
-
+        List<Integer> success = new ArrayList<>();
         for (Place place : allPlaces) {
             String url = "https://maps.googleapis.com/maps/api/place/details/json?" +
                     "placeid=" + place.getPlaceId() +
-                    "&key=" + API_KEY[5];
+                    "&key=" + API_KEY[place.getId() % 10];
 
             try {
                 String response = placeDetailService.fetchPlaceDetailByPlace(place, url);
+                success.add(place.getId());
                 System.out.println("Done with place id: " + place.getId());
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-
-        return "placeslist";
+        model.addAttribute("success", success);
+        return "home";
     }
 
 }
