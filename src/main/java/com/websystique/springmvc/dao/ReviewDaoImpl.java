@@ -6,6 +6,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
@@ -182,9 +183,26 @@ public class ReviewDaoImpl extends AbstractDao<Integer, Review> implements Revie
         Criteria criteria = createEntityCriteria()
                 .add(Restrictions.eq("timeStamp", date))
                 .createCriteria("place", "place")
-                .createCriteria("place.location", "location")
-                .add(Restrictions.in("location.id", locationIds))
-                .setProjection(Projections.property("location.id"));
+                .createCriteria("place.location", "location");
+        if (locationIds.size() > 0)
+            criteria.add(Restrictions.in("location.id", locationIds))
+                    .setProjection(Projections.property("location.id"));
+        return criteria.list();
+    }
+
+    @Override
+    public List<Object[]> getLocationIdsByLocationIdsAndBetweenDates(List<Integer> locationIds, Date startDate, Date endDate) {
+        Criteria criteria = getSession().createCriteria(Review.class, "review")
+                .add(Restrictions.ge("timeStamp", startDate))
+                .add(Restrictions.le("timeStamp", endDate))
+                .createCriteria("place", "place").createCriteria("location", "location");
+        if (locationIds.size() > 0)
+            criteria.add(Restrictions.in("location.id", locationIds));
+
+        ProjectionList list = Projections.projectionList();
+        list.add(Projections.groupProperty("place.id"));
+        list.add(Projections.avg("review.rating").as("rating"));
+        criteria.setProjection(list);
         return criteria.list();
     }
 }

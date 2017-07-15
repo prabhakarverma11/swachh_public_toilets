@@ -9,10 +9,12 @@ import com.websystique.springmvc.service.PlaceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -68,26 +70,27 @@ public class GoogleApiController {
         return "locationslist";
     }
 
-    @RequestMapping(value = "/fetch-place-details", method = RequestMethod.GET)
-    public String fetchPlaceDetails(ModelMap model) {
+    @RequestMapping(value = "/fetch-place-details/{page}/{size}", method = RequestMethod.GET)
+    public String fetchPlaceDetails(@PathVariable Integer page, @PathVariable Integer size, ModelMap model) {
         //TODO change it
-        List<Place> allPlaces = placeService.getAllPlacesByPageAndSize(5, 1000);
+        List<Place> allPlaces = placeService.getAllPlacesByPageAndSize(page, size);
         model.addAttribute("placesList", allPlaces);
-
+        List<Integer> success = new ArrayList<>();
         for (Place place : allPlaces) {
             String url = "https://maps.googleapis.com/maps/api/place/details/json?" +
                     "placeid=" + place.getPlaceId() +
-                    "&key=" + API_KEY[5];
+                    "&key=" + API_KEY[page];
 
             try {
                 String response = placeDetailService.fetchPlaceDetailByPlace(place, url);
+                success.add(place.getId());
                 System.out.println("Done with place id: " + place.getId());
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-
-        return "placeslist";
+        model.addAttribute("success", success);
+        return "home";
     }
 
 }

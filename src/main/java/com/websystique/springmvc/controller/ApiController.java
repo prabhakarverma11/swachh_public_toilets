@@ -97,13 +97,13 @@ public class ApiController {
         response.setCharacterEncoding("utf-8");
 
         //validation of request params TODO
-
+//TODO review it, some problem may be here
         List<Integer> locationIds = placeULBMapService.getLocationIdsByULBNameAndLocationType(ulbName, locationType);
         List<PlaceDetail> placeDetails = placeDetailService.getAllPlaceDetailsByLocationIdsRatingRangePageAndSize(locationIds, ratingFrom, ratingEnd, page, size);
+        Long noOfElements = placeDetailService.countPlaceDetailsByLocationIdsAndRatingRange(locationIds, ratingFrom, ratingEnd);
 
         List<Report> reports = reportService.getReportsListByPlaceDetailsBetweenDates(placeDetails, startDate, endDate);
 
-        Long noOfElements = placeDetailService.countPlaceDetailsByLocationIdsAndRatingRange(locationIds, ratingFrom, ratingEnd);
 
         try {
             PrintWriter writer = response.getWriter();
@@ -547,18 +547,19 @@ public class ApiController {
         //validation TODO
 
         List<Integer> locationIds = placeULBMapService.getLocationIdsByULBNameAndLocationType(ulbName, null);
-        Long totalToilets = placeDetailService.countPlaceDetailsByLocationIdsAndRatingRange(locationIds, 0.0, 5.0);
-        Long fourToFiveStarsRated = placeDetailService.countPlaceDetailsByLocationIdsAndRatingRange(locationIds, 4.0, 5.0);
-        Long threeOrLessStarsRated = placeDetailService.countPlaceDetailsByLocationIdsAndRatingRange(locationIds, 0.0, 3.0);
+        Long millisInOneDay = 60 * 60 * 24 * 1000L;
+        Date yesterday = new Date((System.currentTimeMillis() / millisInOneDay) * millisInOneDay - millisInOneDay);
 
-        Long millisInDay = 60 * 60 * 24 * 1000L;
-        Date yesterday = new Date((System.currentTimeMillis() / millisInDay) * millisInDay - millisInDay);
+        List<Object[]> toiletsReviewedTillDate = reviewService.getLocationIdsByLocationIdsAndBetweenDates(locationIds, new Date(0L), new Date());
+        List<Object[]> toiletsReviewedYesterday = reviewService.getLocationIdsByLocationIdsAndBetweenDates(locationIds, new Date(System.currentTimeMillis() - millisInOneDay), new Date(System.currentTimeMillis() - millisInOneDay));
 
-        locationIds = reviewService.getLocationIdsByLocationIdsAndDate(locationIds, yesterday);
+        Long totalToilets = (long) toiletsReviewedTillDate.size();
+        Long fourToFiveStarsRated = countFiveStars(toiletsReviewedTillDate) + countFourStars(toiletsReviewedTillDate);
+        Long threeOrLessStarsRated = countThreeStars(toiletsReviewedTillDate) + countTwoStars(toiletsReviewedTillDate) + countOneStar(toiletsReviewedTillDate);
 
-        Long totalToiletsYesterday = placeDetailService.countPlaceDetailsByLocationIdsAndRatingRange(locationIds, 0.0, 5.0);
-        Long fourToFiveStarsRatedYesterday = placeDetailService.countPlaceDetailsByLocationIdsAndRatingRange(locationIds, 4.0, 5.0);
-        Long threeOrLessStarsRatedYesterday = placeDetailService.countPlaceDetailsByLocationIdsAndRatingRange(locationIds, 0.0, 3.0);
+        Long totalToiletsYesterday = (long) toiletsReviewedYesterday.size();
+        Long fourToFiveStarsRatedYesterday = countFiveStars(toiletsReviewedYesterday) + countFourStars(toiletsReviewedYesterday);
+        Long threeOrLessStarsRatedYesterday = countThreeStars(toiletsReviewedYesterday) + countTwoStars(toiletsReviewedTillDate) + countOneStar(toiletsReviewedYesterday);
 
         List<String> ulbsList = placeULBMapService.getULBList();
         List<String> staffsList = new ArrayList<>();
@@ -644,12 +645,20 @@ public class ApiController {
         //validation TODO
 
         List<Integer> locationIds = placeULBMapService.getLocationIdsByULBNameAndLocationType(ulbName, null);
-        Long totalToilets = placeDetailService.countPlaceDetailsByLocationIdsAndRatingRange(locationIds, 0.0, 5.0);
-        Long fourToFiveStarsRated = placeDetailService.countPlaceDetailsByLocationIdsAndRatingRange(locationIds, 4.0, 5.0);
-        Long threeOrLessStarsRated = placeDetailService.countPlaceDetailsByLocationIdsAndRatingRange(locationIds, 0.0, 3.0);
 
-        Long millisInDay = 60 * 60 * 24 * 1000L;
-        Date yesterday = new Date((System.currentTimeMillis() / millisInDay) * millisInDay - millisInDay);
+        Long millisInOneDay = 60 * 60 * 24 * 1000L;
+        Date yesterday = new Date((System.currentTimeMillis() / millisInOneDay) * millisInOneDay - millisInOneDay);
+
+        List<Object[]> toiletsReviewedTillDate = reviewService.getLocationIdsByLocationIdsAndBetweenDates(locationIds, new Date(0L), new Date());
+        List<Object[]> toiletsReviewedYesterday = reviewService.getLocationIdsByLocationIdsAndBetweenDates(locationIds, new Date(System.currentTimeMillis() - millisInOneDay), new Date(System.currentTimeMillis() - millisInOneDay));
+        List<Object[]> toiletsReviewedLastWeek = reviewService.getLocationIdsByLocationIdsAndBetweenDates(locationIds, new Date(System.currentTimeMillis() - 7 * millisInOneDay), new Date());
+        List<Object[]> toiletsReviewedLastTwoWeek = reviewService.getLocationIdsByLocationIdsAndBetweenDates(locationIds, new Date(System.currentTimeMillis() - 14 * millisInOneDay), new Date());
+        List<Object[]> toiletsReviewedLastMonth = reviewService.getLocationIdsByLocationIdsAndBetweenDates(locationIds, new Date(System.currentTimeMillis() - 30 * millisInOneDay), new Date());
+
+        Long totalToilets = (long) toiletsReviewedTillDate.size();
+        Long fourToFiveStarsRated = countFiveStars(toiletsReviewedTillDate) + countFourStars(toiletsReviewedTillDate);
+        Long threeOrLessStarsRated = countThreeStars(toiletsReviewedTillDate) + countTwoStars(toiletsReviewedTillDate) + countOneStar(toiletsReviewedTillDate);
+
 
         List<String> ulbsList = placeULBMapService.getULBList();
         List<String> staffsList = new ArrayList<>();
@@ -659,61 +668,61 @@ public class ApiController {
             PrintWriter writer = response.getWriter();
             Gson gson = new Gson();
 
-            Long millisInOneDay = 24 * 60 * 60 * 1000L;
 
             JsonObject ratingDistribution = new JsonObject();
             //five star rated toilets
             JsonObject fiveStar = new JsonObject();
-            fiveStar.addProperty("tillDate", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(0L), new Date(), 5));
-            fiveStar.addProperty("yesterday", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(System.currentTimeMillis() - millisInOneDay), new Date(System.currentTimeMillis() - millisInOneDay), 5));
-            fiveStar.addProperty("lastWeek", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(System.currentTimeMillis() - 7 * millisInOneDay), new Date(), 5));
-            fiveStar.addProperty("lastTwoWeek", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(System.currentTimeMillis() - 14 * millisInOneDay), new Date(), 5));
-            fiveStar.addProperty("lastOneMonth", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(System.currentTimeMillis() - 30 * millisInOneDay), new Date(), 5));
+
+            fiveStar.addProperty("tillDate", countFiveStars(toiletsReviewedTillDate));
+            fiveStar.addProperty("yesterday", countFiveStars(toiletsReviewedYesterday));
+            fiveStar.addProperty("lastWeek", countFiveStars(toiletsReviewedLastWeek));
+            fiveStar.addProperty("lastTwoWeek", countFiveStars(toiletsReviewedLastTwoWeek));
+            fiveStar.addProperty("lastOneMonth", countFiveStars(toiletsReviewedLastMonth));
             ratingDistribution.addProperty("fiveStar", gson.toJson(fiveStar));
 
             //four star rated toilets
             JsonObject fourStar = new JsonObject();
-            fourStar.addProperty("tillDate", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(0L), new Date(), 4));
-            fourStar.addProperty("yesterday", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(System.currentTimeMillis() - millisInOneDay), new Date(System.currentTimeMillis() - millisInOneDay), 4));
-            fourStar.addProperty("lastWeek", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(System.currentTimeMillis() - 7 * millisInOneDay), new Date(), 4));
-            fourStar.addProperty("lastTwoWeek", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(System.currentTimeMillis() - 14 * millisInOneDay), new Date(), 4));
-            fourStar.addProperty("lastOneMonth", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(System.currentTimeMillis() - 30 * millisInOneDay), new Date(), 4));
+            fourStar.addProperty("tillDate", countFourStars(toiletsReviewedTillDate));
+            fourStar.addProperty("yesterday", countFourStars(toiletsReviewedYesterday));
+            fourStar.addProperty("lastWeek", countFourStars(toiletsReviewedLastWeek));
+            fourStar.addProperty("lastTwoWeek", countFourStars(toiletsReviewedLastTwoWeek));
+            fourStar.addProperty("lastOneMonth", countFourStars(toiletsReviewedLastMonth));
             ratingDistribution.addProperty("fourStar", gson.toJson(fourStar));
 
             //three star rated toilets
             JsonObject threeStar = new JsonObject();
-            threeStar.addProperty("tillDate", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(0L), new Date(), 3));
-            threeStar.addProperty("yesterday", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(System.currentTimeMillis() - millisInOneDay), new Date(System.currentTimeMillis() - millisInOneDay), 3));
-            threeStar.addProperty("lastWeek", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(System.currentTimeMillis() - 7 * millisInOneDay), new Date(), 3));
-            threeStar.addProperty("lastTwoWeek", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(System.currentTimeMillis() - 14 * millisInOneDay), new Date(), 3));
-            threeStar.addProperty("lastOneMonth", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(System.currentTimeMillis() - 30 * millisInOneDay), new Date(), 3));
+            threeStar.addProperty("tillDate", countThreeStars(toiletsReviewedTillDate));
+            threeStar.addProperty("yesterday", countThreeStars(toiletsReviewedYesterday));
+            threeStar.addProperty("lastWeek", countThreeStars(toiletsReviewedLastWeek));
+            threeStar.addProperty("lastTwoWeek", countThreeStars(toiletsReviewedLastTwoWeek));
+            threeStar.addProperty("lastOneMonth", countThreeStars(toiletsReviewedLastMonth));
             ratingDistribution.addProperty("threeStar", gson.toJson(threeStar));
 
             //two star rated toilets
             JsonObject twoStar = new JsonObject();
-            twoStar.addProperty("tillDate", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(0L), new Date(), 2));
-            twoStar.addProperty("yesterday", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(System.currentTimeMillis() - millisInOneDay), new Date(System.currentTimeMillis() - millisInOneDay), 2));
-            twoStar.addProperty("lastWeek", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(System.currentTimeMillis() - 7 * millisInOneDay), new Date(), 2));
-            twoStar.addProperty("lastTwoWeek", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(System.currentTimeMillis() - 14 * millisInOneDay), new Date(), 2));
-            twoStar.addProperty("lastOneMonth", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(System.currentTimeMillis() - 30 * millisInOneDay), new Date(), 2));
+            twoStar.addProperty("tillDate", countTwoStars(toiletsReviewedTillDate));
+            twoStar.addProperty("yesterday", countTwoStars(toiletsReviewedYesterday));
+            twoStar.addProperty("lastWeek", countTwoStars(toiletsReviewedLastWeek));
+            twoStar.addProperty("lastTwoWeek", countTwoStars(toiletsReviewedLastTwoWeek));
+            twoStar.addProperty("lastOneMonth", countTwoStars(toiletsReviewedLastMonth));
             ratingDistribution.addProperty("twoStar", gson.toJson(twoStar));
 
             //one star rated toilets
             JsonObject oneStar = new JsonObject();
-            oneStar.addProperty("tillDate", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(0L), new Date(), 1));
-            oneStar.addProperty("yesterday", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(System.currentTimeMillis() - millisInOneDay), new Date(System.currentTimeMillis() - millisInOneDay), 1));
-            oneStar.addProperty("lastWeek", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(System.currentTimeMillis() - 7 * millisInOneDay), new Date(), 1));
-            oneStar.addProperty("lastTwoWeek", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(System.currentTimeMillis() - 14 * millisInOneDay), new Date(), 1));
-            oneStar.addProperty("lastOneMonth", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(System.currentTimeMillis() - 30 * millisInOneDay), new Date(), 1));
+            oneStar.addProperty("tillDate", countOneStar(toiletsReviewedTillDate));
+            oneStar.addProperty("yesterday", countOneStar(toiletsReviewedYesterday));
+            oneStar.addProperty("lastWeek", countOneStar(toiletsReviewedLastWeek));
+            oneStar.addProperty("lastTwoWeek", countOneStar(toiletsReviewedLastTwoWeek));
+            oneStar.addProperty("lastOneMonth", countOneStar(toiletsReviewedLastMonth));
             ratingDistribution.addProperty("oneStar", gson.toJson(oneStar));
 
             //noFeedBack rated toilets
             JsonObject noFeedBack = new JsonObject();
-            noFeedBack.addProperty("tillDate", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(0L), new Date(), 0));
-            noFeedBack.addProperty("yesterday", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(System.currentTimeMillis() - millisInOneDay), new Date(System.currentTimeMillis() - millisInOneDay), 0));
-            noFeedBack.addProperty("lastWeek", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(System.currentTimeMillis() - 7 * millisInOneDay), new Date(), 0));
-            noFeedBack.addProperty("lastTwoWeek", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(System.currentTimeMillis() - 14 * millisInOneDay), new Date(), 0));
-            noFeedBack.addProperty("lastOneMonth", reviewService.countToiletsReviewedBetweenDatesByLocationIdsAndRating(locationIds, new Date(System.currentTimeMillis() - 30 * millisInOneDay), new Date(), 0));
+            noFeedBack.addProperty("tillDate", countZeroStar(toiletsReviewedTillDate));
+            noFeedBack.addProperty("yesterday", countZeroStar(toiletsReviewedYesterday));
+            noFeedBack.addProperty("lastWeek", countZeroStar(toiletsReviewedLastWeek));
+            noFeedBack.addProperty("lastTwoWeek", countZeroStar(toiletsReviewedLastTwoWeek));
+            noFeedBack.addProperty("lastOneMonth", countZeroStar(toiletsReviewedLastMonth));
             ratingDistribution.addProperty("noFeedBack", gson.toJson(noFeedBack));
 
             JsonObject jsonObject = new JsonObject();
@@ -721,11 +730,10 @@ public class ApiController {
             jsonObject.addProperty("fourToFiveStarsRated", fourToFiveStarsRated);
             jsonObject.addProperty("threeOrLessStarsRated", threeOrLessStarsRated);
 
-            locationIds = reviewService.getLocationIdsByLocationIdsAndDate(locationIds, yesterday);
+            Long totalToiletsYesterday = (long) toiletsReviewedYesterday.size();
+            Long fourToFiveStarsRatedYesterday = countFiveStars(toiletsReviewedYesterday) + countFourStars(toiletsReviewedYesterday);
+            Long threeOrLessStarsRatedYesterday = countThreeStars(toiletsReviewedYesterday) + countTwoStars(toiletsReviewedTillDate) + countOneStar(toiletsReviewedYesterday);
 
-            Long totalToiletsYesterday = placeDetailService.countPlaceDetailsByLocationIdsAndRatingRange(locationIds, 0.0, 5.0);
-            Long fourToFiveStarsRatedYesterday = placeDetailService.countPlaceDetailsByLocationIdsAndRatingRange(locationIds, 4.0, 5.0);
-            Long threeOrLessStarsRatedYesterday = placeDetailService.countPlaceDetailsByLocationIdsAndRatingRange(locationIds, 0.0, 3.0);
 
             JsonObject yesterdayData = new JsonObject();
             yesterdayData.addProperty("totalToilets", totalToiletsYesterday);
@@ -772,6 +780,73 @@ public class ApiController {
 
         }
     }
+
+    private Long countFiveStars(List<Object[]> toiletsList) {
+        Long count = 0L;
+        for (Object[] obj : toiletsList) {
+            Double rating = (Double) obj[1];
+            if (rating >= 4.5 && rating <= 5.0) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    private Long countFourStars(List<Object[]> toiletsList) {
+        Long count = 0L;
+        for (Object[] obj : toiletsList) {
+            Double rating = (Double) obj[1];
+            if (rating >= 3.5 && rating < 4.5) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    private Long countThreeStars(List<Object[]> toiletsList) {
+        Long count = 0L;
+        for (Object[] obj : toiletsList) {
+            Double rating = (Double) obj[1];
+            if (rating >= 2.5 && rating < 3.5) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    private Long countTwoStars(List<Object[]> toiletsList) {
+        Long count = 0L;
+        for (Object[] obj : toiletsList) {
+            Double rating = (Double) obj[1];
+            if (rating >= 1.5 && rating < 2.5) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    private Long countOneStar(List<Object[]> toiletsList) {
+        Long count = 0L;
+        for (Object[] obj : toiletsList) {
+            Double rating = (Double) obj[1];
+            if (rating < 1.5 && rating > 0.0) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    private Long countZeroStar(List<Object[]> toiletsList) {
+        Long count = 0L;
+        for (Object[] obj : toiletsList) {
+            Double rating = (Double) obj[1];
+            if (rating == 0.0) {
+                count++;
+            }
+        }
+        return count;
+    }
+
 
     /**
      * Downloads report of locations with given criteria

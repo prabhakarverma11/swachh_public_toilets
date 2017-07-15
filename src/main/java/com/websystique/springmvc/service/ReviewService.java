@@ -29,4 +29,6 @@ public interface ReviewService {
 
     List<Integer> getLocationIdsByLocationIdsAndDate(List<Integer> locationIds, Date date);
 
+    List<Object[]> getLocationIdsByLocationIdsAndBetweenDates(List<Integer> locationIds, Date startDate, Date endDate);
+
 }
