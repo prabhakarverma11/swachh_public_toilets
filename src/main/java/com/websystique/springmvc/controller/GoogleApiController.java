@@ -31,7 +31,8 @@ public class GoogleApiController {
             "AIzaSyCXC3L1bLCp_sFUDxtqtrRP43uIHOfldss",
             "AIzaSyBkLfT8KwQu1N1Oncaky_O7WzcH0rdOSuI",
             "AIzaSyD6YNI_T7cKw26Oq5A_CBhQY0JhFyVFl7A",
-            "AIzaSyDVhfr53ZyIV4ms0UUz9026Ip3bxtODdR4"
+            "AIzaSyDVhfr53ZyIV4ms0UUz9026Ip3bxtODdR4",
+            "AIzaSyCwt5r7yoibkA_0ywy8Cdg6gQDPf5kTeGo"
     };
 
     @Autowired
@@ -43,10 +44,10 @@ public class GoogleApiController {
     @Autowired
     LocationService locationService;
 
-    @RequestMapping(value = "/fetch-place-ids", method = RequestMethod.GET)
-    public String fetchPlaceIds(ModelMap model) {
+    @RequestMapping(value = "/fetch-place-ids/{radius}/{page}/{size}", method = RequestMethod.GET)
+    public String fetchPlaceIds(@PathVariable Integer radius, @PathVariable Integer page, @PathVariable Integer size, ModelMap model) {
         //TODO change it
-        List<Location> allLocations = locationService.getAllLocationsByPageAndSize(26, 200);
+        List<Location> allLocations = locationService.getAllLocationsByPageAndSize(page, size);
         Gson gson = new Gson();
 //        model.addAttribute("locationsListJson", gson.toJson(allLocations));
         model.addAttribute("locationsList", allLocations);
@@ -55,9 +56,9 @@ public class GoogleApiController {
             String url = "https://maps.googleapis.com/maps/api/place/radarsearch/json?" +
                     "location=" +
                     location.getLatitude() + "," + location.getLongitude() +
-                    "&radius=" + "10" +
+                    "&radius=" + radius +
                     "&type=" + "Public+Bathroom" +
-                    "&key=" + API_KEY[7];
+                    "&key=" + API_KEY[location.getId() % 10];
 
             try {
                 Place place = placeService.fetchPlaceIdByLocation(location, url);
@@ -79,7 +80,7 @@ public class GoogleApiController {
         for (Place place : allPlaces) {
             String url = "https://maps.googleapis.com/maps/api/place/details/json?" +
                     "placeid=" + place.getPlaceId() +
-                    "&key=" + API_KEY[page];
+                    "&key=" + API_KEY[place.getId() % 10];
 
             try {
                 String response = placeDetailService.fetchPlaceDetailByPlace(place, url);
