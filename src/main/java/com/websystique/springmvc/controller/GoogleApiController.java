@@ -23,6 +23,8 @@ import java.util.List;
 public class GoogleApiController {
 
     private static String[] API_KEY = {
+            "AIzaSyC2ZyVqehUJKV6b8NyE4w399PNQm8kAU5Y",
+            "AIzaSyCoMgPzCMonunGfEqdxiMlEkeEytBHeIBs",
             "AIzaSyD304cZovgQsVQt2vaAILBdD3bD5pFHcx0",
             "AIzaSyBqdMkhD5uNjfCbCrDUr5L3l0qGEgWKBFI",
             "AIzaSyBKgJqF-l_X5gywxnMpqYgO_eR8G7GiIwA",
@@ -44,6 +46,13 @@ public class GoogleApiController {
     @Autowired
     LocationService locationService;
 
+    /**
+     * @param radius
+     * @param page
+     * @param size
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/fetch-place-ids/{radius}/{page}/{size}", method = RequestMethod.GET)
     public String fetchPlaceIds(@PathVariable Integer radius, @PathVariable Integer page, @PathVariable Integer size, ModelMap model) {
         //TODO change it
@@ -58,7 +67,7 @@ public class GoogleApiController {
                     location.getLatitude() + "," + location.getLongitude() +
                     "&radius=" + radius +
                     "&type=" + "Public+Bathroom" +
-                    "&key=" + API_KEY[location.getId() % 10];
+                    "&key=" + API_KEY[0];
 
             try {
                 Place place = placeService.fetchPlaceIdByLocation(location, url);
@@ -71,6 +80,12 @@ public class GoogleApiController {
         return "locationslist";
     }
 
+    /**
+     * @param page
+     * @param size
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/fetch-place-details/{page}/{size}", method = RequestMethod.GET)
     public String fetchPlaceDetails(@PathVariable Integer page, @PathVariable Integer size, ModelMap model) {
         //TODO change it

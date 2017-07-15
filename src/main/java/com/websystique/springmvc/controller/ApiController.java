@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -97,15 +98,15 @@ public class ApiController {
         response.setCharacterEncoding("utf-8");
 
         //validation of request params TODO
-//TODO review it, some problem may be here
         List<Integer> locationIds = placeULBMapService.getLocationIdsByULBNameAndLocationType(ulbName, locationType);
-        List<PlaceDetail> placeDetails = placeDetailService.getAllPlaceDetailsByLocationIdsRatingRangePageAndSize(locationIds, ratingFrom, ratingEnd, page, size);
-        Long noOfElements = placeDetailService.countPlaceDetailsByLocationIdsAndRatingRange(locationIds, ratingFrom, ratingEnd);
 
-        List<Report> reports = reportService.getReportsListByPlaceDetailsBetweenDates(placeDetails, startDate, endDate);
+        Long noOfElements = null;
 
 
+        List<Report> reports = null;
         try {
+            noOfElements = reportService.countReportsListByLocationIdsBetweenDates(locationIds, startDate, endDate, page, size);
+            reports = reportService.getReportsListByLocationIdsBetweenDates(locationIds, startDate, endDate,ratingFrom,ratingEnd, page, size);
             PrintWriter writer = response.getWriter();
             Gson gson = new Gson();
 
@@ -128,7 +129,6 @@ public class ApiController {
             response.setStatus(200);
 
             logger.info(request.getServletPath() +
-                    ", placeDetails.size: " + placeDetails.size() +
                     ", reports.size: " + reports.size() +
                     ", noOfElements: " + noOfElements +
                     ", timeTaken: " + (endTime - startTime) / 1000
@@ -139,12 +139,13 @@ public class ApiController {
 
             Long endTime = System.currentTimeMillis();
             logger.info(request.getServletPath() +
-                    ", placeDetails.size: " + placeDetails.size() +
                     ", reports.size: " + reports.size() +
                     ", noOfElements: " + noOfElements +
                     ", timeTaken: " + (endTime - startTime) / 1000 +
                     ", error: " + e.getMessage()
             );
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
     }
 

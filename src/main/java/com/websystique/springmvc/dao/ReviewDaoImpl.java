@@ -192,10 +192,14 @@ public class ReviewDaoImpl extends AbstractDao<Integer, Review> implements Revie
 
     @Override
     public List<Object[]> getLocationIdsByLocationIdsAndBetweenDates(List<Integer> locationIds, Date startDate, Date endDate) {
-        Criteria criteria = getSession().createCriteria(Review.class, "review")
-                .add(Restrictions.ge("timeStamp", startDate))
-                .add(Restrictions.le("timeStamp", endDate))
-                .createCriteria("place", "place").createCriteria("location", "location");
+        Criteria criteria = getSession().createCriteria(Review.class, "review");
+
+        if (startDate != null)
+            criteria.add(Restrictions.ge("timeStamp", startDate));
+        if (endDate != null)
+            criteria.add(Restrictions.le("timeStamp", endDate));
+
+        criteria.createCriteria("place", "place").createCriteria("location", "location");
         if (locationIds.size() > 0)
             criteria.add(Restrictions.in("location.id", locationIds));
 

@@ -26,7 +26,8 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#"><img src="/static/img/swacch-logo.png" class="img-responsive"></a>
+            <a class="navbar-brand" href="/admin/review-dashboard"><img src="/static/img/swacch-logo.png"
+                                                                        class="img-responsive"></a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -35,10 +36,10 @@
                 <li><a href="/">Home</a></li>
                 <li><a href="/dashboard">Dashboard</a></li>
                 <li class="active"><a href="/admin/dashboard">ULB Dashboard</a></li>
-                <li><a href="/admin/review-dashboard">Admin</a></li>
+                <%--<li><a href="/admin/review-dashboard">Admin</a></li>--%>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <%--<li><a href="/login">Login <span class="glyphicon glyphicon-log-in"></span></a></li>--%>
+
                 <!-- <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
                   <ul class="dropdown-menu">
@@ -189,19 +190,22 @@
                             <img src="/static/img/smiley1.png"/>
                         </th>
                         <td>
-                            <a href="javascript:void(0)" ng-click="setFilters(5, '')">{{fiveStar.tillDate}}</a>
+                            <a href="javascript:void(0)" ng-click="setFilters(4.5,5.5, '')">{{fiveStar.tillDate}}</a>
                         </td>
                         <td>
-                            <a href="javascript:void(0)" ng-click="setFilters(5, 'yesterday')">{{fiveStar.yesterday}}</a>
+                            <a href="javascript:void(0)"
+                               ng-click="setFilters(4.5,5.5, 'yesterday')">{{fiveStar.yesterday}}</a>
                         </td>
                         <td>
-                            <a href="javascript:void(0)" ng-click="setFilters(5, 'lastWeek')">{{fiveStar.lastWeek}}</a>
+                            <a href="javascript:void(0)" ng-click="setFilters(4.5,5.5, 'lastWeek')">{{fiveStar.lastWeek}}</a>
                         </td>
                         <td>
-                            <a href="javascript:void(0)" ng-click="setFilters(5, 'last2Weeks')">{{fiveStar.lastTwoWeek}}</a>
+                            <a href="javascript:void(0)"
+                               ng-click="setFilters(4.5,5.5, 'last2Weeks')">{{fiveStar.lastTwoWeek}}</a>
                         </td>
                         <td>
-                            <a href="javascript:void(0)" ng-click="setFilters(5, 'lastMonth')">{{fiveStar.lastOneMonth}}</a>
+                            <a href="javascript:void(0)"
+                               ng-click="setFilters(4.5,5.5, 'lastMonth')">{{fiveStar.lastOneMonth}}</a>
                         </td>
                     </tr>
                     <tr>
@@ -209,19 +213,22 @@
                             <img src="/static/img/smiley2.png"/>
                         </th>
                         <td>
-                            <a href="javascript:void(0)" ng-click="setFilters(4, '')">{{fourStar.tillDate}}</a>
+                            <a href="javascript:void(0)" ng-click="setFilters(3.5,4.5, '')">{{fourStar.tillDate}}</a>
                         </td>
                         <td>
-                            <a href="javascript:void(0)" ng-click="setFilters(4, 'yesterday')">{{fourStar.yesterday}}</a>
+                            <a href="javascript:void(0)"
+                               ng-click="setFilters(3.5,4.5, 'yesterday')">{{fourStar.yesterday}}</a>
                         </td>
                         <td>
-                            <a href="javascript:void(0)" ng-click="setFilters(4, 'lastWeek')">{{fourStar.lastWeek}}</a>
+                            <a href="javascript:void(0)" ng-click="setFilters(3.5,4.5, 'lastWeek')">{{fourStar.lastWeek}}</a>
                         </td>
                         <td>
-                            <a href="javascript:void(0)" ng-click="setFilters(4, 'last2Weeks')">{{fourStar.lastTwoWeek}}</a>
+                            <a href="javascript:void(0)"
+                               ng-click="setFilters(3.5,4.5, 'last2Weeks')">{{fourStar.lastTwoWeek}}</a>
                         </td>
                         <td>
-                            <a href="javascript:void(0)" ng-click="setFilters(4, 'lastMonth')">{{fourStar.lastOneMonth}}</a>
+                            <a href="javascript:void(0)"
+                               ng-click="setFilters(3.5,4.5, 'lastMonth')">{{fourStar.lastOneMonth}}</a>
                         </td>
                     </tr>
                     <tr>
@@ -230,19 +237,20 @@
                         </th>
                         <td>
 
-                            <a href="javascript:void(0)" ng-click="setFilters(3, '')">{{threeStar.tillDate}}</a>
+                            <a href="javascript:void(0)" ng-click="setFilters(2.5,3.5, '')">{{threeStar.tillDate}}</a>
                         </td>
                         <td>
-                            <a href="javascript:void(0)" ng-click="setFilters(3, 'yesterday')">{{threeStar.yesterday}}</a>
+                            <a href="javascript:void(0)"
+                               ng-click="setFilters(2.5,3.5, 'yesterday')">{{threeStar.yesterday}}</a>
                         </td>
                         <td>
-                            <a href="javascript:void(0)" ng-click="setFilters(3, 'lastWeek')">{{threeStar.lastWeek}}</a>
+                            <a href="javascript:void(0)" ng-click="setFilters(2.5,3.5, 'lastWeek')">{{threeStar.lastWeek}}</a>
                         </td>
                         <td>
-                            <a href="javascript:void(0)" ng-click="setFilters(3, 'last2Weeks')">{{threeStar.lastTwoWeek}}</a>
+                            <a href="javascript:void(0)" ng-click="setFilters(2.5,3.5, 'last2Weeks')">{{threeStar.lastTwoWeek}}</a>
                         </td>
                         <td>
-                            <a href="javascript:void(0)" ng-click="setFilters(3, 'lastMonth')">{{threeStar.lastOneMonth}}</a>
+                            <a href="javascript:void(0)" ng-click="setFilters(2.5,3.5, 'lastMonth')">{{threeStar.lastOneMonth}}</a>
 
                         </td>
                     </tr>
@@ -251,19 +259,22 @@
                             <img src="/static/img/smiley4.png"/>
                         </th>
                         <td>
-                            <a href="javascript:void(0)" ng-click="setFilters(2, '')">{{twoStar.tillDate}}</a>
+                            <a href="javascript:void(0)" ng-click="setFilters(1.5,2.5, '')">{{twoStar.tillDate}}</a>
                         </td>
                         <td>
-                            <a href="javascript:void(0)" ng-click="setFilters(2, 'yesterday')">{{twoStar.yesterday}}</a>
+                            <a href="javascript:void(0)" ng-click="setFilters(1.5,2.5, 'yesterday')">{{twoStar.yesterday}}</a>
                         </td>
                         <td>
-                            <a href="javascript:void(0)" ng-click="setFilters(2, 'lastWeek')">{{twoStar.lastWeek}}</a>
+                            <a href="javascript:void(0)"
+                               ng-click="setFilters(1.5,2.5, 'lastWeek')">{{twoStar.lastWeek}}</a>
                         </td>
                         <td>
-                            <a href="javascript:void(0)" ng-click="setFilters(2, 'last2Week')">{{twoStar.lastTwoWeek}}</a>
+                            <a href="javascript:void(0)"
+                               ng-click="setFilters(1.5,2.5, 'last2Week')">{{twoStar.lastTwoWeek}}</a>
                         </td>
                         <td>
-                            <a href="javascript:void(0)" ng-click="setFilters(2, 'lastMonth')">{{twoStar.lastOneMonth}}</a>
+                            <a href="javascript:void(0)"
+                               ng-click="setFilters(1.5,2.5, 'lastMonth')">{{twoStar.lastOneMonth}}</a>
 
                         </td>
                     </tr>
@@ -272,19 +283,21 @@
                             <img src="/static/img/smiley5.png"/>
                         </th>
                         <td>
-                            <a href="javascript:void(0)" ng-click="setFilters(1, '')">{{oneStar.tillDate}}</a>
+                            <a href="javascript:void(0)" ng-click="setFilters(0.01,1.5, '')">{{oneStar.tillDate}}</a>
                         </td>
                         <td>
-                            <a href="javascript:void(0)" ng-click="setFilters(1, 'yesterday')">{{oneStar.yesterday}}</a>
+                            <a href="javascript:void(0)" ng-click="setFilters(0.01,1.5, 'yesterday')">{{oneStar.yesterday}}</a>
                         </td>
                         <td>
-                            <a href="javascript:void(0)" ng-click="setFilters(1, 'lastWeek')">{{oneStar.lastWeek}}</a>
+                            <a href="javascript:void(0)" ng-click="setFilters(0.01,1.5, 'lastWeek')">{{oneStar.lastWeek}}</a>
                         </td>
                         <td>
-                            <a href="javascript:void(0)" ng-click="setFilters(1, 'last2Weeks')">{{oneStar.lastTwoWeek}}</a>
+                            <a href="javascript:void(0)"
+                               ng-click="setFilters(0.01,1.5, 'last2Weeks')">{{oneStar.lastTwoWeek}}</a>
                         </td>
                         <td>
-                            <a href="javascript:void(0)" ng-click="setFilters(1, 'lastMonth')">{{oneStar.lastOneMonth}}</a>
+                            <a href="javascript:void(0)"
+                               ng-click="setFilters(0.01,1.5, 'lastMonth')">{{oneStar.lastOneMonth}}</a>
                         </td>
                     </tr>
                     <tr>
@@ -292,19 +305,21 @@
                             No Feedback
                         </th>
                         <td>
-                            <a href="javascript:void(0)" ng-click="setFilters(0, '')">{{noFeedBack.tillDate}}</a>
+                            <a href="javascript:void(0)" ng-click="setFilters(0,0, '')">{{noFeedBack.tillDate}}</a>
                         </td>
                         <td>
-                            <a href="javascript:void(0)" ng-click="setFilters(0, 'yesterday')">{{noFeedBack.yesterday}}</a>
+                            <a href="javascript:void(0)"
+                               ng-click="setFilters(0,0, 'yesterday')">{{noFeedBack.yesterday}}</a>
                         </td>
                         <td>
-                            <a href="javascript:void(0)" ng-click="setFilters(0, 'lastWeek')">{{noFeedBack.lastWeek}}</a>
+                            <a href="javascript:void(0)"
+                               ng-click="setFilters(0,0, 'lastWeek')">{{noFeedBack.lastWeek}}</a>
                         </td>
                         <td>
-                            <a href="javascript:void(0)" ng-click="setFilters(0, 'last2Week')">{{noFeedBack.lastTwoWeek}}</a>
+                            <a href="javascript:void(0)" ng-click="setFilters(0,0, 'last2Week')">{{noFeedBack.lastTwoWeek}}</a>
                         </td>
                         <td>
-                            <a href="javascript:void(0)" ng-click="setFilters(0, 'lastMonth')">{{noFeedBack.lastOneMonth}}</a>
+                            <a href="javascript:void(0)" ng-click="setFilters(0,0, 'lastMonth')">{{noFeedBack.lastOneMonth}}</a>
                         </td>
                     </tr>
                     </tbody>
