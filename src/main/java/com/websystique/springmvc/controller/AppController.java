@@ -87,11 +87,12 @@ public class AppController {
 
     @RequestMapping(value = "/map-place-ulb", method = RequestMethod.GET)
     public String mapPlaceToULB(ModelMap model) {
-        String csvFile = "/home/prabhakar/Documents/work/mahi/SpringMVCHibernateWithSpringSecurityExample/src/main/resources/FinalLocationDataWithDistrictName14_07_2017.csv";
+        String csvFile = "/home/prabhakar/Documents/work/mahi/SpringMVCHibernateWithSpringSecurityExample/src/main/resources/Location_Data_16.07.2017.csv";
         BufferedReader br;
         String line;
 
         try {
+
 
             br = new BufferedReader(new FileReader(csvFile));
             br.readLine();
@@ -106,7 +107,7 @@ public class AppController {
                 Location location = locationService.getLocationById(locationId);
                 Place place = placeService.getPlaceByLocation(location);
                 PlaceULBMap placeULBMap = placeULBMapService.getPlaceULBMapByPlace(place);
-                placeULBMap.setULBName(country[2].split(",").length == 4 ? country[2].split(",")[3] : "-");
+                placeULBMap.setULBName(country[2].split(",").length == 5 ? country[2].split(",")[4] : "-");
                 placeULBMapService.update(placeULBMap);
                 System.out.println(Arrays.toString(country));
             }

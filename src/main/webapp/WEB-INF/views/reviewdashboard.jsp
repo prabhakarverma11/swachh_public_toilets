@@ -27,7 +27,8 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#"><img src="/static/img/swacch-logo.png" class="img-responsive"></a>
+            <a class="navbar-brand" href="/admin/review-dashboard"><img src="/static/img/swacch-logo.png"
+                                                                        class="img-responsive"></a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -36,10 +37,12 @@
                 <li><a href="/">Home</a></li>
                 <li><a href="/dashboard">Dashboard</a></li>
                 <li><a href="/admin/dashboard">ULB Dashboard</a></li>
-                <li class="active"><a href="/admin/review-dashboard">Admin</a></li>
+                <%--<li class="active"><a href="/admin/review-dashboard">Admin</a></li>--%>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <%--<li><a href="/login">Login <span class="glyphicon glyphicon-log-in"></span></a></li>--%>
+                <sec:authorize access="isAuthenticated()">
+                    <li><a href="/logout">Logout <span class="glyphicon glyphicon-log-in"></span></a></li>
+                </sec:authorize>
                 <!-- <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
                   <ul class="dropdown-menu">

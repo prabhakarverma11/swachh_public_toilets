@@ -1,5 +1,6 @@
 package com.websystique.springmvc.service;
 
+import com.websystique.springmvc.dao.LocationDao;
 import com.websystique.springmvc.dao.PlaceDao;
 import com.websystique.springmvc.dao.PlaceDetailDao;
 import com.websystique.springmvc.dao.ReviewDao;
@@ -12,7 +13,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -28,6 +31,9 @@ public class ReportServiceImpl implements ReportService {
 
     @Autowired
     ReviewDao reviewDao;
+
+    @Autowired
+    LocationDao locationDao;
 
     @Autowired
     PlaceULBMapService placeULBMapService;
@@ -65,7 +71,6 @@ public class ReportServiceImpl implements ReportService {
     public List<Report> getReportsListByPlaceDetailsBetweenDates(List<PlaceDetail> placeDetails, String startDate, String endDate) {
         List<Report> reportsList = new ArrayList<Report>();
 
-//        Location location = locationService.getLocationById(locationId);
         for (PlaceDetail placeDetail : placeDetails) {
 
             Report report = new Report();
@@ -88,5 +93,91 @@ public class ReportServiceImpl implements ReportService {
             reportsList.add(report);
         }
         return reportsList;
+    }
+
+    @Override
+    public List<Report> getReportsListBetweenDatesByLocationIdsRatingRangePageAndSize(List<Integer> locationIds, String startDate, String endDate, Double ratingFrom, Double ratingEnd, Integer page, Integer size) throws ParseException {
+        List<Report> reportsList = new ArrayList<>();
+
+        List<Location> locations = new ArrayList<>();
+
+        if (ratingFrom == 0.0 && ratingEnd == 5.0) {
+            List<PlaceDetail> placeDetails = placeDetailDao.getAllPlaceDetailsByLocationIdsRatingRangePageAndSize(locationIds, ratingFrom, ratingEnd, page, size);
+            for (PlaceDetail placeDetail : placeDetails) {
+                locations.add(placeDetail.getPlace().getLocation());
+            }
+        } else {
+            List<Object[]> toiletsReviewed = reviewDao.getPlaceIdsByLocationIdsAndBetweenDates(locationIds, formatDate(startDate), formatDate(endDate));
+            for (Object[] obj : toiletsReviewed) {
+                Double rating = (Double) obj[1];
+                if (ratingEnd == 5.0) {
+                    if (rating >= ratingFrom && rating <= ratingEnd) {
+                        Integer placeId = (Integer) obj[0];
+                        locations.add(placeDao.getPlaceById(placeId).getLocation());
+                    }
+                } else {
+                    if (rating >= ratingFrom && rating < ratingEnd) {
+                        Integer placeId = (Integer) obj[0];
+                        locations.add(placeDao.getPlaceById(placeId).getLocation());
+                    }
+                }
+            }
+            //pagination start
+
+            locations = new ArrayList<>(locations.subList((page - 1) * size < locations.size() ? (page - 1) * size : 0, page * size < locations.size() ? page * size : locations.size()));
+            //pagination end
+        }
+        for (Location location : locations) {
+
+            Report report = new Report();
+            report.setLocation(location);
+            report.setPlace(placeDao.getPlaceByLocation(location));
+            report.setPlaceDetail(placeDetailDao.getPlaceDetailByPlace(report.getPlace()));
+            report.setPlaceULBMap(placeULBMapService.getPlaceULBMapByPlace(report.getPlace()));
+
+            Double averageRating = null;
+            Long reviewsCount = null;
+            try {
+                averageRating = reviewDao.getAverageRatingByPlaceBetweenDates(report.getPlace(), startDate, endDate);
+                reviewsCount = reviewDao.countReviewsByPlaceBetweenDates(report.getPlace(), startDate, endDate);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            report.setAverageRating(averageRating);
+            report.setReviewsCount(reviewsCount);
+
+            reportsList.add(report);
+        }
+        return reportsList;
+    }
+
+    private Date formatDate(String startDate) throws ParseException {
+        if (startDate != null && !startDate.equals(""))
+            return new SimpleDateFormat("dd-MM-yyyy").parse(startDate);
+        else
+            return null;
+    }
+
+    @Override
+    public Long countReportsListBetweenDatesByLocationIdsAndRatingRange(List<Integer> locationIds, String startDate, String endDate, Double ratingFrom, Double ratingEnd) throws ParseException {
+        if (ratingFrom == 0.0 && ratingEnd == 5.0) {
+            return placeDetailDao.countPlaceDetailsByLocationIdsAndRatingRange(locationIds, ratingFrom, ratingEnd);
+        } else {
+            List<Object[]> toiletsReviewed = reviewDao.getPlaceIdsByLocationIdsAndBetweenDates(locationIds, formatDate(startDate), formatDate(endDate));
+            Long count = 0L;
+            for (Object[] obj : toiletsReviewed) {
+                Double rating = (Double) obj[1];
+                if (ratingEnd == 5.0) {
+                    if (rating >= ratingFrom && rating <= ratingEnd) {
+                        count++;
+                    }
+                } else {
+                    if (rating >= ratingFrom && rating < ratingEnd) {
+                        count++;
+                    }
+                }
+            }
+            return count;
+        }
     }
 }

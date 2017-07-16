@@ -26,7 +26,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#"><img src="/static/img/swacch-logo.png" class="img-responsive"></a>
+            <a class="navbar-brand" href="/admin/review-dashboard"><img src="/static/img/swacch-logo.png" class="img-responsive"></a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -35,7 +35,7 @@
                 <li class="active"><a href="/">Home</a></li>
                 <li><a href="/dashboard">Dashboard</a></li>
                 <li><a href="/admin/dashboard">ULB Dashboard</a></li>
-                <li><a href="/admin/review-dashboard">Admin</a></li>
+                <%--<li><a href="/admin/review-dashboard">Admin</a></li>--%>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <%--<li><a href="/login">Login <span class="glyphicon glyphicon-log-in"></span></a></li>--%>

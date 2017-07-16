@@ -51,4 +51,9 @@ public class PlaceDaoImpl extends AbstractDao<Integer, Place> implements PlaceDa
         List<Place> places = (List<Place>) criteria.list();
         return places;
     }
+
+    @Override
+    public Place getPlaceById(Integer placeId) {
+        return getByKey(placeId);
+    }
 }

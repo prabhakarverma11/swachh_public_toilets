@@ -58,10 +58,10 @@ public class ReviewDaoImpl extends AbstractDao<Integer, Review> implements Revie
             criteria = criteria.add(Restrictions.eq("place", place));
 
         if (startDate != null && !startDate.equals(""))
-            criteria = criteria.add(Restrictions.ge("timeStamp", new SimpleDateFormat("yyyy-MM-dd").parse(startDate)));
+            criteria = criteria.add(Restrictions.ge("timeStamp", new SimpleDateFormat("dd-MM-yyyy").parse(startDate)));
 
         if (endDate != null && !endDate.equals(""))
-            criteria = criteria.add(Restrictions.le("timeStamp", new SimpleDateFormat("yyyy-MM-dd").parse(endDate)));
+            criteria = criteria.add(Restrictions.le("timeStamp", new SimpleDateFormat("dd-MM-yyyy").parse(endDate)));
 
         criteria.setFirstResult(0).setMaxResults(20);
         List<Review> reviews = criteria.list();
@@ -87,10 +87,10 @@ public class ReviewDaoImpl extends AbstractDao<Integer, Review> implements Revie
             criteria = criteria.add(Restrictions.eq("place", place));
 
         if (startDate != null && !startDate.equals(""))
-            criteria = criteria.add(Restrictions.ge("timeStamp", new SimpleDateFormat("yyyy-MM-dd").parse(startDate)));
+            criteria = criteria.add(Restrictions.ge("timeStamp", new SimpleDateFormat("dd-MM-yyyy").parse(startDate)));
 
         if (endDate != null && !endDate.equals(""))
-            criteria = criteria.add(Restrictions.le("timeStamp", new SimpleDateFormat("yyyy-MM-dd").parse(endDate)));
+            criteria = criteria.add(Restrictions.le("timeStamp", new SimpleDateFormat("dd-MM-yyyy").parse(endDate)));
 
         criteria.setProjection(Projections.avg("rating"));
         return (Double) criteria.uniqueResult();
@@ -104,10 +104,10 @@ public class ReviewDaoImpl extends AbstractDao<Integer, Review> implements Revie
             criteria = criteria.add(Restrictions.eq("place", place));
 
         if (startDate != null && !startDate.equals(""))
-            criteria = criteria.add(Restrictions.ge("timeStamp", new SimpleDateFormat("yyyy-MM-dd").parse(startDate)));
+            criteria = criteria.add(Restrictions.ge("timeStamp", new SimpleDateFormat("dd-MM-yyyy").parse(startDate)));
 
         if (endDate != null && !endDate.equals(""))
-            criteria = criteria.add(Restrictions.le("timeStamp", new SimpleDateFormat("yyyy-MM-dd").parse(endDate)));
+            criteria = criteria.add(Restrictions.le("timeStamp", new SimpleDateFormat("dd-MM-yyyy").parse(endDate)));
 
         criteria.setProjection(Projections.rowCount());
         return (Long) criteria.uniqueResult();
@@ -191,11 +191,15 @@ public class ReviewDaoImpl extends AbstractDao<Integer, Review> implements Revie
     }
 
     @Override
-    public List<Object[]> getLocationIdsByLocationIdsAndBetweenDates(List<Integer> locationIds, Date startDate, Date endDate) {
-        Criteria criteria = getSession().createCriteria(Review.class, "review")
-                .add(Restrictions.ge("timeStamp", startDate))
-                .add(Restrictions.le("timeStamp", endDate))
-                .createCriteria("place", "place").createCriteria("location", "location");
+    public List<Object[]> getPlaceIdsByLocationIdsAndBetweenDates(List<Integer> locationIds, Date startDate, Date endDate) {
+        Criteria criteria = getSession().createCriteria(Review.class, "review");
+
+        if (startDate != null)
+            criteria.add(Restrictions.ge("timeStamp", startDate));
+        if (endDate != null)
+            criteria.add(Restrictions.le("timeStamp", endDate));
+
+        criteria.createCriteria("place", "place").createCriteria("location", "location");
         if (locationIds.size() > 0)
             criteria.add(Restrictions.in("location.id", locationIds));
 
@@ -204,5 +208,25 @@ public class ReviewDaoImpl extends AbstractDao<Integer, Review> implements Revie
         list.add(Projections.avg("review.rating").as("rating"));
         criteria.setProjection(list);
         return criteria.list();
+    }
+
+    @Override
+    public Long countReviewsByLocationIds(List<Integer> locationIds) {
+        Criteria criteria = createEntityCriteria()
+                .createCriteria("place", "place")
+                .createCriteria("place.location", "location")
+                .add(Restrictions.in("location.id", locationIds));
+        return (Long) criteria.setProjection(Projections.rowCount()).uniqueResult();
+
+    }
+
+    @Override
+    public Long countCommentsByLocationIds(List<Integer> locationIds) {
+        Criteria criteria = createEntityCriteria()
+                .add(Restrictions.ne("reviewText", ""))
+                .createCriteria("place", "place")
+                .createCriteria("place.location", "location")
+                .add(Restrictions.in("location.id", locationIds));
+        return (Long) criteria.setProjection(Projections.rowCount()).uniqueResult();
     }
 }

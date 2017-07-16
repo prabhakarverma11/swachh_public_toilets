@@ -21,7 +21,7 @@ public class PlaceServiceImpl implements PlaceService {
 
     @Override
     public Place fetchPlaceIdByLocation(Location location, String url) throws IOException {
-        System.out.println("location = [" + location.getName() + "], url = [" + url + "]");
+//        System.out.println("location = [" + location.getId() + "], url = [" + url + "]");
 
         if (placeDao.getPlaceByLocation(location) == null) {
             UtilMethods utilMethods = new UtilMethods();
@@ -40,7 +40,8 @@ public class PlaceServiceImpl implements PlaceService {
                         return place;
                     }
                     case "ZERO_RESULTS": {
-                        System.out.println("\nZERO_RESULTS\n");
+                        System.out.println(location.getId() + ", '" + url + "'");
+//                        System.out.println("\nZERO_RESULTS\n");
                         return null;
                     }
                     case "OVER_QUERY_LIMIT": {
@@ -64,7 +65,7 @@ public class PlaceServiceImpl implements PlaceService {
 
             }
         } else {
-            System.out.println("place_id already there in database");
+//            System.out.println("place_id already there in database");
         }
         return null;
         //print result

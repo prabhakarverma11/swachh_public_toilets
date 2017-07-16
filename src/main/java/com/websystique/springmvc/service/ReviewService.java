@@ -29,6 +29,10 @@ public interface ReviewService {
 
     List<Integer> getLocationIdsByLocationIdsAndDate(List<Integer> locationIds, Date date);
 
-    List<Object[]> getLocationIdsByLocationIdsAndBetweenDates(List<Integer> locationIds, Date startDate, Date endDate);
+    List<Object[]> getPlaceIdsByLocationIdsAndBetweenDates(List<Integer> locationIds, Date startDate, Date endDate);
+
+    Long countReviewsByLocationIds(List<Integer> locationIds);
+
+    Long countCommentsByLocationIds(List<Integer> locationIds);
 
 }

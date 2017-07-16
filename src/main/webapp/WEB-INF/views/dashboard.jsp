@@ -26,7 +26,8 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#"><img src="/static/img/swacch-logo.png" class="img-responsive"></a>
+            <a class="navbar-brand" href="/admin/review-dashboard"><img src="/static/img/swacch-logo.png"
+                                                                        class="img-responsive"></a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -35,7 +36,7 @@
                 <li><a href="/">Home</a></li>
                 <li class="active"><a href="/dashboard">Dashboard</a></li>
                 <li><a href="/admin/dashboard">ULB Dashboard</a></li>
-                <li><a href="/admin/review-dashboard">Admin</a></li>
+                <%--<li><a href="/admin/review-dashboard">Admin</a></li>--%>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <%--<li><a href="/login">Login <span class="glyphicon glyphicon-log-in"></span></a></li>--%>
@@ -71,13 +72,14 @@
                                 <span class="glyphicon glyphicon-chevron-left"></span><b>Back</b>
                             </div>
                         </custom-control>
-                        <marker position="[{{location.location.latitude}}, {{location.location.longitude}}]" ng-repeat="location in locationData"></marker>
+                        <marker position="[{{location.location.latitude}}, {{location.location.longitude}}]"
+                                ng-repeat="location in locationData"></marker>
                     </map>
                 </div>
             </div>
         </div>
         <div class="col-xs-12 col-md-3">
-            <h3 class="text-center">Overall</h3>
+            <%--<h3 class="text-center">Overall</h3>--%>
             <div class="panel panel-default color1">
                 <div class="panel-body">
                     <div class="number counter"
@@ -86,7 +88,43 @@
                          duration="totalToilets.myDuration"
                          effect="totalToilets.myEffect"> {{ totalToilets.myValue | number:0 }}
                     </div>
-                    <h2>Total Toilets</h2>
+                    <h2>Total No. of Toilets</h2>
+                </div>
+            </div>
+            <div class="panel panel-default color2">
+                <div class="panel-body">
+                    <div class="number counter"
+                         value="totalReviews.myValue"
+                         to="totalReviews.myTarget"
+                         duration="totalReviews.myDuration"
+                         effect="totalReviews.myEffect"> {{ totalReviews.myValue | number:0 }}
+                    </div>
+                    <h2>Total No. of Reviews</h2>
+                </div>
+            </div>
+            <div class="panel panel-default color3">
+                <div class="panel-body">
+                    <div class="number counter"
+                         value="totalComments.myValue"
+                         to="totalComments.myTarget"
+                         duration="totalComments.myDuration"
+                         effect="totalComments.myEffect"> {{ totalComments.myValue | number:0 }}
+                    </div>
+                    <h2>Total No. of Comments</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-3">
+            <%--<h3 class="text-center">Overall</h3>--%>
+            <div class="panel panel-default color1">
+                <div class="panel-body">
+                    <div class="number counter"
+                         value="totalToiletsReviewed.myValue"
+                         to="totalToiletsReviewed.myTarget"
+                         duration="totalToiletsReviewed.myDuration"
+                         effect="totalToiletsReviewed.myEffect"> {{ totalToiletsReviewed.myValue | number:0 }}
+                    </div>
+                    <h2>Total Toilets Reviewed</h2>
                 </div>
             </div>
             <div class="panel panel-default color2">
@@ -107,44 +145,6 @@
                          to="threeOrLessStarsRated.myTarget"
                          duration="threeOrLessStarsRated.myDuration"
                          effect="threeOrLessStarsRated.myEffect"> {{ threeOrLessStarsRated.myValue | number:0 }}
-                    </div>
-                    <h2>Least Rated (0-3 <i class="glyphicon glyphicon-star" aria-hidden="true"></i>)</h2>
-                </div>
-            </div>
-        </div>
-        <div class="col-xs-12 col-md-3">
-            <h3 class="text-center">Yesterday</h3>
-            <div class="panel panel-default color1">
-                <div class="panel-body">
-                    <div class="number counter"
-                         value="totalToiletsYesterday.myValue"
-                         to="totalToiletsYesterday.myTarget"
-                         duration="totalToiletsYesterday.myDuration"
-                         effect="totalToiletsYesterday.myEffect"> {{ totalToiletsYesterday.myValue | number:0 }}
-                    </div>
-                    <h2>Total Toilets </h2>
-                </div>
-            </div>
-            <div class="panel panel-default color2">
-                <div class="panel-body">
-                    <div class="number counter"
-                         value="fourToFiveStarsRatedYesterday.myValue"
-                         to="fourToFiveStarsRatedYesterday.myTarget"
-                         duration="fourToFiveStarsRatedYesterday.myDuration"
-                         effect="fourToFiveStarsRatedYesterday.myEffect"> {{ fourToFiveStarsRatedYesterday.myValue |
-                        number:0 }}
-                    </div>
-                    <h2>Most Rated (4-5 <i class="glyphicon glyphicon-star" aria-hidden="true"></i>)</h2>
-                </div>
-            </div>
-            <div class="panel panel-default color3">
-                <div class="panel-body">
-                    <div class="number counter"
-                         value="threeOrLessStarsRatedYesterday.myValue"
-                         to="threeOrLessStarsRatedYesterday.myTarget"
-                         duration="threeOrLessStarsRatedYesterday.myDuration"
-                         effect="threeOrLessStarsRatedYesterday.myEffect"> {{ threeOrLessStarsRatedYesterday.myValue |
-                        number:0 }}
                     </div>
                     <h2>Least Rated (0-3 <i class="glyphicon glyphicon-star" aria-hidden="true"></i>)</h2>
                 </div>
