@@ -41,5 +41,9 @@ public interface ReviewDao {
 
     List<Object[]> getLocationIdsByLocationIdsAndBetweenDates(List<Integer> locationIds, Date startDate, Date endDate);
 
+    Long countReviewsByLocationIds(List<Integer> locationIds);
+
+    Long countCommentsByLocationIds(List<Integer> locationIds);
+
 }
 

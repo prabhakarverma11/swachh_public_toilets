@@ -106,7 +106,7 @@ public class ApiController {
         List<Report> reports = null;
         try {
             noOfElements = reportService.countReportsListByLocationIdsBetweenDates(locationIds, startDate, endDate, page, size);
-            reports = reportService.getReportsListByLocationIdsBetweenDates(locationIds, startDate, endDate,ratingFrom,ratingEnd, page, size);
+            reports = reportService.getReportsListByLocationIdsBetweenDates(locationIds, startDate, endDate, ratingFrom, ratingEnd, page, size);
             PrintWriter writer = response.getWriter();
             Gson gson = new Gson();
 
@@ -552,15 +552,15 @@ public class ApiController {
         Date yesterday = new Date((System.currentTimeMillis() / millisInOneDay) * millisInOneDay - millisInOneDay);
 
         List<Object[]> toiletsReviewedTillDate = reviewService.getLocationIdsByLocationIdsAndBetweenDates(locationIds, new Date(0L), new Date());
-        List<Object[]> toiletsReviewedYesterday = reviewService.getLocationIdsByLocationIdsAndBetweenDates(locationIds, new Date(System.currentTimeMillis() - millisInOneDay), new Date(System.currentTimeMillis() - millisInOneDay));
+//        List<Object[]> toiletsReviewedYesterday = reviewService.getLocationIdsByLocationIdsAndBetweenDates(locationIds, new Date(System.currentTimeMillis() - millisInOneDay), new Date(System.currentTimeMillis() - millisInOneDay));
 
-        Long totalToilets = (long) toiletsReviewedTillDate.size();
+        Long totalToiletsReviewed = (long) toiletsReviewedTillDate.size();
         Long fourToFiveStarsRated = countFiveStars(toiletsReviewedTillDate) + countFourStars(toiletsReviewedTillDate);
         Long threeOrLessStarsRated = countThreeStars(toiletsReviewedTillDate) + countTwoStars(toiletsReviewedTillDate) + countOneStar(toiletsReviewedTillDate);
 
-        Long totalToiletsYesterday = (long) toiletsReviewedYesterday.size();
-        Long fourToFiveStarsRatedYesterday = countFiveStars(toiletsReviewedYesterday) + countFourStars(toiletsReviewedYesterday);
-        Long threeOrLessStarsRatedYesterday = countThreeStars(toiletsReviewedYesterday) + countTwoStars(toiletsReviewedTillDate) + countOneStar(toiletsReviewedYesterday);
+//        Long totalToiletsYesterday = (long) toiletsReviewedYesterday.size();
+//        Long fourToFiveStarsRatedYesterday = countFiveStars(toiletsReviewedYesterday) + countFourStars(toiletsReviewedYesterday);
+//        Long threeOrLessStarsRatedYesterday = countThreeStars(toiletsReviewedYesterday) + countTwoStars(toiletsReviewedTillDate) + countOneStar(toiletsReviewedYesterday);
 
         List<String> ulbsList = placeULBMapService.getULBList();
         List<String> staffsList = new ArrayList<>();
@@ -568,17 +568,16 @@ public class ApiController {
         try {
             PrintWriter writer = response.getWriter();
             Gson gson = new Gson();
-
             JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("totalToilets", totalToilets);
+
+            jsonObject.addProperty("totalToilets", locationIds.size());
+            jsonObject.addProperty("totalReviews", reviewService.countReviewsByLocationIds(locationIds));
+            jsonObject.addProperty("totalComments", reviewService.countCommentsByLocationIds(locationIds));
+
+            jsonObject.addProperty("totalToiletsReviewed", totalToiletsReviewed);
             jsonObject.addProperty("fourToFiveStarsRated", fourToFiveStarsRated);
             jsonObject.addProperty("threeOrLessStarsRated", threeOrLessStarsRated);
 
-            JsonObject yesterdayData = new JsonObject();
-            yesterdayData.addProperty("totalToilets", totalToiletsYesterday);
-            yesterdayData.addProperty("fourToFiveStarsRatedYesterday", fourToFiveStarsRatedYesterday);
-            yesterdayData.addProperty("threeOrLessStarsRatedYesterday", threeOrLessStarsRatedYesterday);
-            jsonObject.addProperty("yesterday", gson.toJson(yesterdayData));
 
             jsonObject.addProperty("ulbsList", gson.toJson(ulbsList));
             jsonObject.addProperty("staffsList", gson.toJson(staffsList));
@@ -591,7 +590,7 @@ public class ApiController {
             response.setStatus(200);
 
             logger.info(request.getServletPath() +
-                    ", totalToilets: " + totalToilets +
+                    ", totalToilets: " + totalToiletsReviewed +
                     ", fourToFiveStarsRated: " + fourToFiveStarsRated +
                     ", threeOrLessStarsRated" + threeOrLessStarsRated +
                     ", ulbsList.size: " + ulbsList.size() +
@@ -605,7 +604,7 @@ public class ApiController {
             e.printStackTrace();
             Long endTime = System.currentTimeMillis();
             logger.info(request.getServletPath() +
-                    ", totalToilets: " + totalToilets +
+                    ", totalToilets: " + totalToiletsReviewed +
                     ", fourToFiveStarsRated: " + fourToFiveStarsRated +
                     ", threeOrLessStarsRated" + threeOrLessStarsRated +
                     ", ulbsList.size: " + ulbsList.size() +
@@ -656,7 +655,7 @@ public class ApiController {
         List<Object[]> toiletsReviewedLastTwoWeek = reviewService.getLocationIdsByLocationIdsAndBetweenDates(locationIds, new Date(System.currentTimeMillis() - 14 * millisInOneDay), new Date());
         List<Object[]> toiletsReviewedLastMonth = reviewService.getLocationIdsByLocationIdsAndBetweenDates(locationIds, new Date(System.currentTimeMillis() - 30 * millisInOneDay), new Date());
 
-        Long totalToilets = (long) toiletsReviewedTillDate.size();
+        Long totalToiletsReviewed = (long) toiletsReviewedTillDate.size();
         Long fourToFiveStarsRated = countFiveStars(toiletsReviewedTillDate) + countFourStars(toiletsReviewedTillDate);
         Long threeOrLessStarsRated = countThreeStars(toiletsReviewedTillDate) + countTwoStars(toiletsReviewedTillDate) + countOneStar(toiletsReviewedTillDate);
 
@@ -727,20 +726,17 @@ public class ApiController {
             ratingDistribution.addProperty("noFeedBack", gson.toJson(noFeedBack));
 
             JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("totalToilets", totalToilets);
+            jsonObject.addProperty("totalToiletsReviewed", totalToiletsReviewed);
             jsonObject.addProperty("fourToFiveStarsRated", fourToFiveStarsRated);
             jsonObject.addProperty("threeOrLessStarsRated", threeOrLessStarsRated);
 
             Long totalToiletsYesterday = (long) toiletsReviewedYesterday.size();
             Long fourToFiveStarsRatedYesterday = countFiveStars(toiletsReviewedYesterday) + countFourStars(toiletsReviewedYesterday);
-            Long threeOrLessStarsRatedYesterday = countThreeStars(toiletsReviewedYesterday) + countTwoStars(toiletsReviewedTillDate) + countOneStar(toiletsReviewedYesterday);
+            Long threeOrLessStarsRatedYesterday = countThreeStars(toiletsReviewedYesterday) + countTwoStars(toiletsReviewedYesterday) + countOneStar(toiletsReviewedYesterday);
 
-
-            JsonObject yesterdayData = new JsonObject();
-            yesterdayData.addProperty("totalToilets", totalToiletsYesterday);
-            yesterdayData.addProperty("fourToFiveStarsRatedYesterday", fourToFiveStarsRatedYesterday);
-            yesterdayData.addProperty("threeOrLessStarsRatedYesterday", threeOrLessStarsRatedYesterday);
-            jsonObject.addProperty("yesterday", gson.toJson(yesterdayData));
+            jsonObject.addProperty("totalToiletsYesterday", totalToiletsYesterday);
+            jsonObject.addProperty("fourToFiveStarsRatedYesterday", fourToFiveStarsRatedYesterday);
+            jsonObject.addProperty("threeOrLessStarsRatedYesterday", threeOrLessStarsRatedYesterday);
 
             jsonObject.addProperty("ulbsList", gson.toJson(ulbsList));
             jsonObject.addProperty("staffsList", gson.toJson(staffsList));
@@ -754,7 +750,7 @@ public class ApiController {
             response.setStatus(200);
 
             logger.info(request.getServletPath() +
-                    ", totalToilets: " + totalToilets +
+                    ", totalToilets: " + totalToiletsReviewed +
                     ", fourToFiveStarsRated: " + fourToFiveStarsRated +
                     ", threeOrLessStarsRated" + threeOrLessStarsRated +
                     ", ulbsList.size: " + ulbsList.size() +
@@ -769,7 +765,7 @@ public class ApiController {
             e.printStackTrace();
             Long endTime = System.currentTimeMillis();
             logger.info(request.getServletPath() +
-                    ", totalToilets: " + totalToilets +
+                    ", totalToilets: " + totalToiletsReviewed +
                     ", fourToFiveStarsRated: " + fourToFiveStarsRated +
                     ", threeOrLessStarsRated" + threeOrLessStarsRated +
                     ", ulbsList.size: " + ulbsList.size() +

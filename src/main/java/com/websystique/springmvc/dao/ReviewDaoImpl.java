@@ -209,4 +209,24 @@ public class ReviewDaoImpl extends AbstractDao<Integer, Review> implements Revie
         criteria.setProjection(list);
         return criteria.list();
     }
+
+    @Override
+    public Long countReviewsByLocationIds(List<Integer> locationIds) {
+        Criteria criteria = createEntityCriteria()
+                .createCriteria("place", "place")
+                .createCriteria("place.location", "location")
+                .add(Restrictions.in("location.id", locationIds));
+        return (Long) criteria.setProjection(Projections.rowCount()).uniqueResult();
+
+    }
+
+    @Override
+    public Long countCommentsByLocationIds(List<Integer> locationIds) {
+        Criteria criteria = createEntityCriteria()
+                .add(Restrictions.ne("reviewText",""))
+                .createCriteria("place", "place")
+                .createCriteria("place.location", "location")
+                .add(Restrictions.in("location.id", locationIds));
+        return (Long) criteria.setProjection(Projections.rowCount()).uniqueResult();
+    }
 }

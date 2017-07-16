@@ -84,10 +84,10 @@
             <div class="panel panel-default color1">
                 <div class="panel-body">
                     <div class="number counter"
-                         value="totalToilets.myValue"
-                         to="totalToilets.myTarget"
-                         duration="totalToilets.myDuration"
-                         effect="totalToilets.myEffect"> {{ totalToilets.myValue | number:0 }}
+                         value="totalToiletsReviewed.myValue"
+                         to="totalToiletsReviewed.myTarget"
+                         duration="totalToiletsReviewed.myDuration"
+                         effect="totalToiletsReviewed.myEffect"> {{ totalToiletsReviewed.myValue | number:0 }}
                     </div>
                     <h2>Total Toilets Reviewed</h2>
                 </div>
