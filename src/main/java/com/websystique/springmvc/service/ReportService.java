@@ -13,8 +13,8 @@ public interface ReportService {
 
     List<Report> getReportsListByPlaceDetailsBetweenDates(List<PlaceDetail> placeDetails, String startDate, String endDate);
 
-    List<Report> getReportsListByLocationIdsBetweenDates(List<Integer> locationIds, String startDate, String endDate, Double ratingFrom, Double ratingEnd, Integer page, Integer size) throws ParseException;
+    List<Report> getReportsListBetweenDatesByLocationIdsRatingRangePageAndSize(List<Integer> locationIds, String startDate, String endDate, Double ratingFrom, Double ratingEnd, Integer page, Integer size) throws ParseException;
 
-    Long countReportsListByLocationIdsBetweenDates(List<Integer> locationIds, String startDate, String endDate, Integer page, Integer size);
+    Long countReportsListBetweenDatesByLocationIdsAndRatingRange(List<Integer> locationIds, String startDate, String endDate, Double ratingFrom, Double ratingEnd) throws ParseException;
 
 }

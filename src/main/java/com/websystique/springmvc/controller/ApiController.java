@@ -105,8 +105,8 @@ public class ApiController {
 
         List<Report> reports = null;
         try {
-            noOfElements = reportService.countReportsListByLocationIdsBetweenDates(locationIds, startDate, endDate, page, size);
-            reports = reportService.getReportsListByLocationIdsBetweenDates(locationIds, startDate, endDate, ratingFrom, ratingEnd, page, size);
+            noOfElements = reportService.countReportsListBetweenDatesByLocationIdsAndRatingRange(locationIds, startDate, endDate, ratingFrom, ratingEnd);
+            reports = reportService.getReportsListBetweenDatesByLocationIdsRatingRangePageAndSize(locationIds, startDate, endDate, ratingFrom, ratingEnd, page, size);
             PrintWriter writer = response.getWriter();
             Gson gson = new Gson();
 
@@ -551,7 +551,7 @@ public class ApiController {
         Long millisInOneDay = 60 * 60 * 24 * 1000L;
         Date yesterday = new Date((System.currentTimeMillis() / millisInOneDay) * millisInOneDay - millisInOneDay);
 
-        List<Object[]> toiletsReviewedTillDate = reviewService.getLocationIdsByLocationIdsAndBetweenDates(locationIds, new Date(0L), new Date());
+        List<Object[]> toiletsReviewedTillDate = reviewService.getPlaceIdsByLocationIdsAndBetweenDates(locationIds, new Date(0L), new Date());
 //        List<Object[]> toiletsReviewedYesterday = reviewService.getLocationIdsByLocationIdsAndBetweenDates(locationIds, new Date(System.currentTimeMillis() - millisInOneDay), new Date(System.currentTimeMillis() - millisInOneDay));
 
         Long totalToiletsReviewed = (long) toiletsReviewedTillDate.size();
@@ -649,11 +649,11 @@ public class ApiController {
         Long millisInOneDay = 60 * 60 * 24 * 1000L;
         Date yesterday = new Date((System.currentTimeMillis() / millisInOneDay) * millisInOneDay - millisInOneDay);
 
-        List<Object[]> toiletsReviewedTillDate = reviewService.getLocationIdsByLocationIdsAndBetweenDates(locationIds, new Date(0L), new Date());
-        List<Object[]> toiletsReviewedYesterday = reviewService.getLocationIdsByLocationIdsAndBetweenDates(locationIds, new Date(System.currentTimeMillis() - millisInOneDay), new Date(System.currentTimeMillis() - millisInOneDay));
-        List<Object[]> toiletsReviewedLastWeek = reviewService.getLocationIdsByLocationIdsAndBetweenDates(locationIds, new Date(System.currentTimeMillis() - 7 * millisInOneDay), new Date());
-        List<Object[]> toiletsReviewedLastTwoWeek = reviewService.getLocationIdsByLocationIdsAndBetweenDates(locationIds, new Date(System.currentTimeMillis() - 14 * millisInOneDay), new Date());
-        List<Object[]> toiletsReviewedLastMonth = reviewService.getLocationIdsByLocationIdsAndBetweenDates(locationIds, new Date(System.currentTimeMillis() - 30 * millisInOneDay), new Date());
+        List<Object[]> toiletsReviewedTillDate = reviewService.getPlaceIdsByLocationIdsAndBetweenDates(locationIds, new Date(0L), new Date());
+        List<Object[]> toiletsReviewedYesterday = reviewService.getPlaceIdsByLocationIdsAndBetweenDates(locationIds, new Date(System.currentTimeMillis() - millisInOneDay), new Date(System.currentTimeMillis() - millisInOneDay));
+        List<Object[]> toiletsReviewedLastWeek = reviewService.getPlaceIdsByLocationIdsAndBetweenDates(locationIds, new Date(System.currentTimeMillis() - 7 * millisInOneDay), new Date());
+        List<Object[]> toiletsReviewedLastTwoWeek = reviewService.getPlaceIdsByLocationIdsAndBetweenDates(locationIds, new Date(System.currentTimeMillis() - 14 * millisInOneDay), new Date());
+        List<Object[]> toiletsReviewedLastMonth = reviewService.getPlaceIdsByLocationIdsAndBetweenDates(locationIds, new Date(millisInOneDay * ((System.currentTimeMillis() - 30 * millisInOneDay) / millisInOneDay)), new Date(millisInOneDay * (System.currentTimeMillis() / millisInOneDay)));
 
         Long totalToiletsReviewed = (long) toiletsReviewedTillDate.size();
         Long fourToFiveStarsRated = countFiveStars(toiletsReviewedTillDate) + countFourStars(toiletsReviewedTillDate);
@@ -782,7 +782,7 @@ public class ApiController {
         Long count = 0L;
         for (Object[] obj : toiletsList) {
             Double rating = (Double) obj[1];
-            if (rating >= 4.5 && rating <= 5.0) {
+            if (rating >= 4.5 && rating < 5.5) {
                 count++;
             }
         }

@@ -270,7 +270,7 @@
                         </td>
                         <td>
                             <a href="javascript:void(0)"
-                               ng-click="setFilters(1.5,2.5, 'last2Week')">{{twoStar.lastTwoWeek}}</a>
+                               ng-click="setFilters(1.5,2.5, 'last2Weeks')">{{twoStar.lastTwoWeek}}</a>
                         </td>
                         <td>
                             <a href="javascript:void(0)"

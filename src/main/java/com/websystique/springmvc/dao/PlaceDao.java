@@ -15,5 +15,8 @@ public interface PlaceDao {
     List<Place> getAllPlaces();
 
     List<Place> getAllPlacesByPageAndSize(Integer page, Integer size);
+
+    Place getPlaceById(Integer placeId);
+
 }
 
