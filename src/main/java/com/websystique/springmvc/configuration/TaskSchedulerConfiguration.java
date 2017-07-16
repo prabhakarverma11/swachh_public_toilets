@@ -13,10 +13,10 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @PropertySource(value = {"classpath:application.properties"})
 public class TaskSchedulerConfiguration {
 
-//    @Bean
-//    public CronJobs beanCronJob() {
-//        return new CronJobs();
-//    }
+    @Bean
+    public CronJobs beanCronJob() {
+        return new CronJobs();
+    }
 
 }
 

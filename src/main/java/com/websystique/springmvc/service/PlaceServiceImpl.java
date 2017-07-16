@@ -35,29 +35,29 @@ public class PlaceServiceImpl implements PlaceService {
                         place.setPlaceId(placeIdValue);
                         placeDao.save(place);
 
-                        System.out.println("Place saved successfully");
+//                        System.out.println("Place saved successfully");
 
                         return place;
                     }
                     case "ZERO_RESULTS": {
-                        System.out.println(location.getId() + ", '" + url + "'");
+//                        System.out.println(location.getId() + ", '" + url + "'");
 //                        System.out.println("\nZERO_RESULTS\n");
                         return null;
                     }
                     case "OVER_QUERY_LIMIT": {
-                        System.out.println("\nOVER_QUERY_LIMIT\n");
+//                        System.out.println("\nOVER_QUERY_LIMIT\n");
                         return null;
                     }
                     case "REQUEST_DENIED": {
-                        System.out.println("\nREQUEST_DENIED\n");
+//                        System.out.println("\nREQUEST_DENIED\n");
                         return null;
                     }
                     case "INVALID_REQUEST": {
-                        System.out.println("\nINVALID_REQUEST\n");
+//                        System.out.println("\nINVALID_REQUEST\n");
                         return null;
                     }
                     default: {
-                        System.out.println("\nDOESN'T KNOW WHAT HAPPENED\n");
+//                        System.out.println("\nDOESN'T KNOW WHAT HAPPENED\n");
                         return null;
                     }
                 }

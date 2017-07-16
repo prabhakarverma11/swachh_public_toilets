@@ -127,7 +127,7 @@ public class ReviewDaoImpl extends AbstractDao<Integer, Review> implements Revie
         String hql = "delete from Review where place= :place";
         Query query = getSession().createQuery(hql).setParameter("place", place);
         int result = query.executeUpdate();
-        System.out.println("Rows affected: " + result);
+//        System.out.println("Rows affected: " + result);
     }
 
     @Override

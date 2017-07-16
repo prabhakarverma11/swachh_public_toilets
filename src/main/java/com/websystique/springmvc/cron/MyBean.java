@@ -8,6 +8,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 public class MyBean {
     @Scheduled(initialDelay = 10000, fixedRate = 5000)
     public void printMessage() {
-        System.out.println("I am called by Spring scheduler");
+//        System.out.println("I am called by Spring scheduler");
     }
 }

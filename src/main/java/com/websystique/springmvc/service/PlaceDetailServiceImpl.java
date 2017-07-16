@@ -35,7 +35,7 @@ public class PlaceDetailServiceImpl implements PlaceDetailService {
 
     @Override
     public String fetchPlaceDetailByPlace(Place place, String url) throws IOException {
-        System.out.println("\nplace = [" + place.getId() + "], url = [" + url + "]\n");
+//        System.out.println("\nplace = [" + place.getId() + "], url = [" + url + "]\n");
         UtilMethods utilMethods = new UtilMethods();
         JsonObject jsonObject = utilMethods.getJsonObjectFetchingURL(url);
 
@@ -134,23 +134,23 @@ public class PlaceDetailServiceImpl implements PlaceDetailService {
                 break;
             }
             case "ZERO_RESULTS": {
-                System.out.println("\nZERO_RESULTS\n");
+//                System.out.println("\nZERO_RESULTS\n");
                 break;
             }
             case "OVER_QUERY_LIMIT": {
-                System.out.println("\nOVER_QUERY_LIMIT\n");
+//                System.out.println("\nOVER_QUERY_LIMIT\n");
                 break;
             }
             case "REQUEST_DENIED": {
-                System.out.println("\nREQUEST_DENIED\n");
+//                System.out.println("\nREQUEST_DENIED\n");
                 break;
             }
             case "INVALID_REQUEST": {
-                System.out.println("\nINVALID_REQUEST\n");
+//                System.out.println("\nINVALID_REQUEST\n");
                 break;
             }
             default: {
-                System.out.println("\nDOESN'T KNOW WHAT HAPPENED\n");
+//                System.out.println("\nDOESN'T KNOW WHAT HAPPENED\n");
                 break;
             }
         }

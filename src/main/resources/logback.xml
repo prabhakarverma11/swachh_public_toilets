@@ -1,5 +1,5 @@
 <configuration debug="false">
-    <property name="USER_HOME" value="/home/prabhakar/Documents/work/mahi/logs" />
+    <property name="USER_HOME" value="/home/prabha/logs"/>
 
     <appender name="STDOUT" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <append>true</append>

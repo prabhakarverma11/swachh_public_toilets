@@ -109,7 +109,7 @@ public class AppController {
                 PlaceULBMap placeULBMap = placeULBMapService.getPlaceULBMapByPlace(place);
                 placeULBMap.setULBName(country[2].split(",").length == 5 ? country[2].split(",")[4] : "-");
                 placeULBMapService.update(placeULBMap);
-                System.out.println(Arrays.toString(country));
+//                System.out.println(Arrays.toString(country));
             }
 
         } catch (IOException e) {

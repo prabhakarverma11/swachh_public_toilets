@@ -22,6 +22,8 @@ import java.util.List;
 public class CronJobs {
 
     private static String[] API_KEY = {
+            "AIzaSyC2ZyVqehUJKV6b8NyE4w399PNQm8kAU5Y",
+            "AIzaSyCoMgPzCMonunGfEqdxiMlEkeEytBHeIBs",
             "AIzaSyD304cZovgQsVQt2vaAILBdD3bD5pFHcx0",
             "AIzaSyBqdMkhD5uNjfCbCrDUr5L3l0qGEgWKBFI",
             "AIzaSyBKgJqF-l_X5gywxnMpqYgO_eR8G7GiIwA",
@@ -30,9 +32,9 @@ public class CronJobs {
             "AIzaSyCXC3L1bLCp_sFUDxtqtrRP43uIHOfldss",
             "AIzaSyBkLfT8KwQu1N1Oncaky_O7WzcH0rdOSuI",
             "AIzaSyD6YNI_T7cKw26Oq5A_CBhQY0JhFyVFl7A",
-            "AIzaSyDVhfr53ZyIV4ms0UUz9026Ip3bxtODdR4"
+            "AIzaSyDVhfr53ZyIV4ms0UUz9026Ip3bxtODdR4",
+            "AIzaSyCwt5r7yoibkA_0ywy8Cdg6gQDPf5kTeGo"
     };
-    private static int index = 0;
 
     @Autowired
     MailServiceImpl mailService;
@@ -49,7 +51,7 @@ public class CronJobs {
     @Autowired
     PlaceDetailService placeDetailService;
 
-    @Scheduled(fixedRate = 600000)
+    @Scheduled(cron = "0 0 19 * * *")
     public void sendDailyReport() throws ParseException {
 
         String today = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
@@ -81,26 +83,16 @@ public class CronJobs {
         }
     }
 
-    @Scheduled(fixedRate = 3 * 57000)
+    @Scheduled(cron = "0 0 */12 * * *")
     public void fetchGoogleApisAndUpdateData() {
-        List<Place> allPlaces = placeService.getAllPlacesByPageAndSize(0, 10);
+        List<Place> allPlaces = placeService.getAllPlacesByPageAndSize(1, Integer.MAX_VALUE);
 
         for (Place place : allPlaces) {
             String url = "https://maps.googleapis.com/maps/api/place/details/json?" +
                     "placeid=" + place.getPlaceId() +
-                    "&key=" + API_KEY[index];
+                    "&key=" + API_KEY[place.getId() % 10];
             try {
                 String response = placeDetailService.fetchPlaceDetailByPlace(place, url);
-                if (response.equals("OVER_QUERY_LIMIT")) {
-                    if (index < API_KEY.length - 1) {
-                        index++;
-                        System.out.println("\n\nAPI_KEY changed to- " + API_KEY[index]);
-                    } else {
-                        index = 0;
-                        System.out.println("\n\nAPI_KEY changed to- " + API_KEY[index]);
-                    }
-                }
-                System.out.println("Done with place id: " + place.getId());
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -108,8 +100,7 @@ public class CronJobs {
     }
 
     private File getReportCSVFile(String fileName, String date) throws IOException {
-        //TODO update it
-        List<Location> locations = locationService.getAllLocationsByPageAndSize(0, 10);
+        List<Location> locations = locationService.getAllLocationsByPageAndSize(1, Integer.MAX_VALUE);
 
         List<Report> reportsList = reportService.getReportsListByLocationsBetweenDates(locations, date, date);
 

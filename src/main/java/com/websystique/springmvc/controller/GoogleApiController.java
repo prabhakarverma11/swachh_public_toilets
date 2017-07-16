@@ -55,7 +55,7 @@ public class GoogleApiController {
      */
     @RequestMapping(value = "/fetch-place-ids/{radius}/{page}/{size}", method = RequestMethod.GET)
     public String fetchPlaceIds(@PathVariable Integer radius, @PathVariable Integer page, @PathVariable Integer size, ModelMap model) {
-        //TODO change it
+
         List<Location> allLocations = locationService.getAllLocationsByPageAndSize(page, size);
         Gson gson = new Gson();
 //        model.addAttribute("locationsListJson", gson.toJson(allLocations));
@@ -88,7 +88,7 @@ public class GoogleApiController {
      */
     @RequestMapping(value = "/fetch-place-details/{page}/{size}", method = RequestMethod.GET)
     public String fetchPlaceDetails(@PathVariable Integer page, @PathVariable Integer size, ModelMap model) {
-        //TODO change it
+
         List<Place> allPlaces = placeService.getAllPlacesByPageAndSize(page, size);
         model.addAttribute("placesList", allPlaces);
         List<Integer> success = new ArrayList<>();
@@ -100,7 +100,7 @@ public class GoogleApiController {
             try {
                 String response = placeDetailService.fetchPlaceDetailByPlace(place, url);
                 success.add(place.getId());
-                System.out.println("Done with place id: " + place.getId());
+//                System.out.println("Done with place id: " + place.getId());
             } catch (IOException e) {
                 e.printStackTrace();
             }
