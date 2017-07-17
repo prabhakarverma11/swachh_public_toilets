@@ -1,10 +1,10 @@
 package com.websystique.springmvc.cron;
 
 import au.com.bytecode.opencsv.CSVWriter;
-import com.websystique.springmvc.model.Location;
 import com.websystique.springmvc.model.Place;
 import com.websystique.springmvc.model.Report;
 import com.websystique.springmvc.service.*;
+import com.websystique.springmvc.utils.UtilConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 
@@ -51,30 +51,33 @@ public class CronJobs {
     @Autowired
     PlaceDetailService placeDetailService;
 
-    @Scheduled(cron = "0 0 19 * * *")
+    @Autowired
+    PlaceULBMapService placeULBMapService;
+
+    @Scheduled(cron = "0 */10 * * * *")
     public void sendDailyReport() throws ParseException {
 
-        String today = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+        String startDate = new SimpleDateFormat("dd-MM-yyyy").format(new Date(0L));
+        String endDate = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
 
-        String fileName = "RatingAndReviewsReport_" + today + ".csv";
-        //TODO update it0
+        String fileName = "RatingAndReviewsReport_" + startDate + "_to_" + endDate + ".csv";
 
         File csvFile = null;
         try {
-            csvFile = getReportCSVFile(fileName, today);
+            csvFile = getReportCSVFile(fileName, startDate, endDate);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        String mailSubject = "Swachh Public Toilets | Rating and Reviews Report for " + today;
+        String mailSubject = "Swachh Public Toilets | Rating and Reviews Report from " + startDate + " to " + endDate;
 
-        String mailMessage = "Greetings!!<br><br>Please find attached Report for the date:  " + today
+        String mailMessage = "Greetings!!<br><br>Please find attached Report between the dates:  " + startDate + " - " + endDate
                 + "<br><br><br>"
                 + "----------------------<br>"
                 + "Thanks & Regards<br>"
                 + "Admin";
-        //TODO update it
-        String toAddresses = "prabhakarverma11@gmail.com,mohan.mahima9@gmail.com";
+
+        String toAddresses = UtilConstants.toAddresses;
 
         try {
             mailService.sendAttachmentEmail(toAddresses, mailSubject, mailMessage, csvFile.getAbsolutePath());
@@ -99,11 +102,10 @@ public class CronJobs {
         }
     }
 
-    private File getReportCSVFile(String fileName, String date) throws IOException {
-        List<Location> locations = locationService.getAllLocationsByPageAndSize(1, Integer.MAX_VALUE);
+    private File getReportCSVFile(String fileName, String startDate, String endDate) throws IOException, ParseException {
+        List<Integer> locationIds = placeULBMapService.getLocationIdsByULBNameAndLocationType(null, null);
 
-        List<Report> reportsList = reportService.getReportsListByLocationsBetweenDates(locations, date, date);
-
+        List<Report> reportsList = reportService.getReportsListBetweenDatesByLocationIdsRatingRangePageAndSize(locationIds, startDate, endDate, 0.0, 5.0, 1, Integer.MAX_VALUE);
 
         File csvFile = new File(fileName);
         csvFile.setReadable(true, false);
@@ -112,19 +114,17 @@ public class CronJobs {
 
         CSVWriter writer = new CSVWriter(new FileWriter(csvFile.getAbsolutePath()));
 
-        writer.writeNext(new String[]{"S. No.", "Name", "Address", "Country", "Latitude", "Longitude", "Avg. Rating", "Reviews"});
+        writer.writeNext(new String[]{"S. No.", "Address", "Type", "ULB", "Avg. Rating", "No. of Reviews"});
 
         String line = "";
         int count = 1;
         for (Report report : reportsList) {
             line = "";
             line += (count++) + "|";
-            line += report.getLocation().getName() + "|";
             line += report.getLocation().getAddress() + "|";
-            line += report.getLocation().getCountry() + "|";
-            line += report.getLocation().getLatitude() + "|";
-            line += report.getLocation().getLongitude() + "|";
-            line += report.getAverageRating() + "|";
+            line += report.getLocation().getType() + "|";
+            line += placeULBMapService.getPlaceULBMapByPlace(report.getPlace()).getULBName() + "|";
+            line += report.getAverageRating() != null ? report.getAverageRating() : "NA" + "|";
             line += report.getReviewsCount() + "|";
 
             writer.writeNext(line.split("\\|"));

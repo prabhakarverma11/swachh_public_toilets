@@ -8,6 +8,7 @@ import com.websystique.springmvc.service.LocationService;
 import com.websystique.springmvc.service.MailServiceImpl;
 import com.websystique.springmvc.service.PlaceULBMapService;
 import com.websystique.springmvc.service.ReportService;
+import com.websystique.springmvc.utils.UtilConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -60,7 +61,7 @@ public class MailController {
                 + "Thanks & Regards<br>"
                 + "Admin";
         //TODO update it
-        String toAddresses = "prabhakarverma11@gmail.com,mohan.mahima9@gmail.com";
+        String toAddresses = UtilConstants.toAddresses;
 
         try {
             mailService.sendAttachmentEmail(toAddresses, mailSubject, mailMessage, csvFile.getAbsolutePath());
@@ -133,7 +134,7 @@ public class MailController {
                 + "Prabhakar";
 
         //TODO update it
-        String toAddresses = "prabhakarverma11@gmail.com,mohan.mahima9@gmail.com";
+        String toAddresses = UtilConstants.toAddresses;
 
         try {
             mailService.sendAttachmentEmail(toAddresses, mailSubject, mailMessage, csvFile.getAbsolutePath());

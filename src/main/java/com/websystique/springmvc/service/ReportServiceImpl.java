@@ -152,7 +152,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
     private Date formatDate(String startDate) throws ParseException {
-        if (startDate != null && !startDate.equals(""))
+        if (startDate != null && !startDate.equals("") && !startDate.equals("null"))
             return new SimpleDateFormat("dd-MM-yyyy").parse(startDate);
         else
             return null;

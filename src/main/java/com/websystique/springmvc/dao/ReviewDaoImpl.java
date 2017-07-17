@@ -57,10 +57,10 @@ public class ReviewDaoImpl extends AbstractDao<Integer, Review> implements Revie
         if (place != null)
             criteria = criteria.add(Restrictions.eq("place", place));
 
-        if (startDate != null && !startDate.equals(""))
+        if (startDate != null && !startDate.equals("") && !startDate.equals("null"))
             criteria = criteria.add(Restrictions.ge("timeStamp", new SimpleDateFormat("dd-MM-yyyy").parse(startDate)));
 
-        if (endDate != null && !endDate.equals(""))
+        if (endDate != null && !endDate.equals("") && !endDate.equals("null"))
             criteria = criteria.add(Restrictions.le("timeStamp", new SimpleDateFormat("dd-MM-yyyy").parse(endDate)));
 
         criteria.setFirstResult(0).setMaxResults(20);
@@ -86,10 +86,10 @@ public class ReviewDaoImpl extends AbstractDao<Integer, Review> implements Revie
         if (place != null)
             criteria = criteria.add(Restrictions.eq("place", place));
 
-        if (startDate != null && !startDate.equals(""))
+        if (startDate != null && !startDate.equals("") && !startDate.equals("null"))
             criteria = criteria.add(Restrictions.ge("timeStamp", new SimpleDateFormat("dd-MM-yyyy").parse(startDate)));
 
-        if (endDate != null && !endDate.equals(""))
+        if (endDate != null && !endDate.equals("") && !endDate.equals("null"))
             criteria = criteria.add(Restrictions.le("timeStamp", new SimpleDateFormat("dd-MM-yyyy").parse(endDate)));
 
         criteria.setProjection(Projections.avg("rating"));
@@ -103,10 +103,10 @@ public class ReviewDaoImpl extends AbstractDao<Integer, Review> implements Revie
         if (place != null)
             criteria = criteria.add(Restrictions.eq("place", place));
 
-        if (startDate != null && !startDate.equals(""))
+        if (startDate != null && !startDate.equals("") && !startDate.equals("null"))
             criteria = criteria.add(Restrictions.ge("timeStamp", new SimpleDateFormat("dd-MM-yyyy").parse(startDate)));
 
-        if (endDate != null && !endDate.equals(""))
+        if (endDate != null && !endDate.equals("") && !endDate.equals("null"))
             criteria = criteria.add(Restrictions.le("timeStamp", new SimpleDateFormat("dd-MM-yyyy").parse(endDate)));
 
         criteria.setProjection(Projections.rowCount());
@@ -124,8 +124,8 @@ public class ReviewDaoImpl extends AbstractDao<Integer, Review> implements Revie
 
     @Override
     public void deleteAllRecordsByPlace(Place place) {
-        String hql = "delete from Review where place= :place";
-        Query query = getSession().createQuery(hql).setParameter("place", place);
+        String hql = "delete from Review where place.id= :placeId";
+        Query query = getSession().createQuery(hql).setParameter("placeId", place.getId());
         int result = query.executeUpdate();
 //        System.out.println("Rows affected: " + result);
     }

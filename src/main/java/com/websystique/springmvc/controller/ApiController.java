@@ -920,7 +920,7 @@ public class ApiController {
             logger.info(request.getServletPath() +
                     ", timeTaken: " + (endTime - startTime) / 1000
             );
-        } catch (IOException e) {
+        } catch (IOException | ParseException e) {
             e.printStackTrace();
             Long endTime = System.currentTimeMillis();
             logger.info(request.getServletPath() +
@@ -936,14 +936,11 @@ public class ApiController {
                                   Double ratingFrom, Double ratingEnd,
                                   Integer page, Integer size,
                                   HttpServletRequest request, HttpServletResponse response,
-                                  HttpSession session) throws IOException {
+                                  HttpSession session) throws IOException, ParseException {
 
 
         List<Integer> locationIds = placeULBMapService.getLocationIdsByULBNameAndLocationType(ulbName, locationType);
-        List<PlaceDetail> placeDetails = placeDetailService.getAllPlaceDetailsByLocationIdsRatingRangePageAndSize(locationIds, ratingFrom, ratingEnd, page, size);
-
-        List<Report> reports = reportService.getReportsListByPlaceDetailsBetweenDates(placeDetails, startDate, endDate);
-        Long noOfElements = placeDetailService.countPlaceDetailsByLocationIdsAndRatingRange(locationIds, ratingFrom, ratingEnd);
+        List<Report> reports = reportService.getReportsListBetweenDatesByLocationIdsRatingRangePageAndSize(locationIds, startDate, endDate, ratingFrom, ratingEnd, page, size);
 
         File csvFile = new File(fileName);
         csvFile.setReadable(true, false);
@@ -952,16 +949,16 @@ public class ApiController {
 
         CSVWriter writer = new CSVWriter(new FileWriter(csvFile.getAbsolutePath()));
 
-        writer.writeNext(new String[]{"S. No.", "Name", "Address", "Type", "Avg. Rating", "Reviews"});
+        writer.writeNext(new String[]{"S. No.", "Address", "Type", "ULB", "Avg. Rating", "No. of Reviews"});
 
         String line = "";
         int count = 1;
         for (Report report : reports) {
             line = "";
             line += (count++) + "|";
-            line += report.getLocation().getName() + "|";
             line += report.getLocation().getAddress() + "|";
             line += report.getLocation().getType() + "|";
+            line += placeULBMapService.getPlaceULBMapByPlace(report.getPlace()).getULBName() + "|";
             line += report.getAverageRating() + "|";
             line += report.getReviewsCount() + "|";
 

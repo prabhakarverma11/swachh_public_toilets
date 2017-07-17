@@ -47,12 +47,12 @@ public class PlaceULBMapDaoImpl extends AbstractDao<Integer, PlaceULBMap> implem
     @Override
     public List<Integer> getLocationIdsByULBNameAndLocationType(String ulbName, String locationType) {
         Criteria criteria = createEntityCriteria();
-        if (ulbName != null)
+        if (ulbName != null && !ulbName.equals("") && !ulbName.equals("null"))
             criteria.add(Restrictions.eq("ULBName", ulbName));
         criteria.createCriteria("place", "place");
         criteria.createCriteria("place.location", "location");
 
-        if (locationType != null)
+        if (locationType != null && !locationType.equals("") && !locationType.equals("null"))
             criteria.add(Restrictions.eq("location.type", locationType));
         return criteria.setProjection(Projections.distinct(Projections.projectionList()
                 .add(Projections.property("location.id")))).list();

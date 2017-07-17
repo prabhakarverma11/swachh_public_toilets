@@ -35,7 +35,6 @@ public class Location implements Serializable {
     @Column(name = "LONGITUDE", nullable = false)
     private Double longitude;
 
-    @NotEmpty
     @Column(name = "IMAGE_URL", nullable = false)
     private String imageURL;
 
@@ -60,7 +59,7 @@ public class Location implements Serializable {
     }
 
     public String getAddress() {
-       return WordUtils.capitalize(address);
+        return WordUtils.capitalize(address);
     }
 
     public void setAddress(String address) {
