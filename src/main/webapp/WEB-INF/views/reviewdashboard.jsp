@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html ng-app="spt">
 <head>
-    <title>GTL</title>
+    <title>Swachh Public Toilet</title>
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <link href="https://fonts.googleapis.com/css?family=Raleway:400,500,600,700" rel="stylesheet">
     <link rel="stylesheet" href="<c:url value='/static/css/styles.min.css' />">
