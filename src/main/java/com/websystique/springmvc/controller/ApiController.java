@@ -650,7 +650,7 @@ public class ApiController {
         Date yesterday = new Date((System.currentTimeMillis() / millisInOneDay) * millisInOneDay - millisInOneDay);
 
         List<Object[]> toiletsReviewedTillDate = reviewService.getPlaceIdsByLocationIdsAndBetweenDates(locationIds, new Date(0L), new Date());
-        List<Object[]> toiletsReviewedYesterday = reviewService.getPlaceIdsByLocationIdsAndBetweenDates(locationIds, new Date(System.currentTimeMillis() - millisInOneDay), new Date(System.currentTimeMillis() - millisInOneDay));
+        List<Object[]> toiletsReviewedYesterday = reviewService.getPlaceIdsByLocationIdsAndBetweenDates(locationIds, new Date(millisInOneDay * ((System.currentTimeMillis() - millisInOneDay) / millisInOneDay)), new Date(millisInOneDay * ((System.currentTimeMillis() - millisInOneDay) / millisInOneDay)));
         List<Object[]> toiletsReviewedLastWeek = reviewService.getPlaceIdsByLocationIdsAndBetweenDates(locationIds, new Date(System.currentTimeMillis() - 7 * millisInOneDay), new Date());
         List<Object[]> toiletsReviewedLastTwoWeek = reviewService.getPlaceIdsByLocationIdsAndBetweenDates(locationIds, new Date(System.currentTimeMillis() - 14 * millisInOneDay), new Date());
         List<Object[]> toiletsReviewedLastMonth = reviewService.getPlaceIdsByLocationIdsAndBetweenDates(locationIds, new Date(millisInOneDay * ((System.currentTimeMillis() - 30 * millisInOneDay) / millisInOneDay)), new Date(millisInOneDay * (System.currentTimeMillis() / millisInOneDay)));
