@@ -178,19 +178,19 @@
         <div class="row">
             <div class="col-md-4 col-sm-4 col-xs-12">
                 <div class="Locate">
-                    <h5><a href="https://www.google.co.in/maps" style="color:#fff;" target="_blank">Locate Nearest
+                    <h5><a href="/static/img/unnamed.jpg" style="color:#fff;" target="_blank">Locate Nearest
                         Toilet on <br/> Google Map</a></h5>
                 </div>
             </div><!-- end span div-->
             <div class="col-md-4 col-sm-4 col-xs-12">
                 <div class="Locate">
-                    <h5><a href="https://www.google.co.in/maps" style="color:#fff;" target="_blank"> Rate & <br/> Review
+                    <h5><a href="/static/img/unnamed.jpg" style="color:#fff;" target="_blank"> Rate & <br/> Review
                         it </a></h5>
                 </div>
             </div><!-- end span div-->
             <div class="col-md-4 col-sm-4 col-xs-12">
                 <div class="Locate">
-                    <h5><a href="https://www.google.co.in/maps" style="color:#fff;" target="_blank">Suggest an Edit in
+                    <h5><a href="/static/img/unnamed.jpg" style="color:#fff;" target="_blank">Suggest an Edit in
                         Toilet's Details </a></h5>
                 </div>
             </div><!-- end span div-->
