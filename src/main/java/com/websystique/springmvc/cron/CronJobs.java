@@ -5,6 +5,8 @@ import com.websystique.springmvc.model.Place;
 import com.websystique.springmvc.model.Report;
 import com.websystique.springmvc.service.*;
 import com.websystique.springmvc.utils.UtilConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 
@@ -20,6 +22,8 @@ import java.util.List;
  * Created by prabhakar on 3/7/17.
  */
 public class CronJobs {
+
+    static final Logger logger = LoggerFactory.getLogger(CronJobs.class);
 
     private static String[] API_KEY = {
             "AIzaSyC2ZyVqehUJKV6b8NyE4w399PNQm8kAU5Y",
@@ -56,7 +60,7 @@ public class CronJobs {
 
     @Scheduled(cron = "0 */10 * * * *")
     public void sendDailyReport() throws ParseException {
-
+        logger.info("Cron for sending daily report being executed");
         String startDate = new SimpleDateFormat("dd-MM-yyyy").format(new Date(0L));
         String endDate = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
 
@@ -84,10 +88,12 @@ public class CronJobs {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        logger.info("Cron for sending daily report end");
     }
 
     @Scheduled(cron = "0 0 */12 * * *")
     public void fetchGoogleApisAndUpdateData() {
+        logger.info("Cron for fetching google apis and updating data being executed");
         List<Place> allPlaces = placeService.getAllPlacesByPageAndSize(1, Integer.MAX_VALUE);
 
         for (Place place : allPlaces) {
@@ -100,6 +106,7 @@ public class CronJobs {
                 e.printStackTrace();
             }
         }
+        logger.info("Cron for fetching google apis and updating data end");
     }
 
     private File getReportCSVFile(String fileName, String startDate, String endDate) throws IOException, ParseException {

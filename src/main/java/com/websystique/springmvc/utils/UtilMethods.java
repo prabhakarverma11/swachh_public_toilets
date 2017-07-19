@@ -8,6 +8,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import static org.springframework.http.HttpHeaders.USER_AGENT;
 
@@ -46,6 +49,20 @@ public class UtilMethods {
 //        System.out.println("Fetched url: " + url);
         if (response != null)
             return (JsonObject) gson.fromJson(response.toString(), JsonObject.class);
+        else
+            return null;
+    }
+
+    public Date formatStartDate(String startDate) throws ParseException {
+        if (startDate != null && !startDate.equals("") && !startDate.equals("null"))
+            return new SimpleDateFormat("dd-MM-yyyy").parse(startDate);
+        else
+            return null;
+    }
+
+    public Date formatEndDate(String endDate) throws ParseException {
+        if (endDate != null && !endDate.equals("") && !endDate.equals("null"))
+            return new Date(new SimpleDateFormat("dd-MM-yyyy").parse(endDate).getTime() + 24 * 60 * 60 * 1000 - 1000);
         else
             return null;
     }

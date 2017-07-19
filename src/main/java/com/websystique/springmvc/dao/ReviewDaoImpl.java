@@ -2,6 +2,7 @@ package com.websystique.springmvc.dao;
 
 import com.websystique.springmvc.model.Place;
 import com.websystique.springmvc.model.Review;
+import com.websystique.springmvc.utils.UtilMethods;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
@@ -15,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -26,6 +26,8 @@ public class ReviewDaoImpl extends AbstractDao<Integer, Review> implements Revie
     static final Logger logger = LoggerFactory.getLogger(ReviewDaoImpl.class);
     @Autowired
     private SessionFactory sessionFactory;
+
+    UtilMethods utilMethods = new UtilMethods();
 
     @Override
     public void save(Review review) {
@@ -58,10 +60,10 @@ public class ReviewDaoImpl extends AbstractDao<Integer, Review> implements Revie
             criteria = criteria.add(Restrictions.eq("place", place));
 
         if (startDate != null && !startDate.equals("") && !startDate.equals("null"))
-            criteria = criteria.add(Restrictions.ge("timeStamp", new SimpleDateFormat("dd-MM-yyyy").parse(startDate)));
+            criteria = criteria.add(Restrictions.ge("timeStamp", utilMethods.formatStartDate(startDate)));
 
         if (endDate != null && !endDate.equals("") && !endDate.equals("null"))
-            criteria = criteria.add(Restrictions.le("timeStamp", new SimpleDateFormat("dd-MM-yyyy").parse(endDate)));
+            criteria = criteria.add(Restrictions.le("timeStamp", utilMethods.formatEndDate(endDate)));
 
         criteria.setFirstResult(0).setMaxResults(20);
         List<Review> reviews = criteria.list();
@@ -87,10 +89,10 @@ public class ReviewDaoImpl extends AbstractDao<Integer, Review> implements Revie
             criteria = criteria.add(Restrictions.eq("place", place));
 
         if (startDate != null && !startDate.equals("") && !startDate.equals("null"))
-            criteria = criteria.add(Restrictions.ge("timeStamp", new SimpleDateFormat("dd-MM-yyyy").parse(startDate)));
+            criteria = criteria.add(Restrictions.ge("timeStamp", utilMethods.formatStartDate(startDate)));
 
         if (endDate != null && !endDate.equals("") && !endDate.equals("null"))
-            criteria = criteria.add(Restrictions.le("timeStamp", new SimpleDateFormat("dd-MM-yyyy").parse(endDate)));
+            criteria = criteria.add(Restrictions.le("timeStamp", utilMethods.formatEndDate(endDate)));
 
         criteria.setProjection(Projections.avg("rating"));
         return (Double) criteria.uniqueResult();
@@ -104,10 +106,10 @@ public class ReviewDaoImpl extends AbstractDao<Integer, Review> implements Revie
             criteria = criteria.add(Restrictions.eq("place", place));
 
         if (startDate != null && !startDate.equals("") && !startDate.equals("null"))
-            criteria = criteria.add(Restrictions.ge("timeStamp", new SimpleDateFormat("dd-MM-yyyy").parse(startDate)));
+            criteria = criteria.add(Restrictions.ge("timeStamp", utilMethods.formatStartDate(startDate)));
 
         if (endDate != null && !endDate.equals("") && !endDate.equals("null"))
-            criteria = criteria.add(Restrictions.le("timeStamp", new SimpleDateFormat("dd-MM-yyyy").parse(endDate)));
+            criteria = criteria.add(Restrictions.le("timeStamp", utilMethods.formatEndDate(endDate)));
 
         criteria.setProjection(Projections.rowCount());
         return (Long) criteria.uniqueResult();

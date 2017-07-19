@@ -8,14 +8,13 @@ import com.websystique.springmvc.model.Location;
 import com.websystique.springmvc.model.Place;
 import com.websystique.springmvc.model.PlaceDetail;
 import com.websystique.springmvc.model.Report;
+import com.websystique.springmvc.utils.UtilMethods;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
@@ -37,6 +36,8 @@ public class ReportServiceImpl implements ReportService {
 
     @Autowired
     PlaceULBMapService placeULBMapService;
+
+    UtilMethods utilMethods = new UtilMethods();
 
     @Override
     public List<Report> getReportsListByLocationsBetweenDates(List<Location> locations, String startDate, String endDate) {
@@ -107,7 +108,7 @@ public class ReportServiceImpl implements ReportService {
                 locations.add(placeDetail.getPlace().getLocation());
             }
         } else {
-            List<Object[]> toiletsReviewed = reviewDao.getPlaceIdsByLocationIdsAndBetweenDates(locationIds, formatDate(startDate), formatDate(endDate));
+            List<Object[]> toiletsReviewed = reviewDao.getPlaceIdsByLocationIdsAndBetweenDates(locationIds, utilMethods.formatStartDate(startDate), utilMethods.formatEndDate(endDate));
             for (Object[] obj : toiletsReviewed) {
                 Double rating = (Double) obj[1];
                 if (ratingEnd == 5.0) {
@@ -151,19 +152,12 @@ public class ReportServiceImpl implements ReportService {
         return reportsList;
     }
 
-    private Date formatDate(String startDate) throws ParseException {
-        if (startDate != null && !startDate.equals("") && !startDate.equals("null"))
-            return new SimpleDateFormat("dd-MM-yyyy").parse(startDate);
-        else
-            return null;
-    }
-
     @Override
     public Long countReportsListBetweenDatesByLocationIdsAndRatingRange(List<Integer> locationIds, String startDate, String endDate, Double ratingFrom, Double ratingEnd) throws ParseException {
         if (ratingFrom == 0.0 && ratingEnd == 5.0) {
             return placeDetailDao.countPlaceDetailsByLocationIdsAndRatingRange(locationIds, ratingFrom, ratingEnd);
         } else {
-            List<Object[]> toiletsReviewed = reviewDao.getPlaceIdsByLocationIdsAndBetweenDates(locationIds, formatDate(startDate), formatDate(endDate));
+            List<Object[]> toiletsReviewed = reviewDao.getPlaceIdsByLocationIdsAndBetweenDates(locationIds, utilMethods.formatStartDate(startDate), utilMethods.formatEndDate(endDate));
             Long count = 0L;
             for (Object[] obj : toiletsReviewed) {
                 Double rating = (Double) obj[1];
