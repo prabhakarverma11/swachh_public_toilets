@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.websystique.springmvc.model.*;
 import com.websystique.springmvc.service.*;
+import com.websystique.springmvc.utils.UtilMethods;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,8 @@ public class ApiController {
 
     @Autowired
     AdminVerificationService adminVerificationService;
+
+    UtilMethods utilMethods = new UtilMethods();
 
     /**
      * Response is having report of locations with given criteria
@@ -471,11 +474,11 @@ public class ApiController {
                     Date dateToFilter = new Date(millis);
 
                     JsonObject dayWiseData = new JsonObject();
-                    dayWiseData.addProperty("1", reviewService.countReviewsByPlaceAndRatingRangeBetweenDates(place, 1, 1, dateToFilter, dateToFilter));
-                    dayWiseData.addProperty("2", reviewService.countReviewsByPlaceAndRatingRangeBetweenDates(place, 2, 1, dateToFilter, dateToFilter));
-                    dayWiseData.addProperty("3", reviewService.countReviewsByPlaceAndRatingRangeBetweenDates(place, 3, 1, dateToFilter, dateToFilter));
-                    dayWiseData.addProperty("4", reviewService.countReviewsByPlaceAndRatingRangeBetweenDates(place, 4, 1, dateToFilter, dateToFilter));
-                    dayWiseData.addProperty("5", reviewService.countReviewsByPlaceAndRatingRangeBetweenDates(place, 5, 1, dateToFilter, dateToFilter));
+                    dayWiseData.addProperty("1", reviewService.countReviewsByPlaceAndRatingRangeBetweenDates(place, 1, 1, utilMethods.formatStartDate(dateToFilter), utilMethods.formatEndDate(dateToFilter)));
+                    dayWiseData.addProperty("2", reviewService.countReviewsByPlaceAndRatingRangeBetweenDates(place, 2, 2, utilMethods.formatStartDate(dateToFilter), utilMethods.formatEndDate(dateToFilter)));
+                    dayWiseData.addProperty("3", reviewService.countReviewsByPlaceAndRatingRangeBetweenDates(place, 3, 3, utilMethods.formatStartDate(dateToFilter), utilMethods.formatEndDate(dateToFilter)));
+                    dayWiseData.addProperty("4", reviewService.countReviewsByPlaceAndRatingRangeBetweenDates(place, 4, 4, utilMethods.formatStartDate(dateToFilter), utilMethods.formatEndDate(dateToFilter)));
+                    dayWiseData.addProperty("5", reviewService.countReviewsByPlaceAndRatingRangeBetweenDates(place, 5, 5, utilMethods.formatStartDate(dateToFilter), utilMethods.formatEndDate(dateToFilter)));
 
                     content.addProperty(new SimpleDateFormat("dd-MM-yyyy").format(dateToFilter), gson.toJson(dayWiseData));
                 }

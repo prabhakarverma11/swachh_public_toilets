@@ -66,4 +66,20 @@ public class UtilMethods {
         else
             return null;
     }
+
+    public Date formatStartDate(Date startDate) {
+        Long millisADay = 24 * 60 * 60 * 1000L;
+        if (startDate != null)
+            return new Date(millisADay * ((startDate.getTime()) / millisADay));
+        else
+            return null;
+    }
+
+    public Date formatEndDate(Date endDate) {
+        Long millisADay = 24 * 60 * 60 * 1000L;
+        if (endDate != null)
+            return new Date(millisADay * ((endDate.getTime()) / millisADay + 1) - 1000);
+        else
+            return null;
+    }
 }
