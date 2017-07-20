@@ -1,6 +1,8 @@
 package com.websystique.springmvc.service;
 
 import com.websystique.springmvc.utils.UtilConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -9,6 +11,7 @@ import javax.activation.DataSource;
 import javax.activation.FileDataSource;
 import javax.mail.*;
 import javax.mail.internet.*;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Properties;
 
@@ -16,6 +19,8 @@ import java.util.Properties;
 @Service("mailService")
 @Transactional
 public class MailServiceImpl {
+
+    static final Logger logger = LoggerFactory.getLogger(MailServiceImpl.class);
 
     public void sendAttachmentEmail(String recipients, String subject, String body, String attachmentName) throws AddressException, MessagingException {
 
@@ -98,6 +103,7 @@ public class MailServiceImpl {
         msg.setContent(multipart);
 
         // Send message
+        logger.info("From: " + Arrays.toString(msg.getFrom()) + " ,To: " + Arrays.toString(msg.getAllRecipients()) + " ,subject: " + msg.getSubject());
         Transport.send(msg);
     }
 }

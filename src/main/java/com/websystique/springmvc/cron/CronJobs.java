@@ -110,9 +110,10 @@ public class CronJobs {
     }
 
     private File getReportCSVFile(String fileName, String startDate, String endDate) throws IOException, ParseException {
-        List<Integer> locationIds = placeULBMapService.getLocationIdsByULBNameAndLocationType(null, null);
+        logger.info("Entering getReportCSVFile");
 
-        List<Report> reportsList = reportService.getReportsListBetweenDatesByLocationIdsRatingRangePageAndSize(locationIds, startDate, endDate, 0.0, 5.0, 1, Integer.MAX_VALUE);
+        List<Integer> locationIds = placeULBMapService.getLocationIdsByULBNameAndLocationType(null, null);
+        List<Report> reportsList = reportService.getReportsListBetweenDatesByLocationIdsRatingRangePageAndSize(locationIds, startDate, endDate, 0.01, 5.0, 1, Integer.MAX_VALUE);
 
         File csvFile = new File(fileName);
         csvFile.setReadable(true, false);
@@ -131,12 +132,13 @@ public class CronJobs {
             line += report.getLocation().getAddress() + "|";
             line += report.getLocation().getType() + "|";
             line += placeULBMapService.getPlaceULBMapByPlace(report.getPlace()).getULBName() + "|";
-            line += report.getAverageRating() != null ? report.getAverageRating() : "NA" + "|";
+            line += (report.getAverageRating() != null ? report.getAverageRating() : "NA") + "|";
             line += report.getReviewsCount() + "|";
 
             writer.writeNext(line.split("\\|"));
         }
         writer.close();
+        logger.info("locationIds size: " + locationIds.size() + " ,reportsList size: " + reportsList.size());
         return csvFile;
     }
 }
