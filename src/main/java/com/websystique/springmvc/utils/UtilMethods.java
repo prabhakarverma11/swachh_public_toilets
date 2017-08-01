@@ -1,7 +1,9 @@
 package com.websystique.springmvc.utils;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,6 +15,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static org.springframework.http.HttpHeaders.USER_AGENT;
+
+//import com.google.gson.JsonObject;
 
 /**
  * Created by prabhakar on 24/6/17.
@@ -45,6 +49,11 @@ public class UtilMethods {
             }
             in.close();
         }
+
+        JsonParser jsonParser = new JsonParser();
+        JsonElement jsonTree = jsonParser.parse(response.toString());
+
+
         Gson gson = new Gson();
 //        System.out.println("Fetched url: " + url);
         if (response != null)

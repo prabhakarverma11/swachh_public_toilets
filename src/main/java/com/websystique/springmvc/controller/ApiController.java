@@ -729,6 +729,11 @@ public class ApiController {
             ratingDistribution.addProperty("noFeedBack", gson.toJson(noFeedBack));
 
             JsonObject jsonObject = new JsonObject();
+
+            jsonObject.addProperty("totalToilets", locationIds.size());
+            jsonObject.addProperty("totalReviews", reviewService.countReviewsByLocationIds(locationIds));
+            jsonObject.addProperty("totalComments", reviewService.countCommentsByLocationIds(locationIds));
+
             jsonObject.addProperty("totalToiletsReviewed", totalToiletsReviewed);
             jsonObject.addProperty("fourToFiveStarsRated", fourToFiveStarsRated);
             jsonObject.addProperty("threeOrLessStarsRated", threeOrLessStarsRated);

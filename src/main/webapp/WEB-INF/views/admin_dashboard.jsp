@@ -84,6 +84,48 @@
             <div class="panel panel-default color1">
                 <div class="panel-body">
                     <div class="number counter"
+                         value="totalToilets.myValue"
+                         to="totalToilets.myTarget"
+                         duration="totalToilets.myDuration"
+                         effect="totalToilets.myEffect"> {{ totalToilets.myValue | number:0 }}
+                    </div>
+                    <h2>Total No. of Toilets</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-4">
+            <div class="panel panel-default color2">
+                <div class="panel-body">
+                    <div class="number counter"
+                         value="totalReviews.myValue"
+                         to="totalReviews.myTarget"
+                         duration="totalReviews.myDuration"
+                         effect="totalReviews.myEffect"> {{ totalReviews.myValue | number:0 }}
+                    </div>
+                    <h2>Total No. of Reviews</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-4">
+            <div class="panel panel-default color3">
+                <div class="panel-body">
+                    <div class="number counter"
+                         value="totalComments.myValue"
+                         to="totalComments.myTarget"
+                         duration="totalComments.myDuration"
+                         effect="totalComments.myEffect"> {{ totalComments.myValue | number:0 }}
+                    </div>
+                    <h2>Total No. of Comments</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-md-4">
+
+            <div class="panel panel-default color1">
+                <div class="panel-body">
+                    <div class="number counter"
                          value="totalToiletsReviewed.myValue"
                          to="totalToiletsReviewed.myTarget"
                          duration="totalToiletsReviewed.myDuration"
